@@ -19,6 +19,6 @@ class IndexView(APIView):
     
     def get(self, request, format=None):
         content = {
-            'wmsg':'migue y yepes vamos pal apex'
+            'wmsg':'mensaje para comprobar'
         }
         return Response(content)
