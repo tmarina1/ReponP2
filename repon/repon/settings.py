@@ -37,13 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-<<<<<<< HEAD
     'autenticacion'
-=======
-    'inventario',
-    'empresas',
-    'autentificacion',
->>>>>>> fa4116448c01b6a679da05377743c416c3b2106c
 ]
 
 MIDDLEWARE = [
