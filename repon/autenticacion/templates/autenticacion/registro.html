@@ -12,7 +12,7 @@
 <body>
     <section class="navRegistro">
         <img src="{% static 'img/PAS-logos_white.png' %}" alt="Logo blanco PAS">
-        <a href="#">Iniciar sesión</a>
+        <a href="{% url 'inicioSesion' %}">Iniciar sesión</a>
     </section>
     <div class="fondoBlanco">
         <section class="contenido">
@@ -20,10 +20,12 @@
                 <form method="post">
                     {% csrf_token %}
                     <div class="flexDivColumn">
-                        {% if messages %}
-                            {% for message in messages %}
-                                <p> {{ message }}</p>
-                            {% endfor %}
+                        {% if mensaje %}
+                            {% if colorMensaje%}
+                                <p class="alert alert-warning" role="alert"> {{ mensaje }}</p>
+                            {%else%}
+                                <p class="alert alert-danger" role="alert"> {{ mensaje }}</p>
+                            {%endif%}
                         {% endif %}
                         <div class="containerInput">
                             <label>Nombre</label>

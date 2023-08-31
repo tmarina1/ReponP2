@@ -77,17 +77,25 @@ form{
     align-items: center;
 }
 .navRegistro>img{
-   max-width: 400px;
+   max-width: 350px;
    margin-left: -25px;
 }
 .navRegistro>a{
-    font-size: 20px;
+    font-size: 18px;
     padding: 8px;
     border: 1px solid #5E5BFF;
     border-radius: 5px;
     background-color: #344172;
     color: #ffffff;
     text-decoration: none;
+}
+/*-------------------------------------------------------------------------------------*/
+.alert{
+    margin: 0px !important;
+    margin-bottom: 5px !important;
+    padding: 3px !important;
+    max-width: 80% !important;
+    text-align: center;
 }
 @media (max-width: 600px) {
     .fondoBlanco{
