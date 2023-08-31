@@ -17,23 +17,25 @@
     <div class="fondoBlanco">
         <section class="contenido">
             <h1 id="tituloRegistro">Crear cuenta</h1>
+            
                 <form method="post">
+                    {% csrf_token %}
                     <div class="flexDivColumn">
                         <div class="containerInput">
                             <label>Nombre</label>
-                            <input type="text" placeholder="Ejemplo: Tomás Marín" required>
+                            <input type="text" name="nombre" placeholder="Ejemplo: Tomás Marín" required>
                         </div>
                         <div class="containerInput">
                             <label>Correo</label>
-                            <input type="text" placeholder="Ejemplo: tmarina@eafit.edu.co" required>
+                            <input type="text" name="correo" placeholder="Ejemplo: tmarina@eafit.edu.co" required>
                         </div>
                         <div class="containerInput">
                             <label>Contraseña</label>
-                            <input type="password"  required>
+                            <input type="password" name="clave"  required>
                         </div>
                         <div class="containerInput">
                             <label>Confirmar contraseña</label>
-                            <input type="password"  required>
+                            <input type="password" name="clave_repeat" required>
                         </div>
                         <button type="submit" id="btnCrearCuenta">Crear cuenta</button>
                     </div>
