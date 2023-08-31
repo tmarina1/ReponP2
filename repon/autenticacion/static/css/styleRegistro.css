@@ -48,7 +48,7 @@ form{
     align-items: center; 
 }
 .containerInput>input{
-    border-radius: 8px;
+    border-radius: 6px;
 }
 .containerInput>label{
     width: 100%;
@@ -123,7 +123,7 @@ form{
 }
 @media (min-width: 1000px) {
     .containerInput>label{
-        font-size: 23px;
+        font-size: 17px;
     }
     .containerInput>input{
         width: 300px;
