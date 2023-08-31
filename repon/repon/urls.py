@@ -16,7 +16,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from autenticacion import views as vistaAut
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', vistaAut.registro, name='registro')
 ]

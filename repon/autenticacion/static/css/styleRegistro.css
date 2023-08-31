@@ -1,0 +1,27 @@
+html,body{
+    width: 100%;
+    height: 100%;
+}
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(to top,#152850,#475678);
+}
+.fondoBlanco{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30%;
+    height: 70%;
+    background-color: #ffffff;
+    border-radius: 20px;
+    margin: auto;
+    margin-bottom: 30px;   
+}
+.contenido{
+    width: 95%;
+    height: 95%;
+    border: 1px solid #152850;
+    border-radius: 20px;
+}
