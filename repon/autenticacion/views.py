@@ -1,7 +1,6 @@
-from django.shortcuts import render
-from django.contrib import messages
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from . import models
 
 def registro(request):
@@ -31,6 +30,18 @@ def registro(request):
     return render(request, 'autenticacion/registro.html', {'colorMensaje':colorMensaje,'mensaje':mensaje})
 
 def inicioSesion(request):
+    if request.method == 'POST':
+        usuario = request.POST['correo']
+        clave = request.POST['clave']
+        usuarioAut = authenticate(request, username=usuario, password=clave)
+        
+        if usuarioAut is not None:
+            login(request, usuarioAut)
+            return redirect(inicioSesionCoordinador)  # Redirigir a la página principal después del inicio de sesión
+        else:
+            # Manejo de error en caso de credenciales incorrectas
+            mensaje = "Información incorrecta. Inténtalo de nuevo."
+            return render(request, 'autenticacion/inicioSesion.html', {'mensaje': mensaje})
     return render(request,'autenticacion/inicioSesion.html')
 
 def inicioSesionCoordinador(request):

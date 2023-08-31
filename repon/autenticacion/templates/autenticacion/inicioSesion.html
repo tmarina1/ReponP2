@@ -19,10 +19,8 @@
                 <form method="post">
                     {% csrf_token %}
                     <div class="flexDivColumn">
-                        {% if messages %}
-                            {% for message in messages %}
-                                <p> {{ message }}</p>
-                            {% endfor %}
+                        {% if mensaje %}
+                            <p class="alert alert-danger" role="alert"> {{ mensaje }}</p>
                         {% endif %}
                         <div class="containerInput">
                             <label>Correo</label>
