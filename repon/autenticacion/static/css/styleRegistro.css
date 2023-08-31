@@ -102,6 +102,20 @@ form{
         padding: 6px;
     }
   }
+@media (max-width: 1500px) {
+    .fondoBlanco{
+        height: 75%;
+        margin-bottom: 30px;
+    }
+    #tituloRegistro{
+        margin-top: 5px;
+    }
+    #btnCrearCuenta{
+        font-size: 16px;
+        padding: 6px;
+    }
+
+}
 @media (min-width: 1000px) {
     .containerInput>label{
         font-size: 23px;
