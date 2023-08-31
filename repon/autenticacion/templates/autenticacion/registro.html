@@ -17,10 +17,14 @@
     <div class="fondoBlanco">
         <section class="contenido">
             <h1 id="tituloRegistro">Crear cuenta</h1>
-            
                 <form method="post">
                     {% csrf_token %}
                     <div class="flexDivColumn">
+                        {% if messages %}
+                            {% for message in messages %}
+                                <p> {{ message }}</p>
+                            {% endfor %}
+                        {% endif %}
                         <div class="containerInput">
                             <label>Nombre</label>
                             <input type="text" name="nombre" placeholder="Ejemplo: Tomás Marín" required>
@@ -35,7 +39,7 @@
                         </div>
                         <div class="containerInput">
                             <label>Confirmar contraseña</label>
-                            <input type="password" name="clave_repeat" required>
+                            <input type="password" name="claveRepetida" required>
                         </div>
                         <button type="submit" id="btnCrearCuenta">Crear cuenta</button>
                     </div>

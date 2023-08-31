@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.contrib import messages
+from django.contrib.auth.models import User
 from .  import models
 
 def registro(request):
@@ -8,15 +9,13 @@ def registro(request):
         nombre = request.POST['nombre']
         correo = request.POST['correo']
         clave = request.POST['clave']
-        clave_repeat = request.POST['clave_repeat']
-        cargo = ""
-        empresa = ""
-
-        if clave != clave_repeat:
-            messages.info(request, 'Las contraseñas no coinciden')
+        claveRepetida = request.POST['claveRepetida']
+        administrador = 1
+        if clave != claveRepetida:
+            messages.warning(request, 'Las contraseñas no coinciden')
         else:
-            agregar = models.Usuario(nombre = nombre, correo = correo, cargo = cargo, empresa = empresa ,clave = clave)
-            agregar.save()
-            return render(request, 'autenticacion/registro.html')
+            usuario = User.objects.create_user(first_name=nombre,username=correo, email=correo, password=clave,is_superuser=administrador)
+            usuario.save()
+            messages.success(request, 'Usuario creado exitosamente')
         
     return render(request, 'autenticacion/registro.html')
