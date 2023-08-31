@@ -32,3 +32,6 @@ def registro(request):
 
 def inicioSesion(request):
     return render(request,'autenticacion/inicioSesion.html')
+
+def inicioSesionCoordinador(request):
+    return render(request,'autenticacion/inicioSesionCoordinador.html')

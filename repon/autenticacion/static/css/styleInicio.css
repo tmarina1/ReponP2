@@ -101,6 +101,11 @@ form{
     color: #ffffff;
     text-decoration: none;
 }
+.containerBtnIC{
+    display: flex;
+    width: 80%;
+    justify-content: center;
+}
 @media (max-width: 600px) {
     .fondoBlanco{
         width: 80%;
