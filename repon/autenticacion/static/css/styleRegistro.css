@@ -50,6 +50,9 @@ form{
 .containerInput>input{
     border-radius: 8px;
 }
+.containerInput>label{
+    width: 100%;
+}
 /*-------------------------------------------------------------------------------------*/
 #tituloRegistro{
     text-align: center;
@@ -63,17 +66,19 @@ form{
     border-radius: 5px;
     background-color: #344172;
     color: #ffffff;
+    margin-top: 10px;
 }
 /*-------------------------------------------------------------------------------------*/
 .navRegistro{
     display: flex;
     height: 15%;
-    width: 90%;
+    width: 95%;
     justify-content: space-between;
     align-items: center;
 }
 .navRegistro>img{
    max-width: 400px;
+   margin-left: -25px;
 }
 .navRegistro>a{
     font-size: 20px;
