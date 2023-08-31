@@ -1,27 +1,113 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo&family=Montserrat:wght@600&display=swap');
+*{
+    font-family: 'Montserrat', sans-serif;
+}
 html,body{
     width: 100%;
     height: 100%;
 }
 body{
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(to top,#152850,#475678);
+    background: linear-gradient(to top,#1C1550,#475678,#9198B2);
+}
+form{
+    height: 80%;
 }
 .fondoBlanco{
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 30%;
-    height: 70%;
+    width: 35%;
+    height: 65%;
     background-color: #ffffff;
     border-radius: 20px;
     margin: auto;
-    margin-bottom: 30px;   
+    margin-bottom: 80px;   
 }
 .contenido{
     width: 95%;
     height: 95%;
-    border: 1px solid #152850;
+    border: 2px solid #152850;
     border-radius: 20px;
+}
+.flexDivColumn{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.containerInput{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center; 
+}
+.containerInput>input{
+    border-radius: 8px;
+}
+/*-------------------------------------------------------------------------------------*/
+#tituloRegistro{
+    text-align: center;
+    color: #6E6E6E;
+    margin-top: 30px;
+}
+#btnCrearCuenta{
+    font-size: 20px;
+    padding: 8px;
+    border: 1px solid #5E5BFF;
+    border-radius: 5px;
+    background-color: #344172;
+    color: #ffffff;
+}
+/*-------------------------------------------------------------------------------------*/
+.navRegistro{
+    display: flex;
+    height: 15%;
+    width: 90%;
+    justify-content: space-between;
+    align-items: center;
+}
+.navRegistro>img{
+   max-width: 400px;
+}
+.navRegistro>a{
+    font-size: 20px;
+    padding: 8px;
+    border: 1px solid #5E5BFF;
+    border-radius: 5px;
+    background-color: #344172;
+    color: #ffffff;
+    text-decoration: none;
+}
+@media (max-width: 600px) {
+    .fondoBlanco{
+        width: 80%;
+        height: 50%;
+        margin-bottom: 200px;
+    }
+    #btnCrearCuenta{
+        font-size: 16px;
+        padding: 6px;
+    }
+    .navRegistro>img{
+        max-width: 200px;
+    }
+    .navRegistro>a{
+        font-size: 16px;
+        padding: 6px;
+    }
+  }
+@media (min-width: 1000px) {
+    .containerInput>label{
+        font-size: 23px;
+    }
+    .containerInput>input{
+        width: 300px;
+        height: 35px;
+    }
 }
