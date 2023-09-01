@@ -4,4 +4,5 @@ from . import views
 
 urlpatterns = [
     path('', views.Empresas),
+    path('crearEmpresa/', views.CrearEmpresas),
 ]
