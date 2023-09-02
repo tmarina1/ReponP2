@@ -6,4 +6,5 @@ urlpatterns = [
     path('', views.registro, name="registro"),
     path('inicioSesion/', views.inicioSesion, name="inicioSesion"),
     path('inicioSesionCoordinador/', views.inicioSesionCoordinador, name="inicioSesionCoordinador"),
+    path('recuperarClave/', views.recuperarClave, name="recuperarClave"),
 ]
