@@ -75,10 +75,11 @@ WSGI_APPLICATION = 'repon.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+rutadb = Path(os.path.join(BASE_DIR.parent.parent, 'entorno'))
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': rutadb / 'db.sqlite3',
     }
 }
 
