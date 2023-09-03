@@ -1,5 +1,6 @@
 from django.shortcuts import render
 
+# Create your views here.
 def Empresas(request):
     return render(request, "empresas.html")
 
