@@ -6,3 +6,6 @@ def Empresas(request):
 
 def CrearEmpresas(request):
     return render(request, "crearEmpresas.html")
+
+def crearProyecto(request):
+    return render(request,'crearProyecto.html')
