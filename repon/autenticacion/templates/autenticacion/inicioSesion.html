@@ -24,7 +24,7 @@
                         {% endif %}
                         <div class="containerInput">
                             <label>Correo</label>
-                            <input type="email" name="correo" placeholder="Ejemplo: tmarina@eafit.edu.co" required>
+                            <input type="email" name="correo" placeholder=" Ejemplo: tmarina@eafit.edu.co" required>
                         </div>
                         <div class="containerInput">
                             <label>Contraseña</label>
@@ -32,8 +32,8 @@
                         </div>
                         <p class="olvideContraseña">Si has olvidado tu contraseña haz click <a href="{% url 'password_reset' %}">aquí</a></p>
                         <div class="containerBtnInicio">
-                            <a href="{% url 'registro' %}" id="btnCrearCuenta">Crear cuenta</a>
-                            <button type="submit" id="btnCrearCuenta">Ingresar</button>
+                            <a href="{% url 'registro' %}" class="btnCrearCuenta" id="btnColorDiferente">Crear cuenta</a>
+                            <button type="submit" class="btnCrearCuenta">Ingresar</button>
                         </div>
                     </div>
                 </form>

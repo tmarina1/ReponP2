@@ -25,7 +25,8 @@ form{
     background-color: #ffffff;
     border-radius: 20px;
     margin: auto;
-    margin-bottom: 80px;   
+    margin-bottom: 80px;  
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.333); 
 }
 .contenido{
     width: 95%;
@@ -60,8 +61,8 @@ form{
     color: #6E6E6E;
     margin-top: 30px;
 }
-#btnCrearCuenta{
-    font-size: 20px;
+.btnCrearCuenta{
+    font-size: 16px;
     padding: 8px;
     border: 1px solid #5E5BFF;
     border-radius: 5px;
@@ -70,15 +71,20 @@ form{
     margin-top: 10px;
     text-decoration: none;
 }
+#btnColorDiferente{
+    background-color: #5E5BFF;
+}
 .containerBtnInicio{
     display: flex;
     width: 80%;
     justify-content: space-between;
 }
 .olvideContraseña{
+    font-size: 14px;
     text-align: center;
     margin: 0px;
     color: #4A5568;
+    width: 80%;
 }
 /*-------------------------------------------------------------------------------------*/
 .navInicio{

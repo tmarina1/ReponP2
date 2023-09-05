@@ -37,15 +37,10 @@ def inicioSesion(request):
         
         if usuarioAut is not None:
             login(request, usuarioAut)
-            return redirect(inicioSesionCoordinador)  # Redirigir a la página principal después del inicio de sesión
+            return redirect(registro)  # Redirigir a la página principal después del inicio de sesión
         else:
             # Manejo de error en caso de credenciales incorrectas
             mensaje = "Información incorrecta. Inténtalo de nuevo."
             return render(request, 'autenticacion/inicioSesion.html', {'mensaje': mensaje})
     return render(request,'autenticacion/inicioSesion.html')
 
-def inicioSesionCoordinador(request):
-    return render(request,'autenticacion/inicioSesionCoordinador.html')
-
-def claveConfirmacion(request):
-    return render(request,'registration/password_reset_done.html')
