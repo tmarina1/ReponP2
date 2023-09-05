@@ -1,8 +1,8 @@
 from django.shortcuts import render
 
 # Create your views here.
-def Empresas(request):
-    return render(request, "empresas.html")
+def landingAdmon(request):
+    return render(request, "landingAdmon.html")
 
 def CrearEmpresas(request):
     return render(request, "crearEmpresas.html")

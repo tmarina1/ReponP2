@@ -6,7 +6,7 @@ from django.urls import path,include
 from . import views
 
 urlpatterns = [
-    path('', views.Empresas),
+    path('', views.landingAdmon),
     path('crearEmpresa/', views.CrearEmpresas),
     path('crearProyecto/', views.crearProyecto),
     path('crearCoordinador/', views.crearCoordinador),
