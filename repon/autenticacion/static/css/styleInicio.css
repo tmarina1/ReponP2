@@ -25,14 +25,14 @@ form{
     background-color: #ffffff;
     border-radius: 20px;
     margin: auto;
-    margin-bottom: 80px;   
+    margin-bottom: 80px;  
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.333); 
 }
 .contenido{
     width: 95%;
     height: 95%;
     border: 2px solid #152850;
     border-radius: 20px;
-    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.233);
 }
 .flexDivColumn{
     width: 80%;
@@ -84,7 +84,7 @@ form{
     text-align: center;
     margin: 0px;
     color: #4A5568;
-    width: 70%;
+    width: 80%;
 }
 /*-------------------------------------------------------------------------------------*/
 .navInicio{
