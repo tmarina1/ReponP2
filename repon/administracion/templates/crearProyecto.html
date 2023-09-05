@@ -1,52 +1,44 @@
 {% extends 'autenticacion/plantillaCuadros.html' %}
+{% load static %}
 {% block title %}Crear Proyecto{% endblock %}
 
+{% block head %} 
+    <link rel="stylesheet" href="{% static 'css/crearProyecto.css' %}">
+    <link rel="stylesheet" href="{% static 'css/styleGlobal.css' %}">
+{% endblock %}
+
 {% block content %}
-<div class="content">
     <section class="contenido">
-        <h1 id="tituloCrearEmpresa">Ingrese la información del proyecto</h1>
-        <form method="post">
-            {% csrf_token %}
-
-            <div class="row divFlex">
-                <div class="col">
-                    <div class="input">
-                        <label for="basic-url" class="form-label">NIT (Obligatorio)</label>
-                        <input type="text" class="form-control" placeholder="Ejemplo: 901567814">
-                    </div>
-                    <div class="input">
-                        <label for="basic-url" class="form-label">Nombre de la empresa (Obligatorio)</label>
-                        <input type="text" class="form-control" placeholder="Ejemplo: Homecenter">
-                    </div>
-                    <div class="input">
-                        <label for="basic-url" class="form-label">Dirección (Obligatorio)</label>
-                        <input type="text" class="form-control" placeholder="Ejemplo: Calle 45b sur #25 - 15">
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="input">
-                        <label for="basic-url" class="form-label">Correo de contacto (Obligatorio)</label>
-                        <input type="text" class="form-control" placeholder="Ejemplo: repon@gmail.com">
-                    </div>
-                    <div class="input">
-                        <label for="basic-url" class="form-label">Teléfono (Obligatorio)</label>
-                        <input type="text" class="form-control" placeholder="Ejemplo: 3105316789">
-                    </div>
-                    <div class="confirmacion">
-                        <div class="advertencia">
-                            <label class="verificacion-label">*Recuerde verificar la información
-                                antes de crear la empresa</label>
-                        </div>
-
+        <div class="cuadroBlanco">
+                <div class="containerContenido">
+                    <h1 id="tituloCrearProyecto">Ingrese la información del proyecto</h1>
+                    <form method="post">
+                        <div class="containerForm">
+                            {% csrf_token %}
+                            <div class="input">
+                                <label for="basic-url" class="form-label">Nombre del proyecto (Obligatorio)</label>
+                                <input type="text" class="form-control" placeholder="Ejemplo: Edificio el zocalo">
+                            </div>
+                            <div class="input">
+                                <label for="basic-url" class="form-label">Estado del proyecto (Obligatorio)</label>
+                                <select name="" id="" class="form-control">
+                                    <option value="Por empezar">Por empezar</option>
+                                    <option value="En progreso">En progreso</option>
+                                    <option value="Terminado">Terminado</option>
+                                </select>
+                            </div>
+                            <div class="advertencia">
+                                <label class="verificacion-label">* Recuerde verificar la información
+                                    antes de crear la empresa</label>
+                            </div>
+                        </div>    
                         <div class="botones">
-                            <button type="button" class="btn btn-izq btn-sm">Volver</button>
-                            <button type="button" class="btn btn-der btn-sm">Crear Empresa</button>
+                            <a class="volverCrearProyecto" href="#">Volver</a>
+                            <button type="button" class="btn btn-der btn-sm">Crear Proyecto</button>
                         </div>
-                    </div>
+                    </form>
                 </div>
-            </div>
-        </form>
+        </div>
     </section>
-</div>
 {% endblock %}
 

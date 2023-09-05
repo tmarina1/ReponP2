@@ -1,5 +1,6 @@
 html,body{
     height: 100vh;
+    margin: 0px;
 }
 .navProyecto{
     height: 15%;
@@ -16,7 +17,7 @@ html,body{
 }
 .containerNav>a{
     width: fit-content;
-    padding: 3px 15px;
+    padding: 10px 15px;
     background-color: #3855C2;
     margin-right: 40px;
     border-radius: 6px;
@@ -37,4 +38,12 @@ html,body{
 }
 .divFlex{
     width: 100%;
+}
+@media (max-width: 600px) {
+    .containerNav>img{
+        margin-left: -10px;
+    }
+    .containerNav>a{
+        padding: 3px 15px;
+    }
 }
