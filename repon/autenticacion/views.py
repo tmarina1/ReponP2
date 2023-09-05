@@ -44,8 +44,6 @@ def inicioSesion(request):
             return render(request, 'autenticacion/inicioSesion.html', {'mensaje': mensaje})
     return render(request,'autenticacion/inicioSesion.html')
 
-def inicioSesionCoordinador(request):
-    return render(request,'autenticacion/inicioSesionCoordinador.html')
 
 def recuperarClave(request):
     if request.method == 'POST':
