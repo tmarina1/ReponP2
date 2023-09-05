@@ -20,6 +20,6 @@ def crearEmpresas(request):
         
         asignacionEmpresa = autenticacion.Perfil.objects.get()
 
-        return redirect(CrearEmpresas)
+        return redirect(crearEmpresas)
     
     return render(request, "crearEmpresas.html")
