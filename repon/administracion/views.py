@@ -2,10 +2,10 @@ from django.shortcuts import render, redirect
 from autenticacion import models as autenticacion
 from . import models
 
-def Empresas(request):
+def empresas(request):
     return render(request, "empresas.html")
 
-def CrearEmpresas(request):
+def crearEmpresas(request):
     if request.method == 'POST':
 
         nit = request.POST['nit']
