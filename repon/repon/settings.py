@@ -106,7 +106,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es-co'
 
 TIME_ZONE = 'UTC'
 
@@ -136,5 +136,5 @@ EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 25
 EMAIL_HOST_USER = 'pasteamdev1@gmail.com'
-EMAIL_HOST_PASSWORD = 'petacos1234.'
+EMAIL_HOST_PASSWORD = 'ekac rcro vgom vdma'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
