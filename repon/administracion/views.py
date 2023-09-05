@@ -9,3 +9,6 @@ def CrearEmpresas(request):
 
 def crearProyecto(request):
     return render(request,'crearProyecto.html')
+
+def crearCoordinador(request):
+    return render(request,'crearCoordinador.html')

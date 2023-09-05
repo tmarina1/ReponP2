@@ -9,6 +9,7 @@ urlpatterns = [
     path('', views.Empresas),
     path('crearEmpresa/', views.CrearEmpresas),
     path('crearProyecto/', views.crearProyecto),
+    path('crearCoordinador/', views.crearCoordinador),
 ]
 
 if settings.DEBUG:
