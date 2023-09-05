@@ -53,7 +53,7 @@ form{
     color: #4A5568;
 }
 .botones{
-    width: 70%;
+    width: 60%;
     display: flex;
     justify-content: space-between;
 }
@@ -70,7 +70,9 @@ form{
 .botones>button{
     background-color: #5E5BFF;
 }
-
+.input>input,.input>select{
+    border-color: #000000;
+}
 @media (max-width: 1000px) {
     .cuadroBlanco{
         width: 60%;
