@@ -26,6 +26,7 @@ form{
     border-radius: 20px;
     margin: auto;
     margin-bottom: 80px;   
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.333); 
 }
 .contenido{
     width: 95%;
