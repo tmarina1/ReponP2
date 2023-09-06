@@ -1,16 +1,11 @@
-class DespliegueFormulario {
-    constructor() {
-        this.formulario1 = document.getElementById("formulario1");
-        this.formulario2 = document.getElementById("formulario2");
-        this.botonContinuar = document.getElementById("btn-continuar");
 
-        this.botonContinuar.addEventListener("click", this.mostrarFormulario2.bind(this));
-    }
+formulario1 = document.getElementById("formulario1");
+formulario2 = document.getElementById("formulario2");
+botonContinuar = document.getElementById("btn-continuar");
 
-    mostrarFormulario2() {
-        this.formulario1.style.display = "none";
-        this.formulario2.style.display = "block";
-    }
+botonContinuar.addEventListener("click", this.mostrarFormulario2.bind(this));
+
+function mostrarFormulario2(){
+    formulario1.style.display = "none";
+    formulario2.style.display = "block";
 }
-
-export default DespliegueFormulario;

@@ -51,10 +51,10 @@ body{
     border-radius: 20px;
 }
 
-#tituloCrearEmpresa{
+#tituloCrearInventario{
     text-align: center;
     color: #6E6E6E;
-    margin-top: 30px;
+    margin-top: 10px;
 }
 
 .contenido{
