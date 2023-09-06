@@ -1,0 +1,44 @@
+{% extends 'autenticacion/plantillaCuadros.html' %}
+{% load static %}
+{% block title %}Crear Proyecto{% endblock %}
+
+{% block head %} 
+    <link rel="stylesheet" href="{% static 'css/crearProyecto.css' %}">
+    <link rel="stylesheet" href="{% static 'css/styleGlobal.css' %}">
+{% endblock %}
+
+{% block content %}
+    <section class="contenido">
+        <div class="cuadroBlanco">
+                <div class="containerContenido">
+                    <h1 id="tituloCrearProyecto">Ingrese la información del proyecto</h1>
+                    <form method="post">
+                        <div class="containerForm">
+                            {% csrf_token %}
+                            <div class="input">
+                                <label for="basic-url" class="form-label">Nombre del proyecto (Obligatorio)</label>
+                                <input type="text" class="form-control" placeholder="Ejemplo: Edificio el zocalo">
+                            </div>
+                            <div class="input">
+                                <label for="basic-url" class="form-label">Estado del proyecto (Obligatorio)</label>
+                                <select name="" id="" class="form-control">
+                                    <option value="Por empezar">Por empezar</option>
+                                    <option value="En progreso">En progreso</option>
+                                    <option value="Terminado">Terminado</option>
+                                </select>
+                            </div>
+                            <div class="advertencia">
+                                <label class="verificacion-label">* Recuerde verificar la información
+                                    antes de crear la empresa</label>
+                            </div>
+                        </div>    
+                        <div class="botones">
+                            <a class="volverCrearProyecto" href="{% url 'landingAdmon' %}">Volver</a>
+                            <button type="button" class="btn btn-der btn-sm">Crear Proyecto</button>
+                        </div>
+                    </form>
+                </div>
+        </div>
+    </section>
+{% endblock %}
+
