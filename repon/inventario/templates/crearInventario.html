@@ -1,0 +1,122 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <link rel="icon" href="" />
+    <link rel="stylesheet" href="{% static 'css/crearInventario.css' %}">
+    <title>Crear Inventario</title>
+</head>
+
+
+<body>
+    <section class="navRegistro">
+        <img src="{% static 'img/PAS-logos_white.png' %}" alt="Logo blanco PAS">
+        <a href="">Cerrar sesion</a>
+    </section>
+
+    <div class="content">
+        <section class="contenido">
+            <h1 id="tituloCrearEmpresa">Ingrese la información basica del insumo</h1>
+            <form method="post">
+                {% csrf_token %}
+
+                <div id="formulario1" class="row" >
+                    <div class="col">
+                        <div class="input">
+                            <label for="basic-url" class="form-label">Codigo Insumo</label>
+                            <input type="number" name="codigo" class="form-control" placeholder="Ejemplo: 2023">
+                        </div>
+                        <div class="input">
+                            <label for="basic-url" class="form-label">Referencia</label>
+                            <input type="text" name="ref" class="form-control" placeholder="Ejemplo: Ladrillo">
+                        </div>
+                        <div class="input">
+                            <label for="basic-url" class="form-label">Unidad Base</label>
+                            <input type="text" name="unidadBase" class="form-control" placeholder="Ejemplo: Kilogramos">
+                        </div>
+                        <div class="input">
+                            <label for="basic-url" class="form-label">Cantidad</label>
+                            <input type="number" name="cantidad" class="form-control" placeholder="Ejemplo: 10">
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="input">
+                            <label for="basic-url" class="form-label">Valor Unitario</label>
+                            <input type="number" name="valorU" class="form-control" placeholder="Ejemplo: 15000">
+                        </div>
+                        <div class="input">
+                            <label for="basic-url" class="form-label">Iva</label>
+                            <input type="number" name="iva" class="form-control" placeholder="Ejemplo: 2850">
+                        </div>
+                        <div class="confirmacion">
+                            <div class="botones">
+                                <button type="button" class="btn btn-izq btn-sm">Volver</button>
+                                <button type="button" class="btn btn-der btn-sm" id="btn-continuar" >Continuar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="formulario2" class="row" style="display: none;">
+                    <div class="col">
+                        <div class="input">
+                            <label for="basic-url" class="form-label">Marca</label>
+                            <input type="text" name="marca" class="form-control" placeholder="Ejemplo: adidas">
+                        </div>
+                        <div class="input">
+                            <select class="form-select" name="tipoInsumo" class="form-control">
+                                <option selected>Tipo de insumo</option>
+                                <option value="original">Nuevo, original</option>
+                                <option value="segunda">De segunda mano</option>
+                                <option value="noOriginal">Nuevo, No original</option>
+                                <option value="4">Option4</option>
+                            </select>
+                        </div>
+
+                        <div class="input">
+                            <label for="basic-url" class="form-label">Proyecto que genero el insumo</label>
+                            <input type="text" name="proyecto" class="form-control" placeholder="Ejemplo: Rio">
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="input">
+                            <label for="basic-url" class="form-label">Lugar donde se almacena</label>
+                            <input type="text" name="lugarAlmacenado" class="form-control"
+                                placeholder="Ejemplo: Bodega la finca">
+                        </div>
+                        <div class="input">
+                            <label for="basic-url" class="form-label">Fecha ingreso</label>
+                            <input type="date" name="fechaIngreso" class="form-control"
+                                placeholder="Ejemplo: 18/05">
+                        </div>
+                        <div class="input">
+                            <label for="basic-url" class="form-label">Fecha Compra (Opcional)</label>
+                            <input type="date" name="fechaCompra" class="form-control" placeholder="Ejemplo: 18/05">
+                        </div>
+                        <div class="input">
+                            <label for="basic-url" class="form-label">Observaciones</label>
+                            <textarea type="text" name="observaciones" class="form-control"
+                                placeholder="Ejemplo: sobraron del proyecto" rows="3"></textarea>
+                        </div>
+                        <div class="confirmacion">
+
+                            <div class="botones">
+                                <button type="button" class="btn btn-izq btn-sm">Volver</button>
+                                <button type="submit" class="btn btn-der btn-sm">Enviar Insumo</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </form>
+        </section>
+    </div>
+</body>
+<script src="{% static 'js/despliegueFormulario.js' %}"></script>
+</html>

@@ -6,7 +6,7 @@ from django.urls import path,include
 from . import views
 
 urlpatterns = [
-    path('', views.Inventario),
+    path('', views.inventario, name = "inventario"),
     path('crearInventario/', views.crearInventario),
 ]
 
