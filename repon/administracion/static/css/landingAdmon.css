@@ -1,0 +1,35 @@
+.tituloLanding{
+    margin-top: 50px;
+    color: #ffffff;
+    font-size: 28px;
+    text-align: center;
+}
+.containerTituloLanding{
+    height: 10%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.containerBotonesArriba{
+    width: 80%;
+    height: 240px;
+    margin: 40px auto;
+    display: flex;
+    justify-content: space-between;
+}
+.containerBotonesAbajo{
+    width: 80%;
+    height: 240px;
+    margin: 0px auto;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+.botonesLanding{
+    width: 28%;
+    height: 100%;
+    background-color: #ffffff;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.533);
+    border-radius: 25px; 
+}

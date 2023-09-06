@@ -1,7 +1,20 @@
 {% extends 'autenticacion/plantillaFondoCompleto.html' %}
 {% load static %}
 {% block title %}Landing Admin{% endblock %}
+{%block head%}
+<link rel="stylesheet" href="{% static 'css/landingAdmon.css' %}">
+{%endblock%}
 
 {% block content %}
-
+<section class="containerTituloLanding">
+    <h1 class="tituloLanding">Repon - menú principal</h1>
+</section>
+<section class="containerBotonesArriba">
+    <div class="botonesLanding"></div>
+    <div class="botonesLanding"></div>
+    <div class="botonesLanding"></div>
+</section>
+<section class="containerBotonesAbajo">
+    <div class="botonesLanding"></div>
+</section>
 {% endblock %}
