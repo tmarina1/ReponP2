@@ -34,6 +34,6 @@ def crearEmpresas(request):
             registroEmpresa = models.Empresa.objects.create(nit = nit, nombreEmpresa = nombreEmpresa, direccion = direccion,
                                                             correo = correo, telefono = telefono, usuarioVinculado_id = idUsuarioAutenticado[0])
             registroEmpresa.save()
-            return redirect(empresas)
+            return redirect(landingAdmon)
         
         return render(request, "crearEmpresas.html")
