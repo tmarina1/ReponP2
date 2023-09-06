@@ -2,6 +2,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
 from . import models
+from administracion.views import crearEmpresas
 
 def registro(request):
     colorMensaje = True
@@ -22,7 +23,10 @@ def registro(request):
                 if creado:
                     perfil.cargo = administrador
                     perfil.save()
-                return redirect(inicioSesion)
+                    usuarioAut = authenticate(request, username=usuario, password=clave)
+                    if usuarioAut is not None:
+                        login(request, usuarioAut)
+                        return redirect(crearEmpresas)
             except:
                mensaje = 'Ya existe un usuario registrado con este correo'
                colorMensaje = False
