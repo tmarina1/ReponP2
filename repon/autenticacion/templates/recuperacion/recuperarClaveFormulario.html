@@ -1,0 +1,21 @@
+{% if validlink %}
+<h1>Recuperar cuenta</h1>
+
+<form method="post">
+    {% csrf_token %}
+    <div class="flexDivColumn">
+        <div class="containerInput">
+            <label>Nueva Contraseña</label>
+            {{form.new_password1}}
+            {{form.new_password2.errors}}
+        </div>
+        <div class="containerInput">
+            <label>Confirmar Contraseña</label>
+            {{form.new_password2}}
+        </div>
+        <input type="submit" class="btn btn-default btn-lg" value="Recuperar contraseña">
+    </div>
+</form>
+{% else %}
+    <h1>Enlace Invalido, ya expirado</h1>
+{% endif %}

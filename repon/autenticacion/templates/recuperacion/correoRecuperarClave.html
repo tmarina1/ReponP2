@@ -1,0 +1,13 @@
+Cordial saludo {{ user.first_name }}.
+
+Ha recibido este correo electrónico porque ha solicitado restablecer la contraseña para su cuenta en la plataforma PAS.
+
+Por favor, haz clic en el siguiente enlace y escoja una nueva contraseña.
+
+{{ protocol }}://{{ domain }}{% url 'password_reset_confirm' uidb64=uid token=token %}
+
+¡Gracias por usar nuestro sitio PAS!
+
+El equipo de petacos.
+
+

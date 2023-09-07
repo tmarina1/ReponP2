@@ -41,7 +41,7 @@ def inicioSesion(request):
         
         if usuarioAut is not None:
             login(request, usuarioAut)
-            return redirect(inicioSesionCoordinador)  # Redirigir a la página principal después del inicio de sesión
+            return redirect(registro)  # Redirigir a la página principal después del inicio de sesión
         else:
             # Manejo de error en caso de credenciales incorrectas
             mensaje = "Información incorrecta. Inténtalo de nuevo."
