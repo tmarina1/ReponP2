@@ -6,8 +6,10 @@ from django.urls import path,include
 from . import views
 
 urlpatterns = [
-    path('', views.empresas),
-    path('crearEmpresa/', views.crearEmpresas),
+    path('', views.landingAdmon, name='landingAdmon'),
+    path('crearEmpresa/', views.CrearEmpresas),
+    path('crearProyecto/', views.crearProyecto, name='crearProyecto'),
+    path('crearCoordinador/', views.crearCoordinador, name='crearCoordinador'),
 ]
 
 if settings.DEBUG:

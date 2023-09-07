@@ -48,6 +48,10 @@ def inicioSesion(request):
             return render(request, 'autenticacion/inicioSesion.html', {'mensaje': mensaje})
     return render(request,'autenticacion/inicioSesion.html')
 
-def inicioSesionCoordinador(request):
-    return render(request,'autenticacion/inicioSesionCoordinador.html')
+def recuperarClave(request):
+    if request.method == 'POST':
+        correo = request.POST['correo']
+        mensaje = "Si el correo es valido, te enviaremos para recuperar contraseña, por favor revisa el correo spam"
+        
 
+    return render(request, 'autenticacion/recuperarClave.html',{'mensaje': mensaje})

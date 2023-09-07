@@ -6,5 +6,5 @@ class Empresa(models.Model):
     direccion = models.CharField(max_length=100)
     correo = models.CharField(max_length=100)
     telefono = models.CharField(max_length=50)
-    usuarioVinculado = models.ForeignKey(usuarios.Perfil, on_delete=models.CASCADE)
+    usuarioVinculado = models.ForeignKey(usuarios.Perfil, on_delete=models.CASCADE, null=True)
 

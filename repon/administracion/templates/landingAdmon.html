@@ -1,0 +1,61 @@
+{% extends 'autenticacion/plantillaFondoCompleto.html' %}
+{% load static %}
+{% block title %}Landing Admin{% endblock %}
+{%block head%}
+<link rel="stylesheet" href="{% static 'css/landingAdmon.css' %}">
+<script src="https://kit.fontawesome.com/4efaf993e1.js" crossorigin="anonymous"></script>
+{%endblock%}
+
+{% block content %}
+<section class="containerTituloLanding">
+    <h1 class="tituloLanding">Repon - menú principal</h1>
+</section>
+<section class="containerBotonesArriba">
+    <a class="botonesLanding" href="#">
+        <div class="containerContenido">
+            <img src="{% static 'img/Company.png' %}" class="iconos" alt="Imagen empresa">
+            <p class="textoContenido">Ver empresa</p>
+        </div>
+        <div class="containerCirculo">
+            <div class="circulo">
+                <i class="fas fa-chevron-up" id="flecha"></i>
+            </div>
+        </div>
+    </a>
+    <a class="botonesLanding" href="{% url 'crearCoordinador' %}">
+        <div class="containerContenido">
+            <img src="{% static 'img/Management.png' %}" class="iconos" alt="Imagen coordinador">
+            <p class="textoContenido">Crear coordinador</p>
+        </div>
+        <div class="containerCirculo">
+            <div class="circulo">
+                <i class="fas fa-chevron-up" id="flecha"></i>
+            </div>
+        </div>
+    </a>
+    <a class="botonesLanding" href="{% url 'crearProyecto' %}">
+        <div class="containerContenido">
+            <img src="{% static 'img/ProjectManagement.png' %}" class="iconos" alt="Imagen proyecto">
+            <p class="textoContenido">Crear proyecto</p>
+        </div>
+        <div class="containerCirculo">
+            <div class="circulo">
+                <i class="fas fa-chevron-up" id="flecha"></i>
+            </div>
+        </div>
+    </a>
+</section>
+<section class="containerBotonesAbajo">
+    <a class="botonesLanding" href="#">
+        <div class="containerContenido">
+            <img src="{% static 'img/Graph.png' %}" class="iconos" alt="Imagen admin">
+            <p class="textoContenido">Panel administrador</p>
+        </div>
+        <div class="containerCirculo">
+            <div class="circulo">
+                <i class="fas fa-chevron-up" id="flecha"></i>
+            </div>
+        </div>
+    </a>
+</section>
+{% endblock %}
