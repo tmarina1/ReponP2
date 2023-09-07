@@ -1,0 +1,51 @@
+{% extends 'autenticacion/plantillaFondoCompleto.html' %}
+{% load static %}
+{% block title %}Landing Admin{% endblock %}
+{%block head%}
+<link rel="stylesheet" href="{% static 'css/opcionesCoordinador.css' %}">
+<script src="https://kit.fontawesome.com/4efaf993e1.js" crossorigin="anonymous"></script>
+{%endblock%}
+
+{% block content %}
+<section class="containerTituloLanding">
+    <h1 class="tituloLanding">Rio 1</h1>
+</section>
+<section class="containerBotonesArriba">
+    <a class="botonesLandingOpciones" href="#">
+        <div class="containerContenido">
+            <img src="{% static 'img/Warehouse.png' %}" class="iconos" alt="Imagen empresa">
+            <p class="textoContenido">Ingresar inventario sobrante</p>
+        </div>
+        <div class="containerCirculo">
+            <div class="circulo">
+                <i class="fas fa-chevron-up" id="flecha"></i>
+            </div>
+        </div>
+    </a>
+    <a class="botonesLandingOpciones" href="#">
+        <div class="containerContenido">
+            <img src="{% static 'img/Eye.png' %}" class="iconos" alt="Imagen coordinador">
+            <p class="textoContenido">Ver inventario sobrante</p>
+        </div>
+        <div class="containerCirculo">
+            <div class="circulo">
+                <i class="fas fa-chevron-up" id="flecha"></i>
+            </div>
+        </div>
+    </a>
+    <a class="botonesLandingOpciones" href="#">
+        <div class="containerContenido">
+            <img src="{% static 'img/MicrosoftExcel.png' %}" class="iconos" alt="Imagen proyecto">
+            <p class="textoContenido">Ingresar excel</p>
+        </div>
+        <div class="containerCirculo">
+            <div class="circulo">
+                <i class="fas fa-chevron-up" id="flecha"></i>
+            </div>
+        </div>
+    </a>
+</section>
+<div class="containerBtnVolver">
+    <a href="{% url 'landingCoordinador' %}" class="btnVolver">Volver</a>
+</div>
+{% endblock %}

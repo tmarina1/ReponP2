@@ -5,3 +5,6 @@ def inventario(request):
 
 def landingCoordinador(request):
     return render(request, "landingCoordinador.html")
+
+def opcionesCoordinador(request):
+    return render(request, "opcionesCoordinador.html")
