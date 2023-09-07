@@ -1,0 +1,33 @@
+{% extends 'autenticacion/plantillaCuadros.html' %}
+{% load static %}
+{% block title %}Crear Proyecto{% endblock %}
+
+{% block head %} 
+    <link rel="stylesheet" href="{% static 'css/subirArchivo.css' %}">
+    <link rel="stylesheet" href="{% static 'css/styleGlobal.css' %}">
+{% endblock %}
+
+{% block content %}
+    <section class="contenido">
+        <div class="cuadroBlanco">
+                <div class="containerContenido">
+                    <h1 id="tituloSubirArchivo">Ingrese información mediante un archivo de Excel</h1>
+                    <form method="post">
+                        <div class="containerForm">
+                            {% csrf_token %}
+                            <div class="input">
+                                <label for="basic-url" class="form-label">Adjunte archivo</label>
+                                <input type="text" class="form-control" placeholder="">
+                            </div>
+
+                        </div>    
+                        <div class="botones">
+                            <a class="volver" href="{% url 'opcionesCoordinador' %}">Volver</a>
+                            <button type="button" class="btn btn-der btn-sm">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+        </div>
+    </section>
+{% endblock %}
+

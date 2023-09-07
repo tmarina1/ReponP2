@@ -8,3 +8,6 @@ def landingCoordinador(request):
 
 def opcionesCoordinador(request):
     return render(request, "opcionesCoordinador.html")
+
+def subirArchivo(request):
+    return render(request, "subirArchivo.html")
