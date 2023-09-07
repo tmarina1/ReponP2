@@ -1,36 +1,50 @@
 {% extends 'autenticacion/plantillaCuadros.html' %}
 {% load static %}
-{% block title %}Crear Proyecto{% endblock %}
+{% block title %}Subir Archivo{% endblock %}
 
-{% block head %} 
-    <link rel="stylesheet" href="{% static 'css/subirArchivo.css' %}">
-    <link rel="stylesheet" href="{% static 'css/styleGlobal.css' %}">
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/subirArchivo.css' %}">
+<link rel="stylesheet" href="{% static 'css/styleGlobal.css' %}">
+<script src="https://kit.fontawesome.com/4efaf993e1.js" crossorigin="anonymous"></script>
 {% endblock %}
 
 {% block content %}
-    <section class="contenido">
-        <div class="cuadroBlanco">
-                <div class="containerContenido">
-                    <h1 id="tituloSubirArchivo">Ingrese información mediante un archivo de Excel</h1>
-                    <form method="post">
-                        <div class="containerForm">
-                            {% csrf_token %}
-                            <div class="circulo">
-                                
+<section class="contenido">
+    <div class="cuadroBlanco">
+        <div class="containerContenido">
+            <h1 id="tituloSubirArchivo">Ingrese información mediante un archivo de Excel</h1>
+            <form method="post">
+                <div class="containerForm">
+                    {% csrf_token %}
+                    <a class="descarga" href="{% static 'prueba.txt' %}" download="prueba.txt">
+                        <div class="cuadroAzul">
+                            <div class="row">
+                                <div class="col-9">
+                                    <label for="basic-url" class="descargar-label">Para descargar la plantilla de click
+                                        aqui</label>
+                                </div>
+                                <div class=" col-3">
+                                    <div class="containerCirculo">
+                                        <div class="circulo">
+                                            <i class="fas fa-chevron-right" id="flecha"></i>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="input">
-                                <label for="basic-url" class="form-label">Adjunte archivo</label>
-                                <input type="text" class="form-control" placeholder="">
-                            </div>
-
-                        </div>    
-                        <div class="botones">
-                            <a class="volver" href="{% url 'opcionesCoordinador' %}">Volver</a>
-                            <button type="button" class="btn btn-der btn-sm">Guardar</button>
                         </div>
-                    </form>
-                </div>
-        </div>
-    </section>
-{% endblock %}
+                    </a>
+                    <div class="input">
+                        <label for="basic-url" class="form-label">Adjunte archivo</label>
+                        <input type="file" name="csv_file" required="true" class="form-control" accept=".csv" >
+                    </div>
 
+                </div>
+                <div class="botones">
+                    <a class="volver" href="{% url 'opcionesCoordinador' %}">Volver</a>
+                    <button type="button" class="btn btn-der btn-sm">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}
