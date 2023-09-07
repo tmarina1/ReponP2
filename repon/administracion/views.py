@@ -8,6 +8,19 @@ def landingAdmon(request):
     return render(request, "landingAdmon.html")
 
 def crearProyecto(request):
+    
+    if request.method == 'POST':
+
+        nombreProyecto = request.POST['nombreProyecto']
+        estadoProyecto = request.POST['estadoProyecto']
+
+        idUsuario = request.user.id
+        idEmpresaAutenticada = models.Empresa.objects.filter(usuarioVinculado_id = idUsuario).values_list('id', flat= True)
+        registroProyecto = models.Proyecto.objects.create(nombreProyecto = nombreProyecto, estadoProyecto = estadoProyecto, 
+                                                            empresaVinculada_id = idEmpresaAutenticada[0])
+        registroProyecto.save()
+        return redirect(landingAdmon)
+
     return render(request,'crearProyecto.html')
 
 def crearCoordinador(request):
@@ -16,7 +29,7 @@ def crearCoordinador(request):
 def crearEmpresas(request):
     idUsuario = request.user.id
     empresa = models.Empresa.objects.filter(usuarioVinculado_id = idUsuario).exists()
-
+    
     if empresa:
         return redirect(landingAdmon)
 
