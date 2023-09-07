@@ -7,7 +7,7 @@ from . import views
 
 urlpatterns = [
     path('', views.landingAdmon, name='landingAdmon'),
-    path('crearEmpresa/', views.CrearEmpresas),
+    path('crearEmpresa/', views.CrearEmpresas_prueba),
     path('crearProyecto/', views.crearProyecto, name='crearProyecto'),
     path('crearCoordinador/', views.crearCoordinador, name='crearCoordinador'),
 ]
