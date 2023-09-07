@@ -1,7 +1,7 @@
 {% extends 'autenticacion/plantillaCuadros.html' %}
 {% load static %}
 
-{% block title %} Crear Inventario {% endblock %}
+{% block title %} Crear Empresa {% endblock %}
 
 {% block head %}
 <link rel="stylesheet" href="{% static 'css/crearEmpresa.css' %}">
@@ -36,7 +36,7 @@
                                     <div class="col">
                                         <div class="input">
                                             <label for="basic-url" class="form-label">Correo de contacto (Obligatorio)</label>
-                                            <input type="email" name="valorU" class="form-control" placeholder="Ejemplo: repon@gmail.com">
+                                            <input type="email" name="correo" class="form-control" placeholder="Ejemplo: repon@gmail.com">
                                         </div>
                                         <div class="input">
                                             <label for="basic-url" class="form-label">Teléfono (Obligatorio)</label>
@@ -46,8 +46,8 @@
                                             <label class="advertencia-label">*Recuerde verificar la información
                                                 antes de crear la empresa</label>
                                             <div class="botones">
-                                                <a class="volverCrearProyecto" href="/">Volver</a>
-                                                <button type="button" class="btn btn-der btn-sm" id="btn-crearEmpresa">Crear Empresa</button>
+                                                <a class="volverCrearProyecto" href="{% url 'landingAdmon' %}">Volver</a>
+                                                <button type="submit" class="btn btn-der btn-sm" id="btn-crearEmpresa">Crear Empresa</button>
                                             </div>
                                         </div>
                                     </div>

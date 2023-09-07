@@ -37,6 +37,3 @@ def crearEmpresas(request):
             return redirect(landingAdmon)
         
         return render(request, "crearEmpresas.html")
-
-def CrearEmpresas_prueba(request):
-    return render(request,'crearEmpresas.html')
