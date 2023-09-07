@@ -1,4 +1,7 @@
 from django.shortcuts import render
 
-def Inventario(request):
+def inventario(request):
     return render(request, "inventario.html")
+
+def landingCoordinador(request):
+    return render(request, "landingCoordinador.html")
