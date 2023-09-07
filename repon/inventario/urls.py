@@ -5,4 +5,5 @@ from . import views
 urlpatterns = [
     path('', views.landingCoordinador, name='landingCoordinador'),
     path('opcionesCoordinador/', views.opcionesCoordinador, name='opcionesCoordinador'),
+    path('verInventario/', views.inventario, name='inventario'),
 ]

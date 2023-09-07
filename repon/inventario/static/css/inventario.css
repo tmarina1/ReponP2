@@ -1,0 +1,94 @@
+.tituloLandingInventario{
+    margin-top: 70px;
+    color: #ffffff;
+    font-size: 28px;
+    text-align: center;
+}
+.containerBusqueda>h3{
+    margin-top: 20px;
+    color: #ffffff;
+    font-size: 28px;
+    text-align: center;
+}
+.containerBusqueda>input{
+    border: 2px solid #6E6E6E;
+    border-radius: 10px;
+}
+.containerTituloLanding{
+    margin-left: 60px;
+    height: 10%;
+    width: 60%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.containerInventario{
+    width: 80%;
+    min-height: fit-content;
+    margin: 40px auto;
+    background-color: #ffffff;
+    border-radius: 20px;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.533);
+}
+.iconos{
+    width: 80px;
+}
+.containerCirculo{
+    text-decoration: none;
+}
+.circulo{
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #1C274C;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+    font-size: 30px;
+}
+#flecha{
+    color: #ffffff;
+}
+.verItem{
+    display: flex;
+    justify-content: center;
+}
+.containerBtnVolver{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+.btnVolver{
+    color: white;
+    font-size: 18px;
+    background-color: #ED1A28;
+    border-radius: 10px;
+    text-decoration: none;
+    padding: 5px 15px;
+}
+/*------------------------------------------------------------*/
+table {
+    padding: 20px;
+    width: 95%;
+    margin: 20px auto;
+    border-collapse: collapse;
+}
+
+th, td {
+    text-align: center;
+    padding: 8px;
+}
+
+th {
+    background-color: #ffffff;
+    border-bottom: 2px solid black;
+}
+
+td:not(:last-child), th:not(:last-child)  {
+    border-right: 2px solid black;
+}
+
+tr:not(:last-child) td, tr:not(:last-child) th {
+    border-bottom: 2px solid #99999980;
+}

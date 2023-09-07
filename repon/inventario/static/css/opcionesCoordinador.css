@@ -18,14 +18,6 @@
     display: flex;
     justify-content: space-between;
 }
-.containerBotonesAbajo{
-    width: 80%;
-    height: 240px;
-    margin: 0px auto;
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
-}
 .botonesLandingOpciones{
     width: 28%;
     height: 90%;
