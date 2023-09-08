@@ -1,18 +1,17 @@
+var formulario1 = document.getElementById("formulario1");
+var formulario2 = document.getElementById("formulario2");
+var botonContinuar = document.getElementById("btn-continuar");
+var botonVolver = document.getElementById("btn-volver");
 
-formulario1 = document.getElementById("formulario1");
-formulario2 = document.getElementById("formulario2");
-botonContinuar = document.getElementById("btn-continuar");
-botonVolver = document.getElementById("btn-volver");
-
-botonContinuar.addEventListener("click", this.mostrarFormulario2.bind(this));
-botonVolver.addEventListener("click", this.mostrarFormulario1.bind(this));
-
-var mostrarFormulario2 = function(){
+function mostrarFormulario2() {
     formulario1.style.display = "none";
     formulario2.style.display = "block";
 }
 
-function mostrarFormulario1(){
+function mostrarFormulario1() {
     formulario2.style.display = "none";
     formulario1.style.display = "block";
 }
+
+botonContinuar.addEventListener("click", mostrarFormulario2);
+botonVolver.addEventListener("click", mostrarFormulario1);
