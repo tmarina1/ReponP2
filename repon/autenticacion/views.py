@@ -12,6 +12,8 @@ def registro(request):
         correo = request.POST['correo']
         clave = request.POST['clave']
         claveRepetida = request.POST['claveRepetida']
+        nombreCargo = request.POST['nombreCargo']
+        celular = request.POST['celular']
         administrador = True
         if clave != claveRepetida:
             mensaje = 'Las contraseñas no coinciden'
@@ -22,6 +24,8 @@ def registro(request):
                 perfil,creado = models.Perfil.objects.get_or_create(usuario=usuario)
                 if creado:
                     perfil.cargo = administrador
+                    perfil.nombreCargo = nombreCargo
+                    perfil.celular = celular
                     perfil.save()
                     usuarioAut = authenticate(request, username=usuario, password=clave)
                     if usuarioAut is not None:
