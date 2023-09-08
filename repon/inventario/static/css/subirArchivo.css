@@ -59,6 +59,8 @@ form {
     justify-content: center;
     align-items: center;
     height: 23%;
+    text-decoration: none;
+    cursor: pointer;
 }
 
 .cuadroAzul {
@@ -77,6 +79,7 @@ form {
     margin-top: 0px;
     margin-right: 0px;
     margin-left: 0px;
+    cursor: pointer;
 }
 
 .descargar-label {
