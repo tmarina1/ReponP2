@@ -13,10 +13,14 @@ def crearProyecto(request):
 
         nombreProyecto = request.POST['nombreProyecto']
         estadoProyecto = request.POST['estadoProyecto']
+        direccion = request.POST['direccion']
+        departamento = request.POST['departamento']
+        ciudad = request.POST['ciudad']
 
         idUsuario = request.user.id
         idEmpresaAutenticada = models.Empresa.objects.filter(usuarioVinculado_id = idUsuario).values_list('id', flat= True)
         registroProyecto = models.Proyecto.objects.create(nombreProyecto = nombreProyecto, estadoProyecto = estadoProyecto, 
+                                                            direccion = direccion, departamento = departamento, ciudad = ciudad, 
                                                             empresaVinculada_id = idEmpresaAutenticada[0])
         registroProyecto.save()
         return redirect(landingAdmon)
