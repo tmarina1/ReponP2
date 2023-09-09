@@ -39,12 +39,12 @@ def crearEmpresas(request):
             nit = request.POST['nit']
             nombreEmpresa = request.POST['nombre']
             direccion = request.POST['direccion']
-            correo = request.POST['correo']
-            telefono = request.POST['telefono']
+            departamento = request.POST['departamento']
+            ciudad = request.POST['ciudad']
 
             idUsuarioAutenticado = autenticacion.Perfil.objects.filter(id = idUsuario).values_list('id', flat= True)
             registroEmpresa = models.Empresa.objects.create(nit = nit, nombreEmpresa = nombreEmpresa, direccion = direccion,
-                                                            correo = correo, telefono = telefono, usuarioVinculado_id = idUsuarioAutenticado[0])
+                                                            departamento = departamento, ciudad = ciudad, usuarioVinculado_id = idUsuarioAutenticado[0])
             registroEmpresa.save()
             return redirect(landingAdmon)
         
