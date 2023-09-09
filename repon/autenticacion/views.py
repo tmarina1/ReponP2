@@ -2,7 +2,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
 from . import models
-from administracion.views import crearEmpresas
+from administracion.views import crearEmpresas, landingAdmon
 
 def registro(request):
     colorMensaje = True
@@ -41,7 +41,7 @@ def inicioSesion(request):
         
         if usuarioAut is not None:
             login(request, usuarioAut)
-            return redirect(inicioSesionCoordinador)  # Redirigir a la página principal después del inicio de sesión
+            return redirect(landingAdmon)  # Redirigir a la página principal después del inicio de sesión
         else:
             # Manejo de error en caso de credenciales incorrectas
             mensaje = "Información incorrecta. Inténtalo de nuevo."
