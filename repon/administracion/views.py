@@ -8,6 +8,23 @@ def landingAdmon(request):
     return render(request, "landingAdmon.html")
 
 def crearProyecto(request):
+    
+    if request.method == 'POST':
+
+        nombreProyecto = request.POST['nombreProyecto']
+        estadoProyecto = request.POST['estadoProyecto']
+        direccion = request.POST['direccion']
+        departamento = request.POST['departamento']
+        ciudad = request.POST['ciudad']
+
+        idUsuario = request.user.id
+        idEmpresaAutenticada = models.Empresa.objects.filter(usuarioVinculado_id = idUsuario).values_list('id', flat= True)
+        registroProyecto = models.Proyecto.objects.create(nombreProyecto = nombreProyecto, estadoProyecto = estadoProyecto, 
+                                                            direccion = direccion, departamento = departamento, ciudad = ciudad, 
+                                                            empresaVinculada_id = idEmpresaAutenticada[0])
+        registroProyecto.save()
+        return redirect(landingAdmon)
+
     return render(request,'crearProyecto.html')
 
 def crearCoordinador(request):
@@ -16,7 +33,7 @@ def crearCoordinador(request):
 def crearEmpresas(request):
     idUsuario = request.user.id
     empresa = models.Empresa.objects.filter(usuarioVinculado_id = idUsuario).exists()
-
+    
     if empresa:
         return redirect(landingAdmon)
 
@@ -24,13 +41,12 @@ def crearEmpresas(request):
         if request.method == 'POST':
 
             nit = request.POST['nit']
-            nombreEmpresa = request.POST['nombreEmpresa']
+            nombreEmpresa = request.POST['nombre']
             direccion = request.POST['direccion']
             correo = request.POST['correo']
             telefono = request.POST['telefono']
 
             idUsuarioAutenticado = autenticacion.Perfil.objects.filter(id = idUsuario).values_list('id', flat= True)
-            
             registroEmpresa = models.Empresa.objects.create(nit = nit, nombreEmpresa = nombreEmpresa, direccion = direccion,
                                                             correo = correo, telefono = telefono, usuarioVinculado_id = idUsuarioAutenticado[0])
             registroEmpresa.save()
