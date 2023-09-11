@@ -12,7 +12,6 @@ class Insumo(models.Model):
     valorUnitario = models.DecimalField(max_digits=10, decimal_places=2)
     impuesto = models.DecimalField(max_digits=5, decimal_places=2,default='19')
     nombreMarca = models.CharField(max_length=200)
-    nombreProyecto = models.CharField(max_length=200)
     tipoInsumo = models.CharField(max_length=200)
     ubicacion = models.CharField(max_length=200)
     fechaIngreso = models.DateTimeField(auto_now_add=True)
