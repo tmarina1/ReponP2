@@ -1,3 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo&family=Montserrat:wght@600&display=swap');
+
+* {
+    font-family: 'Montserrat', sans-serif;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(to top, #9198B2, #475678, #1C1550);
+}
+
+form {
+    height: 80%;
+}
+
 .contenido{
     display: flex;
     width: 100%;
@@ -7,8 +31,8 @@
 
 .cuadroBlanco{
     margin-top: 50px;
-    width: 70%;
-    height: 88%;
+    width: 35%;
+    height: 55%;
     background-color: #ffffff;
     border-radius: 20px;
     display: flex;
@@ -20,7 +44,7 @@
 .containerContenido{
     width: 95%;
     height: 95%;
-    border: 5px solid #152850;
+    border: 2px solid #152850;
     border-radius: 20px;
     display: flex;
     flex-direction: column;
@@ -28,12 +52,12 @@
     align-items: center;
 }
 
-#tituloCrearEmpresa{
+#tituloRecuperarContrasena{
     color: #6E6E6E;
     font-size: 25px;
     text-align: center;
     margin-top: 0px;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
 }
 
 form{
@@ -96,6 +120,7 @@ form{
 .botones {
     display: flex;
     justify-content: space-between;
+    margin-top: 20px;
 }
 
 .botones>a, .botones>button{
@@ -123,8 +148,37 @@ form{
     color: #ffffff;
 }
 
-.input>input, .input>select{
+.input>input{
     border-color: #000000;
+}
+
+.navInicio {
+    display: flex;
+    height: 15%;
+    width: 95%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navInicio>img {
+    max-width: 350px;
+    margin-left: -25px;
+}
+
+.navInicio>a {
+    font-size: 20px;
+    padding: 8px;
+    border: 1px solid #5E5BFF;
+    border-radius: 5px;
+    background-color: #344172;
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.containerBtnIC {
+    display: flex;
+    width: 80%;
+    justify-content: center;
 }
 
 
