@@ -28,7 +28,7 @@
     align-items: center;
 }
 
-#tituloCrearProyecto{
+#tituloCrearInventario{
     color: #6E6E6E;
     font-size: 25px;
     text-align: center;
@@ -105,7 +105,7 @@ form{
 .botones>button{
     background-color: #3855C2;
 }
-.botones>button:hover{
+#btn-continuar:hover{
     background-color: #3855C2;
     color: #ffffff;
 }
