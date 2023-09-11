@@ -8,3 +8,6 @@ def landingCoordinador(request):
 
 def opcionesCoordinador(request):
     return render(request, "opcionesCoordinador.html")
+
+def crearInventario(request):
+    return render(request, "crearInventario.html")
