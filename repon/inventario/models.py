@@ -1,5 +1,6 @@
 from django.db import models
 from datetime import datetime
+from administracion.models import Proyecto
 
 # Create your models here.
 
@@ -9,7 +10,7 @@ class Insumo(models.Model):
     unidad = models.CharField(max_length=100)
     cantidad = models.DecimalField(max_digits=10, decimal_places=3)
     valorUnitario = models.DecimalField(max_digits=10, decimal_places=2)
-    impuesto = models.DecimalField(max_digits=10, decimal_places=2,default='19')
+    impuesto = models.DecimalField(max_digits=5, decimal_places=2,default='19')
     nombreMarca = models.CharField(max_length=200)
     nombreProyecto = models.CharField(max_length=200)
     tipoInsumo = models.CharField(max_length=200)
@@ -17,4 +18,5 @@ class Insumo(models.Model):
     fechaIngreso = models.DateTimeField(auto_now_add=True)
     fechaCaducidad = models.DateTimeField(default='')
     fechaCompra = models.DateTimeField(default=datetime.now)
-    observaciones = models.CharField(max_length=200) 
+    observaciones = models.CharField(max_length=200, default='') 
+    proyectoAsociado = models.ForeignKey(Proyecto, on_delete=models.CASCADE)
