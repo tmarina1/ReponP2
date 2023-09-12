@@ -1,13 +1,21 @@
 from django.shortcuts import render
+<<<<<<< HEAD
 from .models import Insumo, Proyecto
+=======
+from administracion.models import Proyecto
+from autenticacion.models import User
+>>>>>>> HU8
 
 def inventario(request):
     return render(request, "inventario.html")
 
 def landingCoordinador(request):
-    return render(request, "landingCoordinador.html")
+    idUsuario = request.user.id
+    idEmpresa = Proyecto.objects.filter(coordinadorVinculado_id = idUsuario).values_list('empresaVinculada_id', flat= True)
+    proyectos = Proyecto.objects.filter(empresaVinculada_id = idEmpresa[0])
+    return render(request, "landingCoordinador.html", {'proyectos':proyectos})
 
-def opcionesCoordinador(request):
+def opcionesCoordinador(request,proyectoId):
     return render(request, "opcionesCoordinador.html")
 
 def crearInventario(request):
