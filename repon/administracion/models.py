@@ -8,7 +8,7 @@ class Empresa(models.Model):
     direccion = models.CharField(max_length=100, default='NA')
     departamento = models.CharField(max_length=100)
     ciudad = models.CharField(max_length=100)
-    usuarioVinculado = models.ForeignKey(usuarios.Perfil, on_delete=models.CASCADE, null=True)
+    usuarioVinculado = models.ForeignKey(usuarios.Perfil, on_delete=models.CASCADE)
 
 class Proyecto(models.Model):
     nombreProyecto = models.CharField(max_length=50)
@@ -16,5 +16,5 @@ class Proyecto(models.Model):
     direccion = models.CharField(max_length=100, default='NA')
     departamento = models.CharField(max_length=100)
     ciudad = models.CharField(max_length=100)
-    empresaVinculada = models.ForeignKey(Empresa, on_delete=models.CASCADE, null=True)
-
+    empresaVinculada = models.ForeignKey(Empresa, on_delete=models.CASCADE)
+    coordinadorVinculado = models.ForeignKey(usuarios.Perfil, on_delete=models.CASCADE, null=True)

@@ -16,19 +16,50 @@ def crearProyecto(request):
         direccion = request.POST['direccion']
         departamento = request.POST['departamento']
         ciudad = request.POST['ciudad']
-
+         
         idUsuario = request.user.id
         idEmpresaAutenticada = models.Empresa.objects.filter(usuarioVinculado_id = idUsuario).values_list('id', flat= True)
-        registroProyecto = models.Proyecto.objects.create(nombreProyecto = nombreProyecto, estadoProyecto = estadoProyecto, 
-                                                            direccion = direccion, departamento = departamento, ciudad = ciudad, 
-                                                            empresaVinculada_id = idEmpresaAutenticada[0])
-        registroProyecto.save()
-        return redirect(landingAdmon)
+        try:
+            proyecto = models.Proyecto.objects.get(nombreProyecto = nombreProyecto, empresaVinculada_id = idEmpresaAutenticada[0])
+
+            if proyecto:
+                mensaje = "Ya existe un proyecto con ese nombre"
+                return render(request,'crearProyecto.html',{"mensaje":mensaje} )
+            
+        except:
+            registroProyecto = models.Proyecto.objects.create(nombreProyecto = nombreProyecto, estadoProyecto = estadoProyecto, 
+                                                                direccion = direccion, departamento = departamento, ciudad = ciudad, 
+                                                                empresaVinculada_id = idEmpresaAutenticada[0])
+            registroProyecto.save()
+            return redirect(landingAdmon)
 
     return render(request,'crearProyecto.html')
 
 def crearCoordinador(request):
-    return render(request,'crearCoordinador.html')
+    idUsuario = request.user.id
+    idEmpresaAutenticada = models.Empresa.objects.filter(usuarioVinculado_id = idUsuario).values_list('id', flat= True)
+    proyectos =  proyecto = models.Proyecto.objects.filter(empresaVinculada_id = idEmpresaAutenticada[0])
+
+    if request.method == 'POST':
+        
+        nombre = request.POST['nombre']
+        correo = request.POST['correo']
+        clave = request.POST['clave']
+        nombreProyecto = request.POST['nombreProyecto']
+
+        proyecto = models.Proyecto.objects.get(nombreProyecto = nombreProyecto, empresaVinculada_id = idEmpresaAutenticada[0])
+
+        usuario = User.objects.create_user(first_name=nombre,username=correo, email=correo, password=clave)
+        usuario.save()
+        perfil,creado = autenticacion.Perfil.objects.get_or_create(usuario=usuario)
+        if creado:
+            perfil.nombreCargo = "Coordinador"
+            perfil.save()
+        proyecto.coordinadorVinculado = perfil
+        proyecto.save()
+        return redirect(landingAdmon)
+
+    return render(request,'crearCoordinador.html',{"proyectos":proyectos})
 
 def crearEmpresas(request):
     idUsuario = request.user.id
