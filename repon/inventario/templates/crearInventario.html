@@ -44,7 +44,10 @@
                                         </div>
                                         <div class="input">
                                             <label for="basic-url" class="form-label">Iva</label>
-                                            <input type="number" name="iva" class="form-control" placeholder="Ejemplo: 2850">
+                                            <select class="form-select" name="iva" class="form-control">
+                                                <option value="si">Si</option>
+                                                <option value="no">No</option>
+                                            </select>
                                         </div>
                                         <div class="confirmacion">
                                             <div class="botones">
@@ -67,15 +70,11 @@
                                         <div class="input">
                                             <label for="basic-url" class="form-label">Tipo de insumo</label>
                                             <select class="form-select" name="tipoInsumo" class="form-control">
-                                                <option selected>Nuevo, original</option>
+                                                <option value="original">Nuevo, original</option>
                                                 <option value="segunda">De segunda mano</option>
                                                 <option value="noOriginal">Nuevo, No original</option>
                                                 <option value="4">Option4</option>
                                             </select>
-                                        </div>
-                                        <div class="input">
-                                            <label for="basic-url" class="form-label">Proyecto que genero el insumo</label>
-                                            <input type="text" name="proyecto" class="form-control" placeholder="Ejemplo: Rio">
                                         </div>
                                         <div class="input">
                                             <label for="basic-url" class="form-label">Lugar donde se almacena</label>
@@ -85,8 +84,8 @@
                                     </div>
                                     <div class="col">
                                         <div class="input">
-                                            <label for="basic-url" class="form-label">Fecha ingreso</label>
-                                            <input type="date" name="fechaIngreso" class="form-control"
+                                            <label for="basic-url" class="form-label">Fecha caducidad</label>
+                                            <input type="date" name="fechaCaducidad" class="form-control"
                                                 placeholder="Ejemplo: 18/05">
                                         </div>
                                         <div class="input">
