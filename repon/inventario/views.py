@@ -1,10 +1,6 @@
 from django.shortcuts import render
-<<<<<<< HEAD
-from .models import Insumo, Proyecto
-=======
 from administracion.models import Proyecto
 from autenticacion.models import User
->>>>>>> HU8
 
 def inventario(request):
     return render(request, "inventario.html")
