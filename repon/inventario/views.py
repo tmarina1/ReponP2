@@ -1,9 +1,12 @@
 from django.shortcuts import render, redirect
 from .models import Proyecto, Insumo
+from django.db.models import Sum
 
 
-def inventario(request):
-    return render(request, "inventario.html")
+def inventario(request, proyectoId):
+    inventarioInsumos = Insumo.objects.filter(proyectoAsociado = proyectoId)
+    #inventarioInsumos = Insumo.objects.filter(proyectoAsociado = proyectoId).values('codigo','referencia','nombreMarca').annotate(totalCantidad=Sum('cantidad')).order_by('codigo')
+    return render(request, "inventario.html",{'proyecto':proyectoId,'inventario':inventarioInsumos})
 
 def landingCoordinador(request):
     idUsuario = request.user.id
