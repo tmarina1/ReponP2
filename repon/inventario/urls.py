@@ -8,7 +8,7 @@ from . import views
 urlpatterns = [
     path('', views.landingCoordinador, name='landingCoordinador'),
     path('opcionesCoordinador/<int:proyectoId>', views.opcionesCoordinador, name='opcionesCoordinador'),
-    path('verInventario/', views.inventario, name='inventario'),
+    path('verInventario/<int:proyectoId>', views.inventario, name='inventario'),
     path('crearInventario/<int:proyectoId>', views.crearInventario, name='crearInventario'),
 ]
 
