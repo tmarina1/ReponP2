@@ -1,0 +1,20 @@
+.cuadroBlanco{
+    margin-top: 50px;
+    width: 30%;
+    height: 45%;
+    background-color: #ffffff;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.333); 
+}
+
+.botones{
+    align-items: center;
+    justify-content: center;
+}
+
+label{
+    text-align: center;
+}

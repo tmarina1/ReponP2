@@ -17,32 +17,47 @@
     <div class="fondoBlanco">
         <section class="contenido">
             <h1 id="tituloRegistro">Crear cuenta</h1>
+            {% if mensaje %}
+            {% if colorMensaje%}
+                <p class="alert alert-warning" role="alert"> {{ mensaje }}</p>
+            {%else%}
+                <p class="alert alert-danger" role="alert"> {{ mensaje }}</p>
+            {%endif%}
+            {% endif %}
                 <form method="post">
                     {% csrf_token %}
-                    <div class="flexDivColumn">
-                        {% if mensaje %}
-                            {% if colorMensaje%}
-                                <p class="alert alert-warning" role="alert"> {{ mensaje }}</p>
-                            {%else%}
-                                <p class="alert alert-danger" role="alert"> {{ mensaje }}</p>
-                            {%endif%}
-                        {% endif %}
-                        <div class="containerInput">
-                            <label>Nombre</label>
-                            <input type="text" name="nombre" placeholder=" Ejemplo: Tomás Marín" required>
-                        </div>
-                        <div class="containerInput">
-                            <label>Correo</label>
-                            <input type="email" name="correo" placeholder=" Ejemplo: tmarina@eafit.edu.co" required>
-                        </div>
-                        <div class="containerInput">
-                            <label>Contraseña</label>
-                            <input type="password" name="clave"  required>
-                        </div>
-                        <div class="containerInput">
-                            <label>Confirmar contraseña</label>
-                            <input type="password" name="claveRepetida" required>
-                        </div>
+                    <div class="flexDiv">
+                        <section class="izquierda">
+                            <div class="containerInput">
+                                <label>Nombre</label>
+                                <input type="text" name="nombre" placeholder=" Ejemplo: Tomás Marín" required>
+                            </div>
+                            <div class="containerInput">
+                                <label>Correo</label>
+                                <input type="email" name="correo" placeholder=" Ejemplo: tmarina@eafit.edu.co" required>
+                            </div>
+                            <div class="containerInput">
+                                <label>Contraseña</label>
+                                <input type="password" name="clave"  required>
+                            </div>
+                        </section>
+                        <div class="lineaSeparadora"></div>
+                        <section class="derecha">
+                            <div class="containerInput">
+                                <label>Confirmar contraseña</label>
+                                <input type="password" name="claveRepetida" required>
+                            </div>
+                            <div class="containerInput">
+                                <label>Cargo</label>
+                                <input type="text" name="nombreCargo" placeholder=" Ejemplo: administrador" required>
+                            </div>
+                            <div class="containerInput">
+                                <label>Número de celular</label>
+                                <input type="number" min="0" step="1" name="celular" placeholder=" Ejemplo: 3154678902" required>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="containerBtn">
                         <button type="submit" id="btnCrearCuenta">Crear cuenta</button>
                     </div>
                 </form>

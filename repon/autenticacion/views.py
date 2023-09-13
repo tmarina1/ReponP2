@@ -2,7 +2,8 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
 from . import models
-from administracion.views import crearEmpresas
+from administracion.views import crearEmpresas, landingAdmon
+from inventario.views import landingCoordinador
 
 def registro(request):
     colorMensaje = True
@@ -12,6 +13,8 @@ def registro(request):
         correo = request.POST['correo']
         clave = request.POST['clave']
         claveRepetida = request.POST['claveRepetida']
+        nombreCargo = request.POST['nombreCargo']
+        celular = request.POST['celular']
         administrador = True
         if clave != claveRepetida:
             mensaje = 'Las contraseñas no coinciden'
@@ -22,6 +25,8 @@ def registro(request):
                 perfil,creado = models.Perfil.objects.get_or_create(usuario=usuario)
                 if creado:
                     perfil.cargo = administrador
+                    perfil.nombreCargo = nombreCargo
+                    perfil.celular = celular
                     perfil.save()
                     usuarioAut = authenticate(request, username=usuario, password=clave)
                     if usuarioAut is not None:
@@ -40,8 +45,14 @@ def inicioSesion(request):
         usuarioAut = authenticate(request, username=usuario, password=clave)
         
         if usuarioAut is not None:
+            usuario = User.objects.get(email = usuario)
+            perfil = models.Perfil.objects.get(id = usuario.id)
+            cargo = perfil.cargo
             login(request, usuarioAut)
-            return redirect(registro)  # Redirigir a la página principal después del inicio de sesión
+            if cargo:
+                return redirect(landingAdmon)  # Redirigir a la página principal después del inicio de sesión
+            else:
+                return redirect(landingCoordinador)  # Redirigir a la página principal después del inicio de sesión
         else:
             # Manejo de error en caso de credenciales incorrectas
             mensaje = "Información incorrecta. Inténtalo de nuevo."
