@@ -36,7 +36,7 @@
         </div>
     </a>
     {% if usuarioSesion == usuarioCoordinador %}
-    <a class="botonesLandingOpciones" href="#">
+    <a class="botonesLandingOpciones" href="{% url 'subirArchivo' proyecto %}">
         <div class="containerContenido">
             <img src="{% static 'img/MicrosoftExcel.png' %}" class="iconos" alt="Imagen proyecto">
             <p class="textoContenido">Ingresar excel</p>

@@ -10,6 +10,7 @@ urlpatterns = [
     path('opcionesCoordinador/<int:proyectoId>', views.opcionesCoordinador, name='opcionesCoordinador'),
     path('verInventario/<int:proyectoId>', views.inventario, name='inventario'),
     path('crearInventario/<int:proyectoId>', views.crearInventario, name='crearInventario'),
+    path('subirArchivo/<int:proyectoId>', views.subirArchivo, name='subirArchivo')
 ]
 
 if settings.DEBUG:

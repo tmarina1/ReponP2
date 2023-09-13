@@ -12,12 +12,19 @@
 <section class="contenido">
     <div class="cuadroBlanco">
         <div class="containerContenido">
+            {% if mensajes %}
+                {% for mensaje in mensajes %}
+                    <br>
+                    <p class="alert alert-danger" role="alert"> {{ mensaje }}</p>
+                {% endfor %}
+                
+            {% endif %}
             <h1 id="tituloSubirArchivo">Ingrese información mediante un archivo de Excel</h1>
-            <form method="post">
+            <form method="post" enctype="multipart/form-data">
                 <div class="containerForm">
                     {% csrf_token %}
                     <p for="basic-url" class="instruccionLabel">1.Descargar plantilla de excel para carga de insumos y Diligenciar Excel en el formato indicado por la plantilla</p>
-                    <a class="descarga" href="{% static 'prueba.txt' %}" download="prueba.txt">
+                    <a class="descarga" href="{% static 'Formato.csv' %}" download="Formato.csv">
                         <div class="cuadroAzul">
                             <div class="row">
                                 <div class="col-9">
@@ -36,13 +43,13 @@
                     <p for="basic-url" class="instruccionLabel">2.Cargar archivo en el campo a continuacion: </p>
                     <div class="input">
                         <label for="basic-url" class="form-label">Adjunte archivo</label>
-                        <input type="file" name="csv_file" required="true" class="form-control" accept=".csv">
+                        <input type="file" name="archivo" required="true" class="form-control" accept=".csv" required>
                     </div>
 
                 </div>
                 <div class="botones">
-                    <a class="volver" href="{% url 'opcionesCoordinador' %}">Volver</a>
-                    <button type="button" class="btn btn-der btn-sm">Guardar</button>
+                    <a class="volver" href="{% url 'opcionesCoordinador' proyecto %}">Volver</a>
+                    <button type="submit" class="btn btn-der btn-sm">Guardar</button>
                 </div>
             </form>
         </div>

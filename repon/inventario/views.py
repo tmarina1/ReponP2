@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from datetime import datetime
 from .models import Proyecto, Insumo
 from django.db.models import Sum
-
+import pandas as pd
 
 def inventario(request, proyectoId):
     inventarioInsumos = Insumo.objects.filter(proyectoAsociado = proyectoId)
@@ -52,3 +52,25 @@ def crearInventario(request, proyectoId):
         return redirect(opcionesCoordinador, proyectoId)
 
     return render(request, "crearInventario.html", {'proyecto':proyectoId})
+
+def subirArchivo(request, proyectoId):
+    mensajes =''
+    try:
+        if request.method == 'POST' and request.FILES['archivo']:
+            archivo = request.FILES['archivo']
+            proyectoAsociado = Proyecto.objects.get(id = proyectoId)
+            df = pd.read_csv(archivo, delimiter=';')
+            for index, row in df.iterrows():
+                Insumo.objects.create(codigo = row['Codigo_insumo'], referencia = row['Referencia'], unidad = row['Unidad_base'],
+                                        cantidad = row['Cantidad'], valorUnitario = row['Valor_unitario'], impuesto = row['Iva'],
+                                        nombreMarca = row['Marca'], tipoInsumo = row['Tipo_insumo'], ubicacion = row['Lugar_Almacenamiento'],
+                                        fechaCaducidad = row['Fecha_caducidad'], fechaCompra = row['Fecha_compra'], 
+                                        observaciones = row['Observaciones'], proyectoAsociado = proyectoAsociado
+                )
+            return redirect(opcionesCoordinador, proyectoId)
+    except:
+        mensajes = ['Error con el archivo subido, por favor verifica que el formato esté correctamente diligenciado']
+    return render(request, 'subirArchivo.html', {'proyecto':proyectoId, 'mensajes':mensajes})
+    
+
+    
