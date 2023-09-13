@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
 from . import models
 from administracion.views import crearEmpresas, landingAdmon
+from inventario.views import landingCoordinador
 
 def registro(request):
     colorMensaje = True
@@ -44,8 +45,14 @@ def inicioSesion(request):
         usuarioAut = authenticate(request, username=usuario, password=clave)
         
         if usuarioAut is not None:
+            usuario = User.objects.get(email = usuario)
+            perfil = models.Perfil.objects.get(id = usuario.id)
+            cargo = perfil.cargo
             login(request, usuarioAut)
-            return redirect(landingAdmon)  # Redirigir a la página principal después del inicio de sesión
+            if cargo:
+                return redirect(landingAdmon)  # Redirigir a la página principal después del inicio de sesión
+            else:
+                return redirect(landingCoordinador)  # Redirigir a la página principal después del inicio de sesión
         else:
             # Manejo de error en caso de credenciales incorrectas
             mensaje = "Información incorrecta. Inténtalo de nuevo."
