@@ -24,7 +24,7 @@
                 <div class="containerForm">
                     {% csrf_token %}
                     <p for="basic-url" class="instruccionLabel">1.Descargar plantilla de excel para carga de insumos y Diligenciar Excel en el formato indicado por la plantilla</p>
-                    <a class="descarga" href="{% static 'Formato.csv' %}" download="Formato.csv">
+                    <a class="descarga" href="{% static 'Formato.xlsx' %}" download="Formato.xlsx">
                         <div class="cuadroAzul">
                             <div class="row">
                                 <div class="col-9">
@@ -43,7 +43,7 @@
                     <p for="basic-url" class="instruccionLabel">2.Cargar archivo en el campo a continuacion: </p>
                     <div class="input">
                         <label for="basic-url" class="form-label">Adjunte archivo</label>
-                        <input type="file" name="archivo" required="true" class="form-control" accept=".csv" required>
+                        <input type="file" name="archivo" required="true" class="form-control" accept=".xlsx" required>
                     </div>
 
                 </div>

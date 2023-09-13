@@ -59,7 +59,7 @@ def subirArchivo(request, proyectoId):
         if request.method == 'POST' and request.FILES['archivo']:
             archivo = request.FILES['archivo']
             proyectoAsociado = Proyecto.objects.get(id = proyectoId)
-            df = pd.read_csv(archivo, delimiter=';')
+            df = pd.read_excel(archivo)
             for index, row in df.iterrows():
                 Insumo.objects.create(codigo = row['Codigo_insumo'], referencia = row['Referencia'], unidad = row['Unidad_base'],
                                         cantidad = row['Cantidad'], valorUnitario = row['Valor_unitario'], impuesto = row['Iva'],
