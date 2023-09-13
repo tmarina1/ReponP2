@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from datetime import datetime
 from .models import Proyecto, Insumo
 
 
@@ -28,13 +29,18 @@ def crearInventario(request, proyectoId):
         fechaCaducidad = request.POST['fechaCaducidad']
         fechaCompra = request.POST['fechaCompra']
         observaciones = request.POST['observaciones']
-        print(f'request: {request.POST}')
+
+        if fechaCaducidad == '':
+            fechaCaducidad = None
+        if fechaCompra == '':
+            fechaCompra = datetime.now()
+
         proyectoAsociado = Proyecto.objects.get(id = proyectoId)
 
         crearInsumo = Insumo.objects.create(codigo = codigo, referencia = ref, unidad = unidadBase, cantidad = cantidad,
                                             valorUnitario = valorU, impuesto = iva, nombreMarca = marca,
-                                            tipoInsumo = tipoInsumo, ubicacion = lugarAlmacenado,
-                                            observaciones = observaciones, proyectoAsociado = proyectoAsociado )
+                                            tipoInsumo = tipoInsumo, ubicacion = lugarAlmacenado, fechaCaducidad = fechaCaducidad,
+                                            fechaCompra = fechaCompra, observaciones = observaciones, proyectoAsociado = proyectoAsociado)
         crearInsumo.save()
         return redirect(opcionesCoordinador, proyectoId)
 
