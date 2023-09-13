@@ -16,7 +16,8 @@
     height: 240px;
     margin: 40px auto;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    gap: 40px;
 }
 .botonesLandingOpciones{
     width: 28%;

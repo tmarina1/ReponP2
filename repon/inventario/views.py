@@ -16,7 +16,11 @@ def landingCoordinador(request):
     return render(request, "landingCoordinador.html", {'proyectos':proyectos})
 
 def opcionesCoordinador(request,proyectoId):
-    return render(request, "opcionesCoordinador.html", {'proyecto':proyectoId})
+    proyecto = Proyecto.objects.get(id=proyectoId)
+    idCoordinador = proyecto.coordinadorVinculado.id
+    nombreProyecto = proyecto.nombreProyecto
+    idUsuario = request.user.id
+    return render(request, "opcionesCoordinador.html", {'proyecto':proyectoId, 'usuarioSesion':idUsuario, 'usuarioCoordinador':idCoordinador, 'nombre':nombreProyecto})
 
 def crearInventario(request, proyectoId):
     if request.method == 'POST':
