@@ -1,6 +1,6 @@
-from django.shortcuts import render
-from administracion.models import Proyecto
-from autenticacion.models import User
+from django.shortcuts import render, redirect
+from .models import Proyecto, Insumo
+
 
 def inventario(request):
     return render(request, "inventario.html")
@@ -12,10 +12,10 @@ def landingCoordinador(request):
     return render(request, "landingCoordinador.html", {'proyectos':proyectos})
 
 def opcionesCoordinador(request,proyectoId):
-    return render(request, "opcionesCoordinador.html")
+    return render(request, "opcionesCoordinador.html", {'proyecto':proyectoId})
 
-def crearInventario(request):
-    if request.method == 'post':
+def crearInventario(request, proyectoId):
+    if request.method == 'POST':
         codigo = request.POST['codigo']
         ref = request.POST['ref']
         unidadBase = request.POST['unidadBase']
@@ -28,11 +28,14 @@ def crearInventario(request):
         fechaCaducidad = request.POST['fechaCaducidad']
         fechaCompra = request.POST['fechaCompra']
         observaciones = request.POST['observaciones']
+        print(f'request: {request.POST}')
+        proyectoAsociado = Proyecto.objects.get(id = proyectoId)
 
-        proyectoId = 1
         crearInsumo = Insumo.objects.create(codigo = codigo, referencia = ref, unidad = unidadBase, cantidad = cantidad,
                                             valorUnitario = valorU, impuesto = iva, nombreMarca = marca,
-                                            tipoInsumo = tipoInsumo, ubicacion = lugarAlmacenado, fechaCaducidad = fechaCaducidad,
-                                            fechaCompra = fechaCompra, observaciones = observaciones, proyectoAsociado = proyectoId )
+                                            tipoInsumo = tipoInsumo, ubicacion = lugarAlmacenado,
+                                            observaciones = observaciones, proyectoAsociado = proyectoAsociado )
+        crearInsumo.save()
+        return redirect(opcionesCoordinador, proyectoId)
 
-    return render(request, "crearInventario.html")
+    return render(request, "crearInventario.html", {'proyecto':proyectoId})
