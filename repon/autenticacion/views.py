@@ -5,6 +5,9 @@ from . import models
 from administracion.views import crearEmpresas, landingAdmon
 from inventario.views import landingCoordinador
 
+def inicio(request):
+    return render(request, 'autenticacion/inicio.html')
+
 def registro(request):
     colorMensaje = True
     mensaje = ''

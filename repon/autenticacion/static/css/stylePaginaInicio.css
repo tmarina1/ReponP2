@@ -1,0 +1,89 @@
+body, h1, h2, h3, p {
+  margin: 0;
+  padding: 0;
+}
+
+footer {
+  background-color: #152850;
+  padding: 20px 0;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex; 
+  justify-content: space-between; 
+  flex-wrap: wrap; 
+}
+
+.footer-column {
+  flex-basis: calc(33.33% - 20px);
+  padding: 0 10px;
+}
+
+.footer-column h3 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  color: #fff;
+}
+
+.footer-column p {
+  font-size: 0.85rem;
+  line-height: 1.4;
+  color: #d7d7d7;
+  text-align: justify;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px;
+  width: 75%;
+}
+
+.content {
+  flex: 1;
+  text-align: center;
+}
+
+.carousel {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.42);
+}
+
+.carousel img {
+  width: 100%;
+  height: auto;
+  transition: transform 0.5s ease;
+}
+
+#imgCarrusel{
+  height: 300px;
+}
+
+.container2 {
+  display: flex;
+  flex-direction: column;
+  text-align: justify;  
+  width: 75%;
+  margin: auto;
+}
+
+#botonRegistroInicio{
+  background-color: #ff3333;
+}
+
+.botonesNav>a{
+  width: fit-content;
+  padding: 10px 15px;
+  background-color: #3855C2;
+  margin-right: 40px;
+  border-radius: 6px;
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 18px;
+}
