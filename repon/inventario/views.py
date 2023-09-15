@@ -3,11 +3,13 @@ from datetime import datetime
 from .models import Proyecto, Insumo
 from django.db.models import Sum
 import pandas as pd
+import difflib
 
 def inventario(request, proyectoId):
     inventarioInsumos = Insumo.objects.filter(proyectoAsociado = proyectoId)
     mensajes = ''
     terminoBusqueda = request.GET.get('busqueda')
+
     if terminoBusqueda:
         if Insumo.objects.filter(proyectoAsociado = proyectoId, codigo__icontains = terminoBusqueda).exists():
             inventarioInsumos = Insumo.objects.filter(proyectoAsociado = proyectoId, codigo__icontains = terminoBusqueda)
@@ -17,7 +19,21 @@ def inventario(request, proyectoId):
         elif Insumo.objects.filter(proyectoAsociado = proyectoId, referencia__icontains = terminoBusqueda).exists():
             inventarioInsumos = Insumo.objects.filter(proyectoAsociado = proyectoId, referencia__icontains = terminoBusqueda)    
         else:
-            mensajes = ['Error, lo que buscaste no existe o está mal escrito, intente nuevamente.']
+            insumos = Insumo.objects.filter(proyectoAsociado=proyectoId)
+            nombres = [insumo.referencia for insumo in insumos]
+            correccionReferencias = difflib.get_close_matches(terminoBusqueda, nombres, n=1, cutoff=0.6)
+            
+            if correccionReferencias:
+                if Insumo.objects.filter(proyectoAsociado = proyectoId, codigo__icontains = correccionReferencias[0]).exists():
+                    inventarioInsumos = Insumo.objects.filter(proyectoAsociado = proyectoId, codigo__icontains = correccionReferencias[0])
+                if Insumo.objects.filter(proyectoAsociado = proyectoId, nombreMarca__icontains = correccionReferencias[0]).exists():
+                    inventarioInsumos = Insumo.objects.filter(proyectoAsociado = proyectoId, nombreMarca__icontains =correccionReferencias[0])
+                if Insumo.objects.filter(proyectoAsociado = proyectoId, referencia__icontains = correccionReferencias[0]).exists():
+                    inventarioInsumos = Insumo.objects.filter(proyectoAsociado = proyectoId, referencia__icontains =  correccionReferencias[0])
+
+            else:
+                mensajes =['Error, lo que buscaste no existe o está mal escrito, intente nuevamente.']
+            
     print (mensajes)
     return render(request, "inventario.html",{'proyecto':proyectoId,'inventario':inventarioInsumos,'terminoBusqueda':terminoBusqueda, 'mensajes':mensajes})
 
