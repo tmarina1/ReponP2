@@ -6,8 +6,20 @@ import pandas as pd
 
 def inventario(request, proyectoId):
     inventarioInsumos = Insumo.objects.filter(proyectoAsociado = proyectoId)
-    #inventarioInsumos = Insumo.objects.filter(proyectoAsociado = proyectoId).values('codigo','referencia','nombreMarca').annotate(totalCantidad=Sum('cantidad')).order_by('codigo')
-    return render(request, "inventario.html",{'proyecto':proyectoId,'inventario':inventarioInsumos})
+    mensajes = ''
+    terminoBusqueda = request.GET.get('busqueda')
+    if terminoBusqueda:
+        if Insumo.objects.filter(proyectoAsociado = proyectoId, codigo__icontains = terminoBusqueda).exists():
+            inventarioInsumos = Insumo.objects.filter(proyectoAsociado = proyectoId, codigo__icontains = terminoBusqueda)
+        elif Insumo.objects.filter(proyectoAsociado = proyectoId, nombreMarca__icontains = terminoBusqueda).exists():
+            inventarioInsumos = Insumo.objects.filter(proyectoAsociado = proyectoId, nombreMarca__icontains = terminoBusqueda)
+
+        elif Insumo.objects.filter(proyectoAsociado = proyectoId, referencia__icontains = terminoBusqueda).exists():
+            inventarioInsumos = Insumo.objects.filter(proyectoAsociado = proyectoId, referencia__icontains = terminoBusqueda)    
+        else:
+            mensajes = ['Error, lo que buscaste no existe o está mal escrito, intente nuevamente.']
+    print (mensajes)
+    return render(request, "inventario.html",{'proyecto':proyectoId,'inventario':inventarioInsumos,'terminoBusqueda':terminoBusqueda, 'mensajes':mensajes})
 
 def landingCoordinador(request):
     idUsuario = request.user.id
