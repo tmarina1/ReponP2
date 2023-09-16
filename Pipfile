@@ -9,6 +9,7 @@ django-ckeditor = "*"
 pylint = "*"
 pylint-django = "*"
 pandas = "*"
+openpyxl="*"
 
 [dev-packages]
 
