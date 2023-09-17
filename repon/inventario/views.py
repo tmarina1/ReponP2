@@ -6,6 +6,13 @@ import pandas as pd
 import difflib
 from django.contrib.auth.decorators import login_required
 
+'''
+Este método tiene la función de listar los insumos en el inventario de un proyecto previamente seleccionado.
+Además, permite realizar búsquedas y listar insumos que coincidan con los criterios especificados. Si se 
+encuentra un insumo que es similar o se asemeja a uno existente, se facilita su visualización. Sin embargo, 
+si no se encuentran insumos que coincidan o sean similares a lo buscado, se muestra un mensaje de error para 
+informar al usuario que no se han encontrado resultados.
+'''
 @login_required
 def inventario(request, proyectoId):
     inventarioInsumos = Insumo.objects.filter(proyectoAsociado = proyectoId)
@@ -39,6 +46,11 @@ def inventario(request, proyectoId):
     print (mensajes)
     return render(request, "inventario.html",{'proyecto':proyectoId,'inventario':inventarioInsumos,'terminoBusqueda':terminoBusqueda, 'mensajes':mensajes})
 
+'''
+Este método tiene como propósito mostrar la página principal destinada al usuario con el rol de coordinador. 
+La página principal para el coordinador proporciona acceso a las funciones relacionadas con la gestión de proyectos 
+asociadas con su rol.
+'''
 @login_required
 def landingCoordinador(request):
     idUsuario = request.user.id
@@ -46,6 +58,11 @@ def landingCoordinador(request):
     proyectos = Proyecto.objects.filter(empresaVinculada_id = idEmpresa[0])
     return render(request, "landingCoordinador.html", {'proyectos':proyectos})
 
+'''
+Este método tiene como objetivo mostrar la página de opciones del coordinador. En esta página, 
+el coordinador tiene la capacidad de realizar varias acciones, incluyendo la posibilidad de guardar 
+uno o varios insumos y listar el inventario.
+'''
 @login_required
 def opcionesCoordinador(request,proyectoId):
     proyecto = Proyecto.objects.get(id=proyectoId)
@@ -54,6 +71,9 @@ def opcionesCoordinador(request,proyectoId):
     idUsuario = request.user.id
     return render(request, "opcionesCoordinador.html", {'proyecto':proyectoId, 'usuarioSesion':idUsuario, 'usuarioCoordinador':idCoordinador, 'nombre':nombreProyecto})
 
+'''
+Este método tiene la función de mostrar la página destinada a ingresar un nuevo insumo al inventario de sobrantes existente.
+'''
 @login_required
 def crearInventario(request, proyectoId):
     if request.method == 'POST':
@@ -86,6 +106,12 @@ def crearInventario(request, proyectoId):
 
     return render(request, "crearInventario.html", {'proyecto':proyectoId})
 
+'''
+Este método tiene como finalidad presentar la página destinada a la incorporación de múltiples 
+insumos al inventario de sobrantes preexistente. Facilita este proceso mediante la carga de un archivo 
+de Excel proporcionado al usuario como plantilla. Posteriormente, verifica que el archivo haya sido completado 
+de manera adecuada antes de almacenar los insumos en el inventario.
+'''
 @login_required
 def subirArchivo(request, proyectoId):
     mensajes =''
