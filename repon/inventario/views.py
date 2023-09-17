@@ -4,7 +4,9 @@ from .models import Proyecto, Insumo
 from django.db.models import Sum
 import pandas as pd
 import difflib
+from django.contrib.auth.decorators import login_required
 
+@login_required
 def inventario(request, proyectoId):
     inventarioInsumos = Insumo.objects.filter(proyectoAsociado = proyectoId)
     mensajes = ''
@@ -37,12 +39,14 @@ def inventario(request, proyectoId):
     print (mensajes)
     return render(request, "inventario.html",{'proyecto':proyectoId,'inventario':inventarioInsumos,'terminoBusqueda':terminoBusqueda, 'mensajes':mensajes})
 
+@login_required
 def landingCoordinador(request):
     idUsuario = request.user.id
     idEmpresa = Proyecto.objects.filter(coordinadorVinculado_id = idUsuario).values_list('empresaVinculada_id', flat= True)
     proyectos = Proyecto.objects.filter(empresaVinculada_id = idEmpresa[0])
     return render(request, "landingCoordinador.html", {'proyectos':proyectos})
 
+@login_required
 def opcionesCoordinador(request,proyectoId):
     proyecto = Proyecto.objects.get(id=proyectoId)
     idCoordinador = proyecto.coordinadorVinculado.id
@@ -50,6 +54,7 @@ def opcionesCoordinador(request,proyectoId):
     idUsuario = request.user.id
     return render(request, "opcionesCoordinador.html", {'proyecto':proyectoId, 'usuarioSesion':idUsuario, 'usuarioCoordinador':idCoordinador, 'nombre':nombreProyecto})
 
+@login_required
 def crearInventario(request, proyectoId):
     if request.method == 'POST':
         codigo = request.POST['codigo']
@@ -81,6 +86,7 @@ def crearInventario(request, proyectoId):
 
     return render(request, "crearInventario.html", {'proyecto':proyectoId})
 
+@login_required
 def subirArchivo(request, proyectoId):
     mensajes =''
     try:

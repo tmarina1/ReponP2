@@ -1,14 +1,17 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
 from . import models
 from administracion.views import crearEmpresas, landingAdmon
 from inventario.views import landingCoordinador
 
+
 def inicio(request):
+    logout(request)
     return render(request, 'autenticacion/inicio.html')
 
 def registro(request):
+    logout(request)
     colorMensaje = True
     mensaje = ''
     if request.method == 'POST':
@@ -42,6 +45,7 @@ def registro(request):
     return render(request, 'autenticacion/registro.html', {'colorMensaje':colorMensaje,'mensaje':mensaje})
 
 def inicioSesion(request):
+    logout(request)
     if request.method == 'POST':
         usuario = request.POST['correo']
         clave = request.POST['clave']
@@ -53,7 +57,7 @@ def inicioSesion(request):
             cargo = perfil.cargo
             login(request, usuarioAut)
             if cargo:
-                return redirect(landingAdmon)  # Redirigir a la página principal después del inicio de sesión
+                return redirect(crearEmpresas)  # Redirigir a la página principal después del inicio de sesión
             else:
                 return redirect(landingCoordinador)  # Redirigir a la página principal después del inicio de sesión
         else:

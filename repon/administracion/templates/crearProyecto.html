@@ -19,8 +19,11 @@
                             <div  id="formulario1" style="display: block;">
                                 <h1 id="tituloCrearEmpresa">Ingrese la información del proyecto</h1>
                                 <div class="row" >
-                                    {% if mensaje %}
-                                        <p class="alert alert-danger" role="alert"> {{ mensaje }}</p>
+                                    {% if mensajeError %}
+                                        <p class="alert alert-danger text-center" role="alert"> {{ mensajeError }}</p>
+                                    {% endif %}
+                                    {% if mensajeExito %}
+                                        <p class="alert alert-success text-center" role="alert"> {{ mensajeExito }}</p>
                                     {% endif %}
                                     <div class="col">
                                         <div class="input">

@@ -12,8 +12,15 @@
         <div class="cuadroBlanco">
                 <div class="containerContenido">
                     <h1 id="tituloCrearProyecto">Ingrese la información del coordinador</h1>
+                        
                     <form method="post">
                         <div class="containerForm">
+                            {% if mensajeError %}
+                            <p class="alert alert-danger text-center" role="alert"> {{ mensajeError }}</p>
+                            {% endif %}
+                            {% if mensajeExito %}
+                                <p class="alert alert-success text-center" role="alert"> {{ mensajeExito }}</p>
+                            {% endif %}
                                 {% csrf_token %}
                                 <div class="input">
                                     <label for="basic-url" class="form-label">Nombre y apellido (Obligatorio)</label>
