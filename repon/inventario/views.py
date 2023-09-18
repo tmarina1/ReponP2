@@ -18,20 +18,17 @@ def inventario(request, proyectoId):
     inventarioInsumos = Insumo.objects.filter(proyectoAsociado = proyectoId)
     mensajes = ''
     terminoBusqueda = request.GET.get('busqueda')
-
     if terminoBusqueda:
         if Insumo.objects.filter(proyectoAsociado = proyectoId, codigo__icontains = terminoBusqueda).exists():
             inventarioInsumos = Insumo.objects.filter(proyectoAsociado = proyectoId, codigo__icontains = terminoBusqueda)
         elif Insumo.objects.filter(proyectoAsociado = proyectoId, nombreMarca__icontains = terminoBusqueda).exists():
             inventarioInsumos = Insumo.objects.filter(proyectoAsociado = proyectoId, nombreMarca__icontains = terminoBusqueda)
-
         elif Insumo.objects.filter(proyectoAsociado = proyectoId, referencia__icontains = terminoBusqueda).exists():
             inventarioInsumos = Insumo.objects.filter(proyectoAsociado = proyectoId, referencia__icontains = terminoBusqueda)    
         else:
             insumos = Insumo.objects.filter(proyectoAsociado=proyectoId)
             nombres = [insumo.referencia for insumo in insumos]
             correccionReferencias = difflib.get_close_matches(terminoBusqueda, nombres, n=1, cutoff=0.6)
-            
             if correccionReferencias:
                 if Insumo.objects.filter(proyectoAsociado = proyectoId, codigo__icontains = correccionReferencias[0]).exists():
                     inventarioInsumos = Insumo.objects.filter(proyectoAsociado = proyectoId, codigo__icontains = correccionReferencias[0])
@@ -39,7 +36,6 @@ def inventario(request, proyectoId):
                     inventarioInsumos = Insumo.objects.filter(proyectoAsociado = proyectoId, nombreMarca__icontains =correccionReferencias[0])
                 if Insumo.objects.filter(proyectoAsociado = proyectoId, referencia__icontains = correccionReferencias[0]).exists():
                     inventarioInsumos = Insumo.objects.filter(proyectoAsociado = proyectoId, referencia__icontains =  correccionReferencias[0])
-
             else:
                 mensajes =['Error, lo que buscaste no existe o está mal escrito, intente nuevamente.']
             
