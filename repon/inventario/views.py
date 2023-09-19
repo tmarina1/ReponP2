@@ -5,6 +5,7 @@ from django.db.models import Sum
 import pandas as pd
 import difflib
 from django.contrib.auth.decorators import login_required
+from decimal import Decimal
 
 '''
 Este método tiene la función de listar los insumos en el inventario de un proyecto previamente seleccionado.
