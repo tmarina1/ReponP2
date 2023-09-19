@@ -22,29 +22,29 @@
                                     <div class="col">
                                         <div class="input">
                                             <label for="basic-url" class="form-label">Codigo Insumo</label>
-                                            <input type="number" name="codigo" class="form-control" placeholder="Ejemplo: 2023">
+                                            <input type="number" name="codigo" class="form-control" placeholder="Ejemplo: 2023" required>
                                         </div>
                                         <div class="input">
                                             <label for="basic-url" class="form-label">Referencia</label>
-                                            <input type="text" name="ref" class="form-control" placeholder="Ejemplo: Ladrillo">
+                                            <input type="text" name="ref" class="form-control" placeholder="Ejemplo: Ladrillo" required>
                                         </div>
                                         <div class="input">
                                             <label for="basic-url" class="form-label">Unidad Base</label>
-                                            <input type="text" name="unidadBase" class="form-control" placeholder="Ejemplo: Kilogramos">
+                                            <input type="text" name="unidadBase" class="form-control" placeholder="Ejemplo: Kilogramos" required>
                                         </div>
                                         <div class="input">
                                             <label for="basic-url" class="form-label">Cantidad</label>
-                                            <input type="number" name="cantidad" class="form-control" placeholder="Ejemplo: 10">
+                                            <input type="number" name="cantidad" class="form-control" placeholder="Ejemplo: 10" required>
                                         </div>
                                     </div>
                                     <div class="col">
                                         <div class="input">
                                             <label for="basic-url" class="form-label">Valor Unitario</label>
-                                            <input type="number" name="valorU" class="form-control" placeholder="Ejemplo: 15000">
+                                            <input type="number" name="valorU" class="form-control" placeholder="Ejemplo: 15000" required>
                                         </div>
                                         <div class="input">
                                             <label for="basic-url" class="form-label">Iva</label>
-                                            <select class="form-select" name="iva" class="form-control">
+                                            <select class="form-select" name="iva" class="form-control" required>
                                                 <option value="si">Si</option>
                                                 <option value="no">No</option>
                                             </select>
@@ -65,11 +65,11 @@
                                     <div class="col">
                                         <div class="input">
                                             <label for="basic-url" class="form-label">Marca</label>
-                                            <input type="text" name="marca" class="form-control" placeholder="Ejemplo: adidas">
+                                            <input type="text" name="marca" class="form-control" placeholder="Ejemplo: adidas" required>
                                         </div>
                                         <div class="input">
                                             <label for="basic-url" class="form-label">Tipo de insumo</label>
-                                            <select class="form-select" name="tipoInsumo" class="form-control">
+                                            <select class="form-select" name="tipoInsumo" class="form-control" required>
                                                 <option value="original">Nuevo, original</option>
                                                 <option value="segunda">De segunda mano</option>
                                                 <option value="noOriginal">Nuevo, No original</option>
@@ -79,18 +79,18 @@
                                         <div class="input">
                                             <label for="basic-url" class="form-label">Lugar donde se almacena</label>
                                             <input type="text" name="lugarAlmacenado" class="form-control"
-                                                placeholder="Ejemplo: Bodega la finca">
+                                                placeholder="Ejemplo: Bodega la finca" required>
                                         </div>
                                     </div>
                                     <div class="col">
                                         <div class="input">
-                                            <label for="basic-url" class="form-label">Fecha caducidad</label>
+                                            <label for="basic-url" class="form-label">Fecha caducidad (Opcional)</label>
                                             <input type="date" name="fechaCaducidad" class="form-control"
                                                 placeholder="Ejemplo: 18/05">
                                         </div>
                                         <div class="input">
                                             <label for="basic-url" class="form-label">Fecha Compra (Opcional)</label>
-                                            <input type="date" name="fechaCompra" class="form-control" placeholder="Ejemplo: 18/05">
+                                            <input type="date" name="fechaCompra" class="form-control" placeholder="Ejemplo: 18/05" >
                                         </div>
                                         <div class="input">
                                             <label for="basic-url" class="form-label">Observaciones</label>

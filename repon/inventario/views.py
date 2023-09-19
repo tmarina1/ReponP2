@@ -5,6 +5,7 @@ from django.db.models import Sum
 import pandas as pd
 import difflib
 from django.contrib.auth.decorators import login_required
+from decimal import Decimal
 
 '''
 Este método tiene la función de listar los insumos en el inventario de un proyecto previamente seleccionado.
@@ -45,7 +46,18 @@ def inventario(request, proyectoId):
 @login_required
 def verItemInventario(request, insumoId):
     item = Insumo.objects.filter(id=insumoId)
-    return render(request, "verInventario.html", {'item': item})
+    for valor in item:
+        if (valor.impuesto.lower() == 'si'):
+            iva = valor.valorUnitario* Decimal(0.19)
+        else:
+            iva = 0
+        valorTotal = valor.valorUnitario * valor.cantidad
+    data = {
+        'item': item,
+        'iva': iva,
+        'valorTotal': valorTotal,
+    }
+    return render(request, "verInventario.html", data)
 '''
 Este método tiene como propósito mostrar la página principal destinada al usuario con el rol de coordinador. 
 La página principal para el coordinador proporciona acceso a las funciones relacionadas con la gestión de proyectos 
