@@ -11,14 +11,15 @@
     <h1 class="tituloLanding">Proyectos</h1>
 </section>
 <section class="containerBotones">
-    <a class="botonesLanding" href="{% url 'opcionesCoordinador' %}">
+    {% for proyecto in proyectos %}
+    <a class="botonesLanding" href="{% url 'opcionesCoordinador' proyecto.id %}">
         <div class="containerContenido">
             <h3 class="subtitulos">Proyecto</h3>
-            <p class="textoContenido">Rio 1</p>
+            <p class="textoContenido">{{proyecto.nombreProyecto}}</p>
         </div>
         <div class="containerContenido">
             <h3 class="subtitulos">Coordinador</h3>
-            <p class="textoContenido">Tomás Marín</p>
+            <p class="textoContenido">{{proyecto.coordinadorVinculado.usuario.first_name}}</p>
         </div>
         <div class="containerCirculo">
             <div class="circulo">
@@ -26,20 +27,6 @@
             </div>
         </div>
     </a>
-    <a class="botonesLanding" href="#">
-        <div class="containerContenido">
-            <h3 class="subtitulos">Proyecto</h3>
-            <p class="textoContenido">Valle</p>
-        </div>
-        <div class="containerContenido">
-            <h3 class="subtitulos">Coordinador</h3>
-            <p class="textoContenido">Miguel Martínez</p>
-        </div>
-        <div class="containerCirculo">
-            <div class="circulo">
-                <i class="fas fa-chevron-right" id="flecha"></i>
-            </div>
-        </div>
-    </a>
+    {% endfor %}
 </section>
 {% endblock %}

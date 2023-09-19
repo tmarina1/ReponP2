@@ -9,8 +9,11 @@
 {% block content %}
 <section class="containerTituloLanding">
     <div class="containerBusqueda">
-        <h3>Buscar</h3>
-        <input type="text" class="barraBusqueda" placeholder="ej: 2003, ladrillo, adidas, etc">
+        <form class="containerBusqueda" action="">
+            <h3>Buscar</h3>
+            <input type="text" class="barraBusqueda" name="busqueda" placeholder="ej: 2003, ladrillo, adidas.">
+            <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+        </form>
     </div>
     <h1 class="tituloLandingInventario">Inventario</h1>
 </section>
@@ -26,11 +29,27 @@
             </tr>
         </thead>
         <tbody>
+            {% if terminoBusqueda and mensajes != "" %}
+                    </tbody>
+                </table>
+            </section>
+            <div class="containerBtnVolver">
+                <a href="{% url 'opcionesCoordinador' proyecto %}" class="btnVolver">Volver</a>
+            </div>
+            {% for mensaje in mensajes %}
+                <br>
+            <section class="containerInventario">
+                <p class="alert alert-danger" role="alert"> {{ mensaje }}</p>
+            </section>
+            {% endfor %}
+            
+        {% elif terminoBusqueda and mensajes == "" %}
+            {% for insumo in inventario %}
             <tr>
-                <td>001</td>
-                <td>Insumo 1</td>
-                <td>Marca A</td>
-                <td>10</td>
+                <td>{{insumo.codigo}}</td>
+                <td>{{insumo.referencia}}</td>
+                <td>{{insumo.nombreMarca}}</td>
+                <td>{{insumo.cantidad|floatformat:2}}</td>
                 <td class="verItem">
                     <a href="#" class="containerCirculo">
                     <div class="circulo">
@@ -39,37 +58,29 @@
                     </a>
                 </td>
             </tr>
-            <tr>
-                <td>002</td>
-                <td>Insumo 2</td>
-                <td>Marca B</td>
-                <td>15</td>
-                <td class="verItem">
-                    <a href="#" class="containerCirculo">
+            {% endfor %}
+        {% else %}
+            {% for insumo in inventario %}
+                <tr>
+                    <td>{{insumo.codigo}}</td>
+                    <td>{{insumo.referencia}}</td>
+                    <td>{{insumo.nombreMarca}}</td>
+                    <td>{{insumo.cantidad|floatformat:2}}</td>
+                    <td class="verItem">
+                        <a href="#" class="containerCirculo">
                         <div class="circulo">
                             <i class="fas fa-chevron-right" id="flecha"></i>
                         </div>
-                    </a>
-                </td>
-            </tr>
-            <tr>
-                <td>003</td>
-                <td>Insumo 3</td>
-                <td>Marca C</td>
-                <td>20</td>
-                <td class="verItem">
-                    <a href="#" class="containerCirculo">
-                        <div class="circulo">
-                            <i class="fas fa-chevron-right" id="flecha"></i>
-                        </div>
-                    </a>
-                </td>
-            </tr>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        {% endif %}
             <!-- Agrega más filas según sea necesario -->
         </tbody>
     </table>
 </section>
 <div class="containerBtnVolver">
-    <a href="{% url 'opcionesCoordinador' %}" class="btnVolver">Volver</a>
+    <a href="{% url 'opcionesCoordinador' proyecto %}" class="btnVolver">Volver</a>
 </div>
 {% endblock %}

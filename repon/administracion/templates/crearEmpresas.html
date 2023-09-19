@@ -8,16 +8,18 @@
 {% endblock %}
 
 {% block content %}
-
-
 <section class="contenido">
     <div class="cuadroBlanco">
             <div class="containerContenido">
                 <form method="post">
                     <div class="containerForm">
+                       
                             {% csrf_token %}
                             <div  id="formulario1" style="display: block;">
                                 <h1 id="tituloCrearEmpresa">Ingrese información de la empresa</h1>
+                                    {% if mensaje %}
+                                    <p class="alert alert-danger" role="alert"> {{ mensaje }}</p>
+                                    {% endif %}
                                 <div class="row" >
                                     <div class="col">
                                         <div class="input">

@@ -12,34 +12,42 @@
         <div class="cuadroBlanco">
                 <div class="containerContenido">
                     <h1 id="tituloCrearProyecto">Ingrese la información del coordinador</h1>
+                        
                     <form method="post">
                         <div class="containerForm">
+                            {% if mensajeError %}
+                            <p class="alert alert-danger text-center" role="alert"> {{ mensajeError }}</p>
+                            {% endif %}
+                            {% if mensajeExito %}
+                                <p class="alert alert-success text-center" role="alert"> {{ mensajeExito }}</p>
+                            {% endif %}
                                 {% csrf_token %}
                                 <div class="input">
                                     <label for="basic-url" class="form-label">Nombre y apellido (Obligatorio)</label>
-                                    <input type="text" class="form-control" placeholder="Ejemplo: Mateo Muñoz">
+                                    <input type="text" class="form-control" name ="nombre" placeholder="Ejemplo: Mateo Muñoz">
                                 </div>
                                 <div class="input">
                                     <label for="basic-url" class="form-label">Correo (Obligatorio)</label>
-                                    <input type="email" class="form-control" placeholder="Ejemplo: mateo@eafit.edu.co">
+                                    <input type="email" class="form-control" name ="correo" placeholder="Ejemplo: mateo@eafit.edu.co">
                                 </div>
                                 <div class="input">
                                     <label for="basic-url" class="form-label">Contraseña (Obligatorio)</label>
-                                    <input type="text" class="form-control" placeholder="Ejemplo: M1234*">
+                                    <input type="text" class="form-control" name ="clave" placeholder="Ejemplo: M1234*">
                                 </div>
                                 <div class="input">
                                     <label class="form-label">Proyecto a asignar (Obligatorio)</label>
-                                    <input list="listaProyecto" class="form-control" name="proyectoCoordinador">
-                                    <datalist id="listaProyecto">
-                                        <option value="Edificio el Zocalo"></option>
-                                        <option value="Parque arias"></option>
-                                        <option value="Lomas turbas"></option>
-                                    </datalist>
+                                    <select name="nombreProyecto" id=""  class="form-control" required>
+                                        {% for proyecto in proyectos %}
+                                            <option value="{{proyecto.nombreProyecto}}">{{proyecto.nombreProyecto}}</option>
+                                        {% endfor %}
+                                        
+                                        
+                                    </select>
                                 </div>
                         </div>    
                         <div class="botones">
                             <a class="volverCrearProyecto" href="{% url 'landingAdmon' %}">Volver</a>
-                            <button type="button" class="btn btn-der btn-sm">Crear Proyecto</button>
+                            <button type="submit" class="btn btn-der btn-sm">Crear Coordninador</button>
                         </div>
                     </form>
                 </div>

@@ -8,10 +8,11 @@
 
 {% block content %}
 <section class="containerTituloLanding">
-    <h1 class="tituloLanding">Rio 1</h1>
+    <h1 class="tituloLanding">{{nombre}}</h1>
 </section>
 <section class="containerBotonesArriba">
-    <a class="botonesLandingOpciones" href="{% url 'crearInventario' %}">
+    {% if usuarioSesion == usuarioCoordinador %}
+    <a class="botonesLandingOpciones" href="{% url 'crearInventario' proyecto %}">
         <div class="containerContenido">
             <img src="{% static 'img/Warehouse.png' %}" class="iconos" alt="Imagen empresa">
             <p class="textoContenido">Ingresar inventario sobrante</p>
@@ -22,7 +23,8 @@
             </div>
         </div>
     </a>
-    <a class="botonesLandingOpciones" href="{% url 'inventario' %}">
+    {%endif%}
+    <a class="botonesLandingOpciones" href="{% url 'inventario' proyecto %}">
         <div class="containerContenido">
             <img src="{% static 'img/Eye.png' %}" class="iconos" alt="Imagen coordinador">
             <p class="textoContenido">Ver inventario sobrante</p>
@@ -33,7 +35,8 @@
             </div>
         </div>
     </a>
-    <a class="botonesLandingOpciones" href="#">
+    {% if usuarioSesion == usuarioCoordinador %}
+    <a class="botonesLandingOpciones" href="{% url 'subirArchivo' proyecto %}">
         <div class="containerContenido">
             <img src="{% static 'img/MicrosoftExcel.png' %}" class="iconos" alt="Imagen proyecto">
             <p class="textoContenido">Ingresar excel</p>
@@ -44,6 +47,7 @@
             </div>
         </div>
     </a>
+    {% endif %}
 </section>
 <div class="containerBtnVolver">
     <a href="{% url 'landingCoordinador' %}" class="btnVolver">Volver</a>
