@@ -8,6 +8,7 @@ from . import views
 urlpatterns = [
     path('', views.landingAdmon, name='landingAdmon'),
     path('crearEmpresa/', views.crearEmpresas, name='crearEmpresas'),
+    path('verEmpresa/', views.verEmpresa, name='verEmpresa'),
     path('crearProyecto/', views.crearProyecto, name='crearProyecto'),
     path('crearCoordinador/', views.crearCoordinador, name='crearCoordinador'),
 ]
