@@ -3,7 +3,9 @@ from autenticacion import models as autenticacion
 from django.contrib.auth.models import User
 from . import models
 from django.contrib.auth.decorators import login_required
-
+from django.core.mail import EmailMessage as mensajeEmail
+from django.template.loader import render_to_string
+from repon import settings as configuraciones
 
 '''
 Este método permite mostrar la página principal de los usuarios administradores. Para acceder a esta página,
@@ -59,6 +61,7 @@ Este método tiene como objetivo mostrar la página de creación de coordinadore
 verifica los proyectos existentes en la empresa para posteriormente vincular al coordinador con
 uno de estos proyectos durante la creación. Además, se asegura de que el coordinador no haya sido
 registrado previamente. Si el coordinador no se encuentra registrado previamente, procede a crearlo.
+Posterior a eso envia al correo del coordinador las credenciales para que pueda ingresar a la plataforma.
 '''
 @login_required
 def crearCoordinador(request):
@@ -83,9 +86,28 @@ def crearCoordinador(request):
                 perfil.save()
             proyecto.coordinadorVinculado = perfil
             proyecto.save()
-            mensajeExito = 'se ha creado correctamente el coordinador'
+            mensajeExito = 'se ha creado correctamente el coordinador, por favor pidele que revise su correo, en la carpeta spam'
+
+            plantilla = render_to_string('correoCoordinador.html',{
+                'nombre':nombre,
+                'correo':correo,    
+                'clave':clave,
+                'nombreProyecto':nombreProyecto
+            })
+            
+            asunto = f"Credenciales de autenticacion para el uso de PAS para {nombre}"
+            correoAEnviar = mensajeEmail(
+                asunto,
+                plantilla,
+                configuraciones.EMAIL_HOST_USER,
+                [correo]
+            )
+
+            correoAEnviar.fail_silently = False
+            correoAEnviar.send()
+
             return render(request,'crearCoordinador.html',{"proyectos":proyectos,"mensajeExito":mensajeExito})
-        
+
         except:
             mensajeError= 'Ya existe un coordinador registrado con este correo'
             return render(request,'crearCoordinador.html',{"proyectos":proyectos,"mensajeError":mensajeError})
