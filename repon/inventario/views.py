@@ -44,8 +44,9 @@ def inventario(request, proyectoId):
 
 @login_required
 def verItemInventario(request, insumoId):
-    item = Insumo.objects.filter(id=insumoId)
-    return render(request, "verInventario.html", {'item': item})
+    item = Insumo.objects.get(id=insumoId)
+    valorTotal = "{0:.2f}".format(item.cantidad*item.valorUnitario)
+    return render(request, "verInventario.html", {'item': item, 'valorTotal': valorTotal})
 '''
 Este método tiene como propósito mostrar la página principal destinada al usuario con el rol de coordinador. 
 La página principal para el coordinador proporciona acceso a las funciones relacionadas con la gestión de proyectos 

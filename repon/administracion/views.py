@@ -153,6 +153,10 @@ def crearEmpresas(request):
                 return render(request, "landingAdmon.html",{'mensaje': mensaje})
         return render(request, "crearEmpresas.html",{'mensaje': mensaje, 'ciudades':UBICACION[0], 'departamentos':UBICACION[1]})
 
+'''
+Este método tiene como finalidad mostrar la información con la que se inscribió la empresa y la información básica de los proyectos relacionados. Esto se logra 
+realizando dos queries a la base de datos en donde se encuentra la empresa relacionada al usuario logueado y los proyectos utilizando el id de esta misma empresa.
+'''
 @login_required
 def verEmpresa(request):
     idUsuario = request.user.id

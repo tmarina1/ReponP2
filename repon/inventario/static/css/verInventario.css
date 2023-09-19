@@ -29,3 +29,7 @@
 .botones>a{
     background-color: #ED1A28;
 }
+.input>p{
+    margin: 0px;
+    border-color: #000000;
+}

@@ -1,5 +1,8 @@
 import json
-
+'''
+Esta función tiene como finalidad leer un archivo tipo JSON y extraer de allí por medio de listas las ciudades y los departamentos de colombia para posteriormente aplicarlos
+en los templates y asi poder dar una recomendación asertiva al usuario. 
+'''
 def extraerCiudadyDepartamento(ruta):
     departamentos = []
     ciudades = []

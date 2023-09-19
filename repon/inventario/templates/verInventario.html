@@ -10,9 +10,7 @@
 
 {% block content %}
 
-{% for valor in item %}
-
-<h1 id="tituloItem">{{valor.referencia}}</h1>
+<h1 id="tituloItem">{{item.referencia}}</h1>
 <section class="contenido">
     <div class="cuadroBlanco">
         <form method="post">
@@ -23,77 +21,84 @@
                         <div class="col">
                             <div class="input">
                                 <label for="basic-url" class="form-label">Codigo Insumo</label>
-                                <input type="number" name="codigo" class="form-control" value="{{ valor.codigo }}">
+                                <p name="codigo" class="form-control">{{ item.codigo }}</p>
                             </div>
                             <div class="input">
                                 <label for="basic-url" class="form-label">Referencia</label>
-                                <input type="text" name="ref" class="form-control" value="{{ valor.referencia }}">
+                                <input type="text" name="ref" class="form-control" value="{{ item.referencia }}">
                             </div>
                             <div class="input">
                                 <label for="basic-url" class="form-label">Unidad Base</label>
                                 <input type="text" name="unidadBase" class="form-control"
-                                    value="{{ valor.unidad }}">
+                                    value="{{ item.unidad }}">
                             </div>
                             <div class="input">
                                 <label for="basic-url" class="form-label">Cantidad</label>
-                                <input type="number" name="cantidad" class="form-control" value="{{ valor.cantidad }}">
+                                <input type="number" name="cantidad" class="form-control" value="{{ item.cantidad }}">
                             </div>
                             <div class="input">
                                 <label for="basic-url" class="form-label">Marca</label>
-                                <input type="text" name="marca" class="form-control" value="{{ valor.nombreMarca }}">
+                                <input type="text" name="marca" class="form-control" value="{{ item.nombreMarca }}">
                             </div>
                             <div class="input">
                                 <label for="basic-url" class="form-label">Tipo de insumo</label>
                                 <input type="text" name="marca" class="form-control"
-                                    value="{{ valor.tipoInsumo }}">
+                                    value="{{ item.tipoInsumo }}">
                             </div>
                             <div class="input">
                                 <label for="basic-url" class="form-label">Proyecto que genero el insumo</label>
                                 <input type="text" name="marca" class="form-control"
-                                    value="{{ valor.proyectoAsociado }}">
+                                    value="{{ item.proyectoAsociado.nombreProyecto }}">
                             </div>
                             <div class="input">
                                 <label for="basic-url" class="form-label">Lugar donde se almacena</label>
                                 <input type="text" name="lugarAlmacenado" class="form-control"
-                                    value="{{ valor.ubicacion }}">
+                                    value="{{ item.ubicacion }}">
                             </div>
                         </div>
                         <div class="col">
                             <div class="input">
                                 <label for="basic-url" class="form-label">Valor Unitario</label>
-                                <input type="number" name="valorU" class="form-control" value="{{ valor.valorUnitario }}">
+                                <input type="number" name="valorU" class="form-control" value="{{ item.valorUnitario }}">
                             </div>
                             <div class="input">
                                 <label for="basic-url" class="form-label">Iva</label>
-                                <input type="number" name="valorU" class="form-control" value="">
+                                <input type="text" name="valorU" class="form-control" value="{{item.impuesto}}">
                             </div>
                             <div class="input">
                                 <label for="basic-url" class="form-label">Valor Total</label>
-                                <input type="number" name="valorU" class="form-control" value="">
+                                <input type="number" name="valorU" class="form-control" value="{{valorTotal}}">
                             </div>
                             <div class="input">
                                 <label for="basic-url" class="form-label">Fecha Ingreso</label>
-                                <input type="date" name="fechaCaducidad" class="form-control"
-                                    value="{{ valor.fechaIngreso }}">
+                                <p name="fechaCaducidad" class="form-control">{{ item.fechaIngreso }}</p>
                             </div>
+                            {% if valor.fechaCaducidad %}
                             <div class="input">
                                 <label for="basic-url" class="form-label">Fecha Caducidad</label>
-                                <input type="date" name="fechaCaducidad" class="form-control"
-                                    value="{{ valor.fechaCaducidad }}">
+                                <input type="text" name="fechaCaducidad" class="form-control"
+                                    value="{{ item.fechaCaducidad }}">
                             </div>
+                            {% else %}
+                            <div class="input">
+                                <label for="basic-url" class="form-label">Fecha Caducidad</label>
+                                <input type="text" name="fechaCaducidad" class="form-control"
+                                    value="NA">
+                            </div>
+                            {% endif %}
                             <div class="input">
                                 <label for="basic-url" class="form-label">Fecha Compra</label>
-                                <input type="date" name="fechaCaducidad" class="form-control"
-                                    value="{{ valor.fechaCompra }}">
+                                <input type="datetime" name="fechaCaducidad" class="form-control"
+                                    value="{{ item.fechaCompra }}">
                             </div>
                             <div class="input">
                                 <label for="basic-url" class="form-label">Observaciones</label>
                                 <input type="text" name="observaciones" class="form-control"
-                                    value="{{ valor.observaciones }}">
+                                    value="{{ item.observaciones }}">
                             </div>
                             <div class="confirmacion">
                                 <div class="botones">
-                                    <a class="volver" href="{% url 'inventario' proyectoId=item.0.proyectoAsociado.id %}">Volver</a>
+                                    <a class="volver" href="{% url 'inventario' item.proyectoAsociado_id %}">Volver</a>
                                 </div>
                             </div>
                         </div>
@@ -103,7 +108,5 @@
         </form>
     </div>
 </section>
-
-{% endfor %}
 
 {% endblock %}
