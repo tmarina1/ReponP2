@@ -41,7 +41,7 @@ form{
 .contenido{
     width: 98%;
     height: 98%;
-    border: 2px solid #152850;
+    border: 5px solid #152850;
     border-radius: 20px;
 }
 .flexDiv{
@@ -68,10 +68,10 @@ form{
 .containerInput>input{
     border:2px solid #000000;
     border-radius: 6px;
-    font-size: 16px;
+    font-size: 16px; 
 }
 .containerInput>label{
-    width: 100%;
+    width: 100%; 
     font-size: 14px;
 }
 /*-------------------------------------------------------------------------------------*/

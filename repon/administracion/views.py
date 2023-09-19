@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.mail import EmailMessage as mensajeEmail
 from django.template.loader import render_to_string
 from repon import settings as configuraciones
+from repon.settings import UBICACION
 
 '''
 Este método permite mostrar la página principal de los usuarios administradores. Para acceder a esta página,
@@ -149,5 +150,4 @@ def crearEmpresas(request):
                                                                 departamento = departamento, ciudad = ciudad, usuarioVinculado_id = idUsuarioAutenticado[0])
                 registroEmpresa.save()
                 return redirect(landingAdmon)
-        
-        return render(request, "crearEmpresas.html",{'mensaje': mensaje})
+        return render(request, "crearEmpresas.html",{'mensaje': mensaje, 'ciudades':UBICACION[0], 'departamentos':UBICACION[1]})

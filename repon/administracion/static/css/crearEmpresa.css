@@ -7,7 +7,7 @@
 
 .cuadroBlanco{
     margin-top: 50px;
-    width: 70%;
+    width: 35%;
     height: 88%;
     background-color: #ffffff;
     border-radius: 20px;
@@ -18,8 +18,8 @@
 }
 
 .containerContenido{
-    width: 95%;
-    height: 95%;
+    width: 98%;
+    height: 98%;
     border: 5px solid #152850;
     border-radius: 20px;
     display: flex;
@@ -33,7 +33,7 @@
     font-size: 25px;
     text-align: center;
     margin-top: 0px;
-    margin-bottom: 30px;
+    margin-bottom: 5px;
 }
 
 form{
@@ -95,7 +95,7 @@ form{
 
 .botones {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
 }
 
 .botones>a, .botones>button{
@@ -124,17 +124,19 @@ form{
 }
 
 .input>input{
-    border-color: #000000;
+    border:2px solid #000000;
+    border-radius: 6px;
+    font-size: 16px;
 }
 
 
 @media (max-width: 1000px) {
     .cuadroBlanco{
         width: 60%;
-        height: 50%;
+        height: 70%;
     }
     .botones{
-        width: 65%;
+        width: 100%;
     }
     .containerForm{
         width: 70%;
@@ -146,7 +148,7 @@ form{
         height: 60%;
     }
     .botones{
-        width: 88%;
+        width: 100%;
     }
     .containerForm{
         width: 90%;

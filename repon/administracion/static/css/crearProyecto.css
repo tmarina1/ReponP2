@@ -8,7 +8,7 @@
 .cuadroBlanco{
     margin-top: 50px;
     width: 70%;
-    height: 88%;
+    height: 75%;
     background-color: #ffffff;
     border-radius: 20px;
     display: flex;
@@ -18,8 +18,8 @@
 }
 
 .containerContenido{
-    width: 95%;
-    height: 95%;
+    width: 98%;
+    height: 98%;
     border: 5px solid #152850;
     border-radius: 20px;
     display: flex;
