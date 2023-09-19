@@ -46,7 +46,12 @@ def inventario(request, proyectoId):
 @login_required
 def verItemInventario(request, insumoId):
     item = Insumo.objects.get(id=insumoId)
-    valorTotal = "{0:.2f}".format(item.cantidad*item.valorUnitario)
+    valorSubTotal = item.cantidad*item.valorUnitario
+    if item.impuesto == 'si':
+        valorTotal = valorSubTotal+(valorSubTotal*0.19)
+    else:
+        valorTotal = valorSubTotal
+
     return render(request, "verInventario.html", {'item': item, 'valorTotal': valorTotal})
 '''
 Este método tiene como propósito mostrar la página principal destinada al usuario con el rol de coordinador. 
