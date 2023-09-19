@@ -7,8 +7,8 @@
 
 .cuadroBlanco{
     margin-top: 50px;
-    width: 35%;
-    height: 88%;
+    width: 40%;
+    height: 92%;
     background-color: #ffffff;
     border-radius: 20px;
     display: flex;
@@ -79,7 +79,7 @@ form{
     color: #000000;
     font-weight: bold;
     text-align: center;
-    margin-bottom: 5%;
+    margin-bottom: 10px;
 }
 
 .confirmacionForm2 {
@@ -128,7 +128,17 @@ form{
     border-radius: 6px;
     font-size: 16px;
 }
-
+.alert{
+    margin: 0px auto !important;
+    margin-bottom: 3px !important;
+    padding: 3px !important;
+    max-width: 100% !important;
+    text-align: center;
+    font-size: 10px;
+}
+.formulario1{
+    width: 95%;
+}
 
 @media (max-width: 1000px) {
     .cuadroBlanco{

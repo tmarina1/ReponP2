@@ -7,8 +7,8 @@
 
 .cuadroBlanco{
     margin-top: 50px;
-    width: 70%;
-    height: 75%;
+    width: 35%;
+    height: 90%;
     background-color: #ffffff;
     border-radius: 20px;
     display: flex;
@@ -33,7 +33,7 @@
     font-size: 25px;
     text-align: center;
     margin-top: 0px;
-    margin-bottom: 30px;
+    margin-bottom: 5px;
 }
 
 form{
@@ -96,6 +96,8 @@ form{
 .botones {
     display: flex;
     justify-content: space-between;
+    width: 90%;
+    margin: auto;
 }
 
 .botones>a, .botones>button{
@@ -126,6 +128,13 @@ form{
 .input>input, .input>select{
     border-color: #000000;
 }
+.alert{
+    margin: 0px auto !important;
+    margin-bottom: 3px !important;
+    padding: 3px !important;
+    max-width: 100% !important;
+    text-align: center;
+}
 
 
 @media (max-width: 1000px) {
@@ -135,6 +144,7 @@ form{
     }
     .botones{
         width: 65%;
+        margin: auto;
     }
     .containerForm{
         width: 70%;
@@ -147,6 +157,7 @@ form{
     }
     .botones{
         width: 88%;
+        margin: auto;
     }
     .containerForm{
         width: 90%;

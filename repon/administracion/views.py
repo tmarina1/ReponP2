@@ -55,7 +55,7 @@ def crearProyecto(request):
             mensajeExito = "Proyecto creado exitosamente."
             return render(request,'crearProyecto.html',{"mensajeExito":mensajeExito} )
 
-    return render(request,'crearProyecto.html')
+    return render(request,'crearProyecto.html',{'ciudades':UBICACION[0], 'departamentos':UBICACION[1]})
 
 '''
 Este método tiene como objetivo mostrar la página de creación de coordinadores. En primer lugar,
@@ -143,11 +143,12 @@ def crearEmpresas(request):
             nombreEmpresaExistente = models.Empresa.objects.filter(nombreEmpresa=nombreEmpresa).exists()
 
             if nitEmpresaExistente or nombreEmpresaExistente:
-                mensaje = "Error al crear la empresa, debido a que ya existe. Por favor, verifica la información e inténtalo nuevamente."
+                mensaje = "Error al crear la empresa debido a que ya existe. Por favor verificar la información e intentarlo nuevamente."
             else:
                 idUsuarioAutenticado = autenticacion.Perfil.objects.filter(id = idUsuario).values_list('id', flat= True)
                 registroEmpresa = models.Empresa.objects.create(nit = nit, nombreEmpresa = nombreEmpresa, direccion = direccion,
                                                                 departamento = departamento, ciudad = ciudad, usuarioVinculado_id = idUsuarioAutenticado[0])
                 registroEmpresa.save()
-                return redirect(landingAdmon)
+                mensaje = 'Empresa creada satisfactoriamente.'
+                return render(request, "landingAdmon.html",{'mensaje': mensaje})
         return render(request, "crearEmpresas.html",{'mensaje': mensaje, 'ciudades':UBICACION[0], 'departamentos':UBICACION[1]})
