@@ -68,7 +68,11 @@ def landingCoordinador(request):
     idUsuario = request.user.id
     idEmpresa = Proyecto.objects.filter(coordinadorVinculado_id = idUsuario).values_list('empresaVinculada_id', flat= True)
     proyectos = Proyecto.objects.filter(empresaVinculada_id = idEmpresa[0])
-    return render(request, "landingCoordinador.html", {'proyectos':proyectos})
+    proyectosConCoordinador = []
+    for proyecto in proyectos:
+        if proyecto.coordinadorVinculado:
+            proyectosConCoordinador.append(proyecto)
+    return render(request, "landingCoordinador.html", {'proyectos':proyectosConCoordinador})
 
 '''
 Este método tiene como objetivo mostrar la página de opciones del coordinador. En esta página, 

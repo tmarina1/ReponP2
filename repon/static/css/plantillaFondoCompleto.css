@@ -32,7 +32,7 @@ html,body{
 }
 .contenidoBody{
     width: 100%;
-    min-height: 100%;
+    min-height: 200%;
     background-color: #1C274C;
 }
 .divFlex{

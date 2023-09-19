@@ -1,11 +1,12 @@
 from django.shortcuts import render, redirect
-from autenticacion import models as autenticacion
+from autenticacion.models import Perfil
 from django.contrib.auth.models import User
 from . import models
 from django.contrib.auth.decorators import login_required
 from django.core.mail import EmailMessage as mensajeEmail
 from django.template.loader import render_to_string
 from repon import settings as configuraciones
+from repon.settings import UBICACION
 
 '''
 Este método permite mostrar la página principal de los usuarios administradores. Para acceder a esta página,
@@ -54,7 +55,7 @@ def crearProyecto(request):
             mensajeExito = "Proyecto creado exitosamente."
             return render(request,'crearProyecto.html',{"mensajeExito":mensajeExito} )
 
-    return render(request,'crearProyecto.html')
+    return render(request,'crearProyecto.html',{'ciudades':UBICACION[0], 'departamentos':UBICACION[1]})
 
 '''
 Este método tiene como objetivo mostrar la página de creación de coordinadores. En primer lugar,
@@ -80,7 +81,7 @@ def crearCoordinador(request):
         try:
             usuario = User.objects.create_user(first_name=nombre,username=correo, email=correo, password=clave)
             usuario.save()
-            perfil,creado = autenticacion.Perfil.objects.get_or_create(usuario=usuario)
+            perfil,creado = Perfil.objects.get_or_create(usuario=usuario)
             if creado:
                 perfil.nombreCargo = "Coordinador"
                 perfil.save()
@@ -142,12 +143,20 @@ def crearEmpresas(request):
             nombreEmpresaExistente = models.Empresa.objects.filter(nombreEmpresa=nombreEmpresa).exists()
 
             if nitEmpresaExistente or nombreEmpresaExistente:
-                mensaje = "Error al crear la empresa, debido a que ya existe. Por favor, verifica la información e inténtalo nuevamente."
+                mensaje = "Error al crear la empresa debido a que ya existe. Por favor verificar la información e intentarlo nuevamente."
             else:
-                idUsuarioAutenticado = autenticacion.Perfil.objects.filter(id = idUsuario).values_list('id', flat= True)
+                idUsuarioAutenticado = Perfil.objects.filter(id = idUsuario).values_list('id', flat= True)
                 registroEmpresa = models.Empresa.objects.create(nit = nit, nombreEmpresa = nombreEmpresa, direccion = direccion,
                                                                 departamento = departamento, ciudad = ciudad, usuarioVinculado_id = idUsuarioAutenticado[0])
                 registroEmpresa.save()
-                return redirect(landingAdmon)
-        
-        return render(request, "crearEmpresas.html",{'mensaje': mensaje})
+                mensaje = 'Empresa creada satisfactoriamente.'
+                return render(request, "landingAdmon.html",{'mensaje': mensaje})
+        return render(request, "crearEmpresas.html",{'mensaje': mensaje, 'ciudades':UBICACION[0], 'departamentos':UBICACION[1]})
+
+@login_required
+def verEmpresa(request):
+    idUsuario = request.user.id
+    empresa = models.Empresa.objects.get(usuarioVinculado = idUsuario)
+    proyectos = models.Proyecto.objects.filter(empresaVinculada = empresa.id)
+    return render(request, 'verEmpresa.html',{'empresa':empresa, 'proyectos':proyectos})
+

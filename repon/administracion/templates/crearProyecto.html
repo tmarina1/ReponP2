@@ -12,7 +12,7 @@
 
 <section class="contenido">
     <div class="cuadroBlanco">
-            <div class="containerContenido">
+            <div class="containerContenido"> 
                 <form method="post">
                     <div class="containerForm">
                             {% csrf_token %}
@@ -42,15 +42,23 @@
                                             <label for="basic-url" class="form-label">Dirección (Opcional)</label>
                                             <input type="text" name="direccion" class="form-control" placeholder="Ejemplo: Calle 45b sur #25 - 15">
                                         </div>
-                                    </div>
-                                    <div class="col">
                                         <div class="input">
                                             <label for="basic-url" class="form-label">Departamento (Obligatorio)</label>
-                                            <input type="text" name="departamento" class="form-control" placeholder="Ejemplo: Antioquia" required>
+                                            <input type="text" name="departamento" class="form-control" list="listaDepartamentos" placeholder="Ejemplo: Antioquia" required>
+                                            <datalist id="listaDepartamentos">
+                                                {% for departamento in departamentos %}
+                                                <option value="{{departamento}}"></option>
+                                                {% endfor %}
+                                            </datalist>
                                         </div>
                                         <div class="input">
                                             <label for="basic-url" class="form-label">Ciudad (Obligatorio)</label>
-                                            <input type="text" name="ciudad" class="form-control" placeholder="Ejemplo: Medellín" required>
+                                            <input type="text" name="ciudad" class="form-control" list="listaCiudades" placeholder="Ejemplo: Medellín" required>
+                                            <datalist id="listaCiudades">
+                                                {% for ciudad in ciudades %}
+                                                <option value="{{ciudad}}"></option>
+                                                {% endfor %}
+                                            </datalist>
                                         </div>
                                         <div class="confirmacion">
                                             <label class="advertencia-label">*Recuerde verificar la información

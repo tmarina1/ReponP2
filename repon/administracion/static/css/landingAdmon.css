@@ -16,14 +16,14 @@
     height: 240px;
     margin: 40px auto;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
 }
 .containerBotonesAbajo{
     width: 80%;
     height: 240px;
     margin: 0px auto;
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     margin-bottom: 20px;
 }
 .botonesLanding{
@@ -73,4 +73,15 @@
 }
 #flecha{
     color: #ffffff;
+}
+#panelAdmin{
+    background-color: #6E6E6E;
+}
+.alert{
+    margin: 0px auto !important;
+    margin-bottom: 3px !important;
+    padding: 3px !important;
+    max-width: 30% !important;
+    text-align: center;
+    font-size: 14px;
 }

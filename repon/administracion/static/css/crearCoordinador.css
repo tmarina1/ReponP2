@@ -18,8 +18,8 @@
 
 .containerContenido{
     width: 98%;
-    height: 95%;
-    border: 2px solid #152850;
+    height: 98%;
+    border: 5px solid #152850;
     border-radius: 20px;
     display: flex;
     flex-direction: column;

@@ -139,3 +139,7 @@ EMAIL_PORT = 25
 EMAIL_HOST_USER = 'pasteamdev1@gmail.com'
 EMAIL_HOST_PASSWORD = 'ekac rcro vgom vdma'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+from administracion.logica import extraerCiudadyDepartamento
+RUTA_UBICACION = os.path.join(BASE_DIR,'static','archivos','colombia.json')
+UBICACION = extraerCiudadyDepartamento(RUTA_UBICACION) 
