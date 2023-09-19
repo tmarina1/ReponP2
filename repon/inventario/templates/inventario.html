@@ -51,7 +51,7 @@
                 <td>{{insumo.nombreMarca}}</td>
                 <td>{{insumo.cantidad|floatformat:2}}</td>
                 <td class="verItem">
-                    <a href="#" class="containerCirculo">
+                    <a href="{% url 'verItemInventario' insumo.id %}" class="containerCirculo">
                     <div class="circulo">
                         <i class="fas fa-chevron-right" id="flecha"></i>
                     </div>
@@ -67,7 +67,7 @@
                     <td>{{insumo.nombreMarca}}</td>
                     <td>{{insumo.cantidad|floatformat:2}}</td>
                     <td class="verItem">
-                        <a href="#" class="containerCirculo">
+                        <a href="{% url 'verItemInventario' insumo.id %}" class="containerCirculo">
                         <div class="circulo">
                             <i class="fas fa-chevron-right" id="flecha"></i>
                         </div>

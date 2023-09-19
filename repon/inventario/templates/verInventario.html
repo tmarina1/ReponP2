@@ -1,0 +1,109 @@
+{% extends 'autenticacion/plantillaFondoCompleto.html' %}
+{% load static %}
+
+{% block title %} Ver item {% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/crearInventario.css' %}">
+<link rel="stylesheet" href="{% static 'css/verInventario.css' %}">
+{% endblock %}
+
+{% block content %}
+
+{% for valor in item %}
+
+<h1 id="tituloItem">{{valor.referencia}}</h1>
+<section class="contenido">
+    <div class="cuadroBlanco">
+        <form method="post">
+            <div class="containerForm">
+                {% csrf_token %}
+                <div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="input">
+                                <label for="basic-url" class="form-label">Codigo Insumo</label>
+                                <input type="number" name="codigo" class="form-control" value="{{ valor.codigo }}">
+                            </div>
+                            <div class="input">
+                                <label for="basic-url" class="form-label">Referencia</label>
+                                <input type="text" name="ref" class="form-control" value="{{ valor.referencia }}">
+                            </div>
+                            <div class="input">
+                                <label for="basic-url" class="form-label">Unidad Base</label>
+                                <input type="text" name="unidadBase" class="form-control"
+                                    value="{{ valor.unidad }}">
+                            </div>
+                            <div class="input">
+                                <label for="basic-url" class="form-label">Cantidad</label>
+                                <input type="number" name="cantidad" class="form-control" value="{{ valor.cantidad }}">
+                            </div>
+                            <div class="input">
+                                <label for="basic-url" class="form-label">Marca</label>
+                                <input type="text" name="marca" class="form-control" value="{{ valor.nombreMarca }}">
+                            </div>
+                            <div class="input">
+                                <label for="basic-url" class="form-label">Tipo de insumo</label>
+                                <input type="text" name="marca" class="form-control"
+                                    value="{{ valor.tipoInsumo }}">
+                            </div>
+                            <div class="input">
+                                <label for="basic-url" class="form-label">Proyecto que genero el insumo</label>
+                                <input type="text" name="marca" class="form-control"
+                                    value="{{ valor.proyectoAsociado }}">
+                            </div>
+                            <div class="input">
+                                <label for="basic-url" class="form-label">Lugar donde se almacena</label>
+                                <input type="text" name="lugarAlmacenado" class="form-control"
+                                    value="{{ valor.ubicacion }}">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="input">
+                                <label for="basic-url" class="form-label">Valor Unitario</label>
+                                <input type="number" name="valorU" class="form-control" value="{{ valor.valorUnitario }}">
+                            </div>
+                            <div class="input">
+                                <label for="basic-url" class="form-label">Iva</label>
+                                <input type="number" name="valorU" class="form-control" value="">
+                            </div>
+                            <div class="input">
+                                <label for="basic-url" class="form-label">Valor Total</label>
+                                <input type="number" name="valorU" class="form-control" value="">
+                            </div>
+                            <div class="input">
+                                <label for="basic-url" class="form-label">Fecha Ingreso</label>
+                                <input type="date" name="fechaCaducidad" class="form-control"
+                                    value="{{ valor.fechaIngreso }}">
+                            </div>
+                            <div class="input">
+                                <label for="basic-url" class="form-label">Fecha Caducidad</label>
+                                <input type="date" name="fechaCaducidad" class="form-control"
+                                    value="{{ valor.fechaCaducidad }}">
+                            </div>
+                            <div class="input">
+                                <label for="basic-url" class="form-label">Fecha Compra</label>
+                                <input type="date" name="fechaCaducidad" class="form-control"
+                                    value="{{ valor.fechaCompra }}">
+                            </div>
+                            <div class="input">
+                                <label for="basic-url" class="form-label">Observaciones</label>
+                                <input type="text" name="observaciones" class="form-control"
+                                    value="{{ valor.observaciones }}">
+                            </div>
+                            <div class="confirmacion">
+                                <div class="botones">
+                                    <a class="volver" href="{% url 'inventario' proyectoId=item.0.proyectoAsociado.id %}">Volver</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+
+{% endfor %}
+
+{% endblock %}

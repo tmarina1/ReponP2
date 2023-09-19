@@ -1,0 +1,31 @@
+#tituloItem{
+    color: #ffff;
+    text-align: center;
+    margin: auto;
+    padding-top: 20px;
+}
+
+.contenido{
+    padding-bottom: 50px;
+}
+
+.containerForm{
+    margin: 30px;
+}
+
+.cuadroBlanco{
+    width: 60%;
+    height: 100%;
+}
+
+.confirmacion {
+    margin-top: 10%;
+}
+
+.botones {
+    justify-content: flex-end;
+}
+
+.botones>a{
+    background-color: #ED1A28;
+}

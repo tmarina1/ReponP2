@@ -9,6 +9,7 @@ urlpatterns = [
     path('', views.landingCoordinador, name='landingCoordinador'),
     path('opcionesCoordinador/<int:proyectoId>', views.opcionesCoordinador, name='opcionesCoordinador'),
     path('verInventario/<int:proyectoId>', views.inventario, name='inventario'),
+    path('verItemInventario/<int:insumoId>', views.verItemInventario, name='verItemInventario'),
     path('crearInventario/<int:proyectoId>', views.crearInventario, name='crearInventario'),
     path('subirArchivo/<int:proyectoId>', views.subirArchivo, name='subirArchivo')
 ]
