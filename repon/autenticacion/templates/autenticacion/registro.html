@@ -12,7 +12,10 @@
 <body>
     <section class="navRegistro">
         <img src="{% static 'img/PAS-logos_white.png' %}" alt="Logo blanco PAS">
-        <a href="{% url 'inicioSesion' %}">Iniciar sesión</a>
+        <div class="botones">
+            <a href="{% url 'inicio' %}" id="btnVolverInicio">Página inicio</a>
+            <a href="{% url 'inicioSesion' %}">Iniciar sesión</a>
+        </div>
     </section>
     <div class="fondoBlanco">
         <section class="contenido">

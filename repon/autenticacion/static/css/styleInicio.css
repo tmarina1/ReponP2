@@ -103,6 +103,10 @@ form{
    max-width: 350px;
    margin-left: -25px;
 }
+#btnVolverInicio{
+    background-color: #ED1A28;
+    border-color: #ED1A28;
+}
 .navInicio>a{
     font-size: 20px;
     padding: 8px;

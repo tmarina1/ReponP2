@@ -104,7 +104,11 @@ form{
    max-width: 350px;
    margin-left: -25px;
 }
-.navRegistro>a{
+#btnVolverInicio{
+    background-color: #ED1A28;
+    border-color: #ED1A28;
+}
+.botones>a{
     font-size: 18px;
     padding: 8px;
     border: 1px solid #5E5BFF;
