@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from autenticacion.models import Perfil
 from django.contrib.auth.models import User
 from . import models
+from inventario.models import Insumo
 from django.contrib.auth.decorators import login_required
 from django.core.mail import EmailMessage as mensajeEmail
 from django.template.loader import render_to_string
@@ -163,4 +164,17 @@ def verEmpresa(request):
     empresa = models.Empresa.objects.get(usuarioVinculado = idUsuario)
     proyectos = models.Proyecto.objects.filter(empresaVinculada = empresa.id)
     return render(request, 'verEmpresa.html',{'empresa':empresa, 'proyectos':proyectos})
+
+def ingresoCategoria(request):
+    insumosConEmpresas = Insumo.objects.select_related('proyectoAsociado__empresaVinculada')
+
+    insumosUnicos = {}
+
+    for insumo in insumosConEmpresas:
+        referencia = insumo.referencia
+        if referencia not in insumosUnicos:
+            insumosUnicos[referencia] = insumo
+
+    print(insumosUnicos)
+    return render(request, 'ingresoCategoria.html',{'insumosUnicos': insumosUnicos.values()})
 

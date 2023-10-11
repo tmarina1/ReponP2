@@ -1,0 +1,25 @@
+{% extends 'autenticacion/plantillaFondoCompleto.html' %}
+{% load static %}
+{% block title %}Ingreso Categoria{% endblock %}
+{%block head%}
+<link rel="stylesheet" href="{% static 'css/ingresoCategoria.css' %}">
+<script src="https://kit.fontawesome.com/4efaf993e1.js" crossorigin="anonymous"></script>
+{%endblock%}
+
+{% block content %}
+<section class="containerTituloLanding">
+    <h1 class="tituloLanding">Categorización</h1>
+</section>
+<div class="containerBtnVolver">
+    <a href="{% url 'landingAdmon' %}" class="btnVolver">Volver</a>
+</div>
+{% for insumo in insumosUnicos %}
+    <h2>{{ insumo.proyectoAsociado.empresa.nombreEmpresa }}</h2>
+    <form method="post">
+        <p>{{ insumo.referencia }}</p>
+        <input type="text" placeholder="Ingrese la categoría">
+    </form>
+{% empty %}
+    <p>No hay insumos registrados.</p>
+{% endfor %}
+{% endblock %}

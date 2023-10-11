@@ -18,4 +18,5 @@ class Insumo(models.Model):
     fechaCaducidad = models.DateTimeField(null=True)
     fechaCompra = models.DateTimeField()
     observaciones = models.CharField(max_length=300, default='') 
+    categoria = models.CharField(max_length=300, default='') 
     proyectoAsociado = models.ForeignKey(Proyecto, on_delete=models.CASCADE)

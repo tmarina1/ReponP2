@@ -11,6 +11,7 @@ urlpatterns = [
     path('verEmpresa/', views.verEmpresa, name='verEmpresa'),
     path('crearProyecto/', views.crearProyecto, name='crearProyecto'),
     path('crearCoordinador/', views.crearCoordinador, name='crearCoordinador'),
+    path('ingresoCategoria/', views.ingresoCategoria, name='ingresoCategoria'),
 ]
 
 if settings.DEBUG:

@@ -1,0 +1,27 @@
+.tituloLanding{
+    margin-top: 50px;
+    color: #ffffff;
+    font-size: 28px;
+    text-align: center;
+}
+.containerTituloLanding{
+    height: 10%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.containerBtnVolver{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+.btnVolver{
+    color: white;
+    font-size: 18px;
+    background-color: #ED1A28;
+    border-radius: 10px;
+    text-decoration: none;
+    padding: 5px 15px;
+}
