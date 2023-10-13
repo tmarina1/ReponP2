@@ -166,9 +166,28 @@ def verEmpresa(request):
     proyectos = models.Proyecto.objects.filter(empresaVinculada = empresa.id)
     return render(request, 'verEmpresa.html',{'empresa':empresa, 'proyectos':proyectos})
 
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.model_selection import train_test_split
+from sklearn.naive_bayes import MultinomialNB
+import nltk
+from nltk.corpus import stopwords
+clf = MultinomialNB()
+
+def categorizacion(insumo, categoria):
+    global clf
+    nltk.download('stopwords')
+    spanish_stopwords = set(stopwords.words('spanish'))
+    spanish_stopwords_list = list(spanish_stopwords)
+    vectorizer = CountVectorizer(stop_words=spanish_stopwords_list)
+
+    insumoVectorizado = vectorizer.fit_transform(insumo)
+    clf.fit(insumoVectorizado, categoria)
+
 def ingresoCategoria(request):
     insumosConEmpresas = Insumo.objects.select_related('proyectoAsociado__empresaVinculada').filter(Q(categoria__isnull=True) | Q(categoria__exact=''))
 
+    insumoEntr = []
+    categoriaEntr = []
     insumosUnicos = {}
 
     for insumo in insumosConEmpresas:
@@ -179,6 +198,10 @@ def ingresoCategoria(request):
     if request.method == 'POST':
         referencia = request.POST.get('referencia')
         categoria = request.POST.get('categoria')
+
+        insumoEntr.append(referencia)
+        categoriaEntr.append(categoria) 
+        categorizacion(insumoEntr,categoriaEntr)
 
         insumos = Insumo.objects.filter(referencia=referencia, categoria__isnull=True) | Insumo.objects.filter(referencia=referencia, categoria__exact='')
         for insumo in insumos:

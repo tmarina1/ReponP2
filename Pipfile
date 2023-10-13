@@ -12,6 +12,7 @@ pandas = "*"
 openpyxl="*"
 numpy = "*"
 scikit-learn = "*"
+nltk = "*"
 
 [dev-packages]
 
