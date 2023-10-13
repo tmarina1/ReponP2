@@ -13,16 +13,18 @@
 <div class="containerBtnVolver">
     <a href="{% url 'landingAdmon' %}" class="btnVolver">Volver</a>
 </div>
-{% for insumo in insumosUnicos %}
-    <h2>{{ insumo.proyectoAsociado.empresa.nombreEmpresa }}</h2>
-    <form method="post">
-        {% csrf_token %}
-        <input type="hidden" name="referencia" value="{{ insumo.referencia }}">
-        <p>{{ insumo.referencia }}</p>
-        <input type="text" placeholder="Ingrese la categoría" name="categoria">
-        <button type="submit">Asignar categoría</button>
-    </form>
-{% empty %}
-    <p>No hay insumos registrados.</p>
-{% endfor %}
+<section class="containerGeneral">
+    {% for insumo in insumosUnicos %}
+        <h2>{{ insumo.proyectoAsociado.empresa.nombreEmpresa }}</h2>
+        <form method="post" class="containerIngresoCategoria">
+            {% csrf_token %}
+            <input type="hidden" name="referencia" value="{{ insumo.referencia }}">
+            <p>{{ insumo.referencia }}</p>
+            <input type="text" placeholder="Ingrese la categoría" name="categoria">
+            <button type="submit" id="btnEnviar"><i class="fas fa-check"></i></button>
+        </form>
+    {% empty %}
+        <p>Todos los insumos asociados a la empresa tienen una categoría asignada.</p>
+    {% endfor %}
+</section>
 {% endblock %}

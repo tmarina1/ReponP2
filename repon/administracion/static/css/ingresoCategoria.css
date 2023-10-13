@@ -24,4 +24,23 @@
     border-radius: 10px;
     text-decoration: none;
     padding: 5px 15px;
+    margin-top: 10px;
+}
+.containerIngresoCategoria{
+    width: fit-content;
+    height: fit-content;
+    text-align: center;
+    color: #ffffff;
+}
+.containerGeneral{
+    width: 90%;
+    margin: 40px auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2%;
+}
+#btnEnviar{
+    border-color: transparent;
+    background-color: #ffffff;
+    border-radius: 10px;
 }
