@@ -16,8 +16,11 @@
 {% for insumo in insumosUnicos %}
     <h2>{{ insumo.proyectoAsociado.empresa.nombreEmpresa }}</h2>
     <form method="post">
+        {% csrf_token %}
+        <input type="hidden" name="referencia" value="{{ insumo.referencia }}">
         <p>{{ insumo.referencia }}</p>
-        <input type="text" placeholder="Ingrese la categoría">
+        <input type="text" placeholder="Ingrese la categoría" name="categoria">
+        <button type="submit">Asignar categoría</button>
     </form>
 {% empty %}
     <p>No hay insumos registrados.</p>

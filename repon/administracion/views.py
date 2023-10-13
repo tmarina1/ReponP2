@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.mail import EmailMessage as mensajeEmail
 from django.template.loader import render_to_string
 from repon import settings as configuraciones
+from django.db.models import Q
 from repon.settings import UBICACION
 
 '''
@@ -166,7 +167,7 @@ def verEmpresa(request):
     return render(request, 'verEmpresa.html',{'empresa':empresa, 'proyectos':proyectos})
 
 def ingresoCategoria(request):
-    insumosConEmpresas = Insumo.objects.select_related('proyectoAsociado__empresaVinculada')
+    insumosConEmpresas = Insumo.objects.select_related('proyectoAsociado__empresaVinculada').filter(Q(categoria__isnull=True) | Q(categoria__exact=''))
 
     insumosUnicos = {}
 
@@ -175,6 +176,15 @@ def ingresoCategoria(request):
         if referencia not in insumosUnicos:
             insumosUnicos[referencia] = insumo
 
-    print(insumosUnicos)
+    if request.method == 'POST':
+        referencia = request.POST.get('referencia')
+        categoria = request.POST.get('categoria')
+
+        insumos = Insumo.objects.filter(referencia=referencia, categoria__isnull=True) | Insumo.objects.filter(referencia=referencia, categoria__exact='')
+        for insumo in insumos:
+            insumo.categoria = categoria
+            insumo.save()
+        return redirect(ingresoCategoria)
+
     return render(request, 'ingresoCategoria.html',{'insumosUnicos': insumosUnicos.values()})
 
