@@ -1,11 +1,10 @@
 from django.shortcuts import render, redirect
 from datetime import datetime
-from .models import Proyecto, Insumo
-from django.db.models import Sum
+from .models import Proyecto, Insumo, TransferenciaInsumo
 import pandas as pd
 import difflib
 from django.contrib.auth.decorators import login_required
-from decimal import Decimal
+
 
 '''
 Este método tiene la función de listar los insumos en el inventario de un proyecto previamente seleccionado.
@@ -42,17 +41,40 @@ def inventario(request, proyectoId):
             
     print (mensajes)
     return render(request, "inventario.html",{'proyecto':proyectoId,'inventario':inventarioInsumos,'terminoBusqueda':terminoBusqueda, 'mensajes':mensajes})
-
+'''
+Describir
+'''
 @login_required
 def verItemInventario(request, insumoId):
+    mensaje = ''
     item = Insumo.objects.get(id=insumoId)
     valorSubTotal = item.cantidad*item.valorUnitario
     if item.impuesto == 'si':
         valorTotal = valorSubTotal+(valorSubTotal*0.19)
     else:
         valorTotal = valorSubTotal
+    
 
-    return render(request, "verInventario.html", {'item': item, 'valorTotal': valorTotal})
+    if request.method == 'POST':
+        cantidad = request.POST['cantidad']
+        coordinadorSolicitante = request.user.id
+        administrador = item.proyectoAsociado.empresaVinculada.usuarioVinculado
+        proyectoOrigen = item.proyectoAsociado
+
+        destino = Proyecto.objects.get(coordinadorVinculado = coordinadorSolicitante)
+        proyectoDestino = destino.id
+        insumo = item.id
+        
+        peticion = TransferenciaInsumo.objects.create(coordinadorSolicitante = coordinadorSolicitante, administrador = administrador,
+                                                      proyectoOrigen = proyectoOrigen, proyectoDestino = proyectoDestino, insumo=insumo,
+                                                      cantidad = cantidad)
+        
+        peticion.save()
+        mensaje = 'se ha enviado la solicitud correctamente'
+        return redirect(verItemInventario, {'item': item, 'valorTotal': valorTotal, 'mensaje':mensaje})
+
+
+    return render(request, "verInventario.html", {'item': item, 'valorTotal': valorTotal, 'mensaje':mensaje})
 '''
 Este método tiene como propósito mostrar la página principal destinada al usuario con el rol de coordinador. 
 La página principal para el coordinador proporciona acceso a las funciones relacionadas con la gestión de proyectos 
@@ -142,6 +164,7 @@ def subirArchivo(request, proyectoId):
     except:
         mensajes = ['Error con el archivo subido, por favor verifica que el formato esté correctamente diligenciado']
     return render(request, 'subirArchivo.html', {'proyecto':proyectoId, 'mensajes':mensajes})
+
     
 
     

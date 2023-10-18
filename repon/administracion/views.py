@@ -7,6 +7,7 @@ from django.core.mail import EmailMessage as mensajeEmail
 from django.template.loader import render_to_string
 from repon import settings as configuraciones
 from repon.settings import UBICACION
+from inventario.models import TransferenciaInsumo
 
 '''
 Este método permite mostrar la página principal de los usuarios administradores. Para acceder a esta página,
