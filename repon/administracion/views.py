@@ -166,48 +166,30 @@ def verEmpresa(request):
     proyectos = models.Proyecto.objects.filter(empresaVinculada = empresa.id)
     return render(request, 'verEmpresa.html',{'empresa':empresa, 'proyectos':proyectos})
 
-from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.model_selection import train_test_split
-from sklearn.naive_bayes import MultinomialNB
-import nltk
-from nltk.corpus import stopwords
-clf = MultinomialNB()
-
-def categorizacion(insumo, categoria):
-    global clf
-    nltk.download('stopwords')
-    spanish_stopwords = set(stopwords.words('spanish'))
-    spanish_stopwords_list = list(spanish_stopwords)
-    vectorizer = CountVectorizer(stop_words=spanish_stopwords_list)
-
-    insumoVectorizado = vectorizer.fit_transform(insumo)
-    clf.fit(insumoVectorizado, categoria)
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 def ingresoCategoria(request):
-    insumosConEmpresas = Insumo.objects.select_related('proyectoAsociado__empresaVinculada').filter(Q(categoria__isnull=True) | Q(categoria__exact=''))
+    insumosExistentes = Insumo.objects.all().order_by('referencia')
 
-    insumoEntr = []
-    categoriaEntr = []
-    insumosUnicos = {}
+    paginacion = Paginator(insumosExistentes, 10)  # Muestra 10 insumos por página
+    pagina = request.GET.get('pagina')
 
-    for insumo in insumosConEmpresas:
-        referencia = insumo.referencia
-        if referencia not in insumosUnicos:
-            insumosUnicos[referencia] = insumo
+    try:
+        insumos = paginacion.page(pagina)
+    except PageNotAnInteger:
+        # Si el parámetro de la página no es un número, muestra la primera página
+        insumos = paginacion.page(1)
+    except EmptyPage:
+        # Si la página está fuera de rango, muestra la última página de resultados
+        insumos = paginacion.page(paginacion.num_pages)
+    return render(request, 'ingresoCategoria.html',{'insumos': insumos})
 
-    if request.method == 'POST':
-        referencia = request.POST.get('referencia')
-        categoria = request.POST.get('categoria')
+def verInventarioAdmin(request, insumoId):
+    item = Insumo.objects.get(id=insumoId)
+    valorSubTotal = item.cantidad*item.valorUnitario
+    if item.impuesto == 'si':
+        valorTotal = valorSubTotal+(valorSubTotal*0.19)
+    else:
+        valorTotal = valorSubTotal
 
-        insumoEntr.append(referencia)
-        categoriaEntr.append(categoria) 
-        categorizacion(insumoEntr,categoriaEntr)
-
-        insumos = Insumo.objects.filter(referencia=referencia, categoria__isnull=True) | Insumo.objects.filter(referencia=referencia, categoria__exact='')
-        for insumo in insumos:
-            insumo.categoria = categoria
-            insumo.save()
-        return redirect(ingresoCategoria)
-
-    return render(request, 'ingresoCategoria.html',{'insumosUnicos': insumosUnicos.values()})
-
+    return render(request, "verInventarioAdmin.html", {'item': item, 'valorTotal': valorTotal})

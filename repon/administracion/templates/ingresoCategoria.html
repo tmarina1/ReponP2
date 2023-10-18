@@ -13,18 +13,51 @@
 <div class="containerBtnVolver">
     <a href="{% url 'landingAdmon' %}" class="btnVolver">Volver</a>
 </div>
-<section class="containerGeneral">
-    {% for insumo in insumosUnicos %}
-        <h2>{{ insumo.proyectoAsociado.empresa.nombreEmpresa }}</h2>
-        <form method="post" class="containerIngresoCategoria">
-            {% csrf_token %}
-            <input type="hidden" name="referencia" value="{{ insumo.referencia }}">
-            <p>{{ insumo.referencia }}</p>
-            <input type="text" placeholder="Ingrese la categoría" name="categoria">
-            <button type="submit" id="btnEnviar"><i class="fas fa-check"></i></button>
-        </form>
-    {% empty %}
-        <p id="alertaInsumo">Todos los insumos asociados a la empresa tienen una categoría asignada.</p>
-    {% endfor %}
+<section class="containerInventario">
+    <table>
+        <thead>
+            <tr>
+                <th>Código Insumo</th>
+                <th>Referencia</th>
+                <th>Marca</th>
+                <th>Cantidad</th>
+                <th>Ver Item</th>
+            </tr>
+        </thead>
+        <tbody>  
+            {% for insumo in insumos %}
+            <tr>
+                <td>{{insumo.codigo}}</td>
+                <td>{{insumo.referencia}}</td>
+                <td>{{insumo.nombreMarca}}</td>
+                <td>{{insumo.cantidad|floatformat:2}}</td>
+                <td class="verItem">
+                    <a href="{% url 'verInventarioAdmin' insumo.id %}" class="containerCirculo">
+                    <div class="circulo">
+                        <i class="fas fa-chevron-right" id="flecha"></i>
+                    </div>
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </section>
+<div class="paginacion">
+    <span class="links">
+        {% if insumos.has_previous %}
+            <a href="?pagina=1">&laquo; primera</a>
+            <a href="?pagina={{ insumos.previous_page_number }}">anterior</a>
+        {% endif %}
+
+        <span class="actual">
+            Página {{ insumos.number }} de {{ insumos.paginator.num_pages }}.
+        </span>
+
+        {% if insumos.has_next %}
+            <a href="?pagina={{ insumos.next_page_number }}">siguiente</a>
+            <a href="?pagina={{ insumos.paginator.num_pages }}">última &raquo;</a>
+        {% endif %}
+    </span>
+</div>
 {% endblock %}
