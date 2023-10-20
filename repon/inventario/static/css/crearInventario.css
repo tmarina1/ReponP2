@@ -88,6 +88,7 @@ form{
 .botones {
     display: flex;
     justify-content: space-between;
+    
 }
 
 .botones>a, .botones>button{

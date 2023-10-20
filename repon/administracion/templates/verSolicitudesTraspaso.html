@@ -1,0 +1,60 @@
+{% extends 'autenticacion/plantillaFondoCompleto.html' %}
+{% load static %}
+{% block title %}Traspaso{% endblock %}
+{%block head%}
+<link rel="stylesheet" href="{% static 'css/inventario.css' %}">
+<script src="https://kit.fontawesome.com/4efaf993e1.js" crossorigin="anonymous"></script>
+{%endblock%}
+
+{% block content %}
+<section class="containerTituloLanding">
+    <div class="containerBusqueda">
+        
+    </div>
+    <h1 class="tituloLandingInventario">Solicitudes de traspaso</h1>
+</section>
+<section class="containerInventario">
+    <table>
+        <thead>
+            <tr>
+                <th>Insumo</th>
+                <th>Cantidad</th>
+                <th>Proyecto origen</th>
+                <th>Proyecto destino</th>
+                <th>Coordinador</th>
+                <th>Aceptar</th>
+                <th>Rechazar</th>
+            </tr>
+        </thead>
+        <tbody> 
+            {% for solicitud in solicitudes %}
+                {% if solicitud.estado == 'Pendiente' %}
+                <tr>
+                    <td>{{solicitud.insumo.nombreMarca}}</td>
+                    <td>{{solicitud.cantidad}}</td>
+                    <td>{{solicitud.proyectoOrigen.nombreProyecto}}</td>
+                    <td>{{solicitud.proyectoDestino.nombreProyecto}}</td>
+                    <td>{{solicitud.coordinadorSolicitante.usuario.first_name}}</td>
+
+                    <td>
+                        <a href="#" class="containerCirculo" style="display: flex; justify-content:center; ">
+                        <div class="circulo" style="background-color:green;width: 45px;height: 45px;">
+                            <i class="fas fa-chevron-right"  id="flecha"></i>
+                        </div>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="#" class="containerCirculo" style="display: flex; justify-content:center; ">
+                        <div class="circulo" style="background-color:red;width: 45px;height: 45px;">
+                            <i class="fas fa-chevron-right" id="flecha"></i>
+                        </div>
+                        </a>
+                    </td>
+                </tr>
+                {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+{% endblock %}

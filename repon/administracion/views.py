@@ -165,3 +165,10 @@ def verEmpresa(request):
     proyectos = models.Proyecto.objects.filter(empresaVinculada = empresa.id)
     return render(request, 'verEmpresa.html',{'empresa':empresa, 'proyectos':proyectos})
 
+@login_required
+def verSolicitudesTraspaso(request):
+    idUsuario = request.user.id
+    solicitudes = TransferenciaInsumo.objects.filter(administrador_id = idUsuario)
+    
+    return render(request,'verSolicitudesTraspaso.html',{'solicitudes':solicitudes})
+

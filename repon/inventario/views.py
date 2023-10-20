@@ -42,7 +42,7 @@ def inventario(request, proyectoId):
     print (mensajes)
     return render(request, "inventario.html",{'proyecto':proyectoId,'inventario':inventarioInsumos,'terminoBusqueda':terminoBusqueda, 'mensajes':mensajes})
 '''
-Describir
+Metodo que se encarga de listar los isumos del inventario
 '''
 @login_required
 def verItemInventario(request, insumoId):
@@ -56,25 +56,24 @@ def verItemInventario(request, insumoId):
     
 
     if request.method == 'POST':
-        cantidad = request.POST['cantidad']
-        coordinadorSolicitante = request.user.id
-        administrador = item.proyectoAsociado.empresaVinculada.usuarioVinculado
-        proyectoOrigen = item.proyectoAsociado
+        cantidad = request.POST['cantidadTraspaso']
 
-        destino = Proyecto.objects.get(coordinadorVinculado = coordinadorSolicitante)
+        coordinadorSolicitante = request.user.id
+        administrador = item.proyectoAsociado.empresaVinculada.usuarioVinculado.id
+        proyectoOrigen = item.proyectoAsociado.id    
+        destino = Proyecto.objects.get(coordinadorVinculado_id = coordinadorSolicitante)
         proyectoDestino = destino.id
         insumo = item.id
-        
-        peticion = TransferenciaInsumo.objects.create(coordinadorSolicitante = coordinadorSolicitante, administrador = administrador,
-                                                      proyectoOrigen = proyectoOrigen, proyectoDestino = proyectoDestino, insumo=insumo,
+        peticion = TransferenciaInsumo.objects.create(coordinadorSolicitante_id = coordinadorSolicitante, administrador_id = administrador,
+                                                      proyectoOrigen_id = proyectoOrigen, proyectoDestino_id = proyectoDestino, insumo_id=insumo,
                                                       cantidad = cantidad)
         
         peticion.save()
         mensaje = 'se ha enviado la solicitud correctamente'
-        return redirect(verItemInventario, {'item': item, 'valorTotal': valorTotal, 'mensaje':mensaje})
 
 
     return render(request, "verInventario.html", {'item': item, 'valorTotal': valorTotal, 'mensaje':mensaje})
+
 '''
 Este método tiene como propósito mostrar la página principal destinada al usuario con el rol de coordinador. 
 La página principal para el coordinador proporciona acceso a las funciones relacionadas con la gestión de proyectos 

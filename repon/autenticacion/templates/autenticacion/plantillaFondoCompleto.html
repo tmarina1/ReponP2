@@ -18,9 +18,12 @@
 
 <body>
     <section class="navProyecto">
-        <div class="containerNav">
+        <div class="containerNav" >
             <img src="{% static 'img/PAS-logos_white.png' %}" alt="Logo blanco PAS">
+            <div class="containerNav">
+            <a type="button" value="Volver" style="background-color:red; color:#fff;" onClick="javascript:history.go(-1);">Volver</a>
             <a href="{% url 'inicioSesion' %}">Cerrar sesión</a>
+            </div>
         </div>
         <div class="lineDecorativa"></div>
     </section>
