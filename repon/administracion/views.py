@@ -164,3 +164,10 @@ def verEmpresa(request):
     proyectos = models.Proyecto.objects.filter(empresaVinculada = empresa.id)
     return render(request, 'verEmpresa.html',{'empresa':empresa, 'proyectos':proyectos})
 
+@login_required
+def panelAdministrador(request):
+    return render(request, 'panelAdministrador.html', request)
+
+@login_required
+def comparacionMedio(request):
+    return render(request, 'comparacionMedio.html', request)

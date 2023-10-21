@@ -1,0 +1,75 @@
+h3{
+    margin: 0px ;
+}
+.tituloLanding{
+    margin-top: 50px;
+    color: #ffffff;
+    font-size: 28px;
+    text-align: center;
+}
+.containerTituloLanding{
+    height: 10%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.containerBotones{
+    width: 80%;
+    height: fit-content;
+    margin: 40px auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 40px;
+}
+.botonesLanding{
+    width: 50%;
+    height: 110px;
+    background-color: #ffffff;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.533);
+    border-radius: 25px; 
+    display: flex;
+    justify-content: space-evenly;
+    text-decoration: none;
+}
+.containerContenido{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: #000000;
+    height: 100%;
+}
+.containerCirculo{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.textoContenido{
+    text-align: center;
+    color: #152850;
+    font-size: 20px;
+    width: 100%;
+    margin: 0px;
+    line-height: 18px;
+}
+.iconos{
+    width: 80px;
+}
+.circulo{
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #1C274C;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+    font-size: 30px;
+}
+#flecha{
+    color: #ffffff;
+}
