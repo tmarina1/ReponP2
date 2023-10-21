@@ -50,6 +50,8 @@
 .table {
     min-width: 250px;
     width: 100%;
+    border: 2px solid rgb(0, 0, 0);
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
 }
 
 .containerBtnVolver{
