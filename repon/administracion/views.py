@@ -192,7 +192,6 @@ def aceptarTraspaso(request, transferenciaId):
         insumo =  Insumo.objects.get(id = solicitud.insumo_id)
         coordinador = User.objects.get(id = solicitud.coordinadorSolicitante_id)
         proyecto = models.Proyecto.objects.get(coordinadorVinculado_id = solicitud.coordinadorSolicitante_id)
-
         plantilla = render_to_string('traspasos/correoAprobacion.html',{
             'nombre': coordinador.first_name,
             'insumo': insumo.referencia,
@@ -207,7 +206,6 @@ def aceptarTraspaso(request, transferenciaId):
         )
         correoAEnviar.fail_silently = False
         correoAEnviar.send()
-
         if solicitud.cantidad == insumo.cantidad:
             insumo.proyectoAsociado_id = solicitud.proyectoDestino_id
             insumo.save()
@@ -225,8 +223,6 @@ def aceptarTraspaso(request, transferenciaId):
                                                     ubicacion = insumo.ubicacion,fechaCaducidad = insumo.fechaCaducidad,
                                                     fechaCompra = insumo.fechaCompra, observaciones = insumo.observaciones, proyectoAsociado_id = solicitud.proyectoDestino_id)
                 nuevoInsumo.save()
-        
-
         return redirect(verSolicitudesTraspaso)
     return render(request, 'traspasos/aceptado.html')
 
