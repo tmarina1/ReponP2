@@ -1,13 +1,10 @@
-h3{
-    margin: 0px ;
-}
-.tituloLanding{
+.tituloPanel{
     margin-top: 50px;
-    color: #ffffff;
+    color: red;
     font-size: 28px;
     text-align: center;
 }
-.containerTituloLanding{
+.tituloContainer{
     height: 10%;
     width: 100%;
     display: flex;
@@ -47,14 +44,6 @@ h3{
     display: flex;
     justify-content: center;
     align-items: center;
-}
-.textoContenido{
-    text-align: center;
-    color: #152850;
-    font-size: 20px;
-    width: 100%;
-    margin: 0px;
-    line-height: 18px;
 }
 .iconos{
     width: 80px;

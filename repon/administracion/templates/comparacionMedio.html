@@ -2,49 +2,49 @@
 {% load static %}
 {% block title %}Comparacion con el medio{% endblock %}
 {%block head%}
-<link rel="stylesheet" href="{% static 'css/panelAdministrador.css' %}">
+<link rel="stylesheet" href="{% static 'css/comparacionMedio.css' %}">
 <script src="https://kit.fontawesome.com/4efaf993e1.js" crossorigin="anonymous"></script>
 {%endblock%}
 
 {% block content %}
-<section class="comparacionMedio">
-    <h1 class="tituloLanding"></h1>
-</section>
-<section class="containerBotones">
-    <div class="containerContenido">
-        <h3 class="subtitulos">Comparacion con el medio</h3>
+<section class="contenido">
+    <div class="cuadroBlanco">
+        <div class="containerContenido">
+            <h1 id="titulo">Empresa vs medio</h1>
+            <div class="containerColumnas" >
+                <div class="columna" >
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th scope="col">Mi Empresa</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>@mdo</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="columna" >
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th scope="col">El medio</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>@mdo</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="comparacion">
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th scope="col">Handle</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                </tr>
-            </tbody>
-        </table>
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th scope="col">Handle</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                </tr>
-            </tbody>
-        </table>
+    <div class="containerBtnVolver">
+        <a href="{% url 'landingAdmon' %}" class="btnVolver">Volver</a>
     </div>
 </section>
 {% endblock %}
