@@ -54,19 +54,37 @@
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
 }
 
-.containerBtnVolver{
+.botones{
     display: flex;
-    justify-content: center;
-    width: 100%;
-    margin-top: 40px;
+    justify-content: space-between;
+    padding-bottom: 20px;
 }
-.btnVolver{
-    color: white;
-    font-size: 18px;
-    background-color: #ED1A28;
-    border-radius: 10px;
+.botones>a, .botones>button{
     text-decoration: none;
-    padding: 5px 15px;
+    color: #ffffff;
+    font-size: 18px;
+    border-radius: 5px;
+    padding: 3px 10px;
+}
+.botones>a{
+    background-color: #152850;
+}
+.botones>button{
+    background-color: #5E5BFF;
+}
+.input>input{
+    border-color: #000000;
+}
+
+@media (max-width: 1000px) {
+    .botones{
+        width: 65%;
+    }
+}
+@media (max-width: 600px) {
+    .botones{
+        width: 88%;
+    }
 }
 
 @media (max-width: 1000px) {
