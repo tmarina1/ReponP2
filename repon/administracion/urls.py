@@ -12,6 +12,8 @@ urlpatterns = [
     path('crearProyecto/', views.crearProyecto, name='crearProyecto'),
     path('crearCoordinador/', views.crearCoordinador, name='crearCoordinador'),
     path('verSolicitudesTraspaso/', views.verSolicitudesTraspaso, name='verSolicitudesTraspaso'),
+    path('aceptarTraspaso/<int:transferenciaId>', views.aceptarTraspaso, name='aceptarTraspaso'),
+    path('rechazarTraspaso/<int:transferenciaId>', views.rechazarTraspaso, name='rechazarTraspaso'),
 ]
 
 if settings.DEBUG:

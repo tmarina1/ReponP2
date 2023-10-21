@@ -49,6 +49,13 @@ def verItemInventario(request, insumoId):
     mensaje = ''
     item = Insumo.objects.get(id=insumoId)
     valorSubTotal = item.cantidad*item.valorUnitario
+
+    coordinadorSolicitante = request.user.id
+    coordinadorDueño = item.proyectoAsociado_id
+    
+    coordinadorInsumo = Proyecto.objects.get(id = coordinadorDueño)
+
+
     if item.impuesto == 'si':
         valorTotal = valorSubTotal+(valorSubTotal*0.19)
     else:
@@ -57,8 +64,7 @@ def verItemInventario(request, insumoId):
 
     if request.method == 'POST':
         cantidad = request.POST['cantidadTraspaso']
-
-        coordinadorSolicitante = request.user.id
+        
         administrador = item.proyectoAsociado.empresaVinculada.usuarioVinculado.id
         proyectoOrigen = item.proyectoAsociado.id    
         destino = Proyecto.objects.get(coordinadorVinculado_id = coordinadorSolicitante)
@@ -71,8 +77,7 @@ def verItemInventario(request, insumoId):
         peticion.save()
         mensaje = 'se ha enviado la solicitud correctamente'
 
-
-    return render(request, "verInventario.html", {'item': item, 'valorTotal': valorTotal, 'mensaje':mensaje})
+    return render(request, "verInventario.html", {'item': item, 'valorTotal': valorTotal, 'mensaje':mensaje,'coordinadorInsumo':coordinadorInsumo,'coordinadorSolicitante':coordinadorSolicitante})
 
 '''
 Este método tiene como propósito mostrar la página principal destinada al usuario con el rol de coordinador. 

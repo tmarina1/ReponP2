@@ -1,0 +1,17 @@
+<html>
+    <head>
+    </head>
+        <body>
+            <form method="post">
+                {% csrf_token %}
+                <input type ="hidden" value="aceptado" name="aceptado"/>
+                <Button id="clickButton" class="button" hidden="hidden" type="submit"/>
+            </form>
+        </body>
+        <script>
+            window.onload = function(){
+                var button = document.getElementById('clickButton');
+                button.form.submit();
+            }
+        </script>
+</html>
