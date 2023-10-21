@@ -82,28 +82,14 @@
 }
 
 @media (max-width: 1000px) {
-    .cuadroBlanco{
-        width: 60%;
-        height: 50%;
-    }
     .botones{
         width: 65%;
-    }
-    .containerForm{
-        width: 70%;
     }
 }
 
 @media (max-width: 600px) {
-    .cuadroBlanco{
-        width: 90%;
-        height: 60%;
-    }
     .botones{
         width: 88%;
-    }
-    .containerForm{
-        width: 90%;
     }
 }
 
