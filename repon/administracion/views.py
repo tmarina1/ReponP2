@@ -169,5 +169,5 @@ def panelAdministrador(request):
     return render(request, 'panelAdministrador.html')
 
 @login_required
-def comparacionMedio(request):
-    return render(request, 'comparacionMedio.html')
+def comparacionProyectos(request):
+    return render(request, 'comparacionProyectos.html')

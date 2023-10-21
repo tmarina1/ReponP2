@@ -1,8 +1,8 @@
 {% extends 'autenticacion/plantillaCuadros.html' %}
 {% load static %}
-{% block title %}Comparacion con el medio{% endblock %}
+{% block title %}Comparación entre proyectos{% endblock %}
 {%block head%}
-<link rel="stylesheet" href="{% static 'css/comparacionMedio.css' %}">
+<link rel="stylesheet" href="{% static 'css/comparacionProyectos.css' %}">
 <script src="https://kit.fontawesome.com/4efaf993e1.js" crossorigin="anonymous"></script>
 {%endblock%}
 
@@ -10,13 +10,33 @@
 <section class="contenido">
     <div class="cuadroBlanco">
         <div class="containerContenido">
-            <h1 id="titulo">Empresa vs medio</h1>
+            <h1 id="titulo">Comparación entre proyectos</h1>
+            <div class="containerColumnas seleccionarProyecto" >
+                <div class="columna" >
+                    <div class="input">
+                        <select name="estadoProyecto" id="" class="form-control" required>
+                            <option value="Por empezar">Proyecto #</option>
+                            <option value="Por empezar">Proyecto #</option>
+                            <option value="Por empezar">Proyecto #</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="columna" >
+                    <div class="input">
+                        <select name="estadoProyecto" id="" class="form-control" required>
+                            <option value="Por empezar">Proyecto #</option>
+                            <option value="Por empezar">Proyecto #</option>
+                            <option value="Por empezar">Proyecto #</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
             <div class="containerColumnas" >
                 <div class="columna" >
                     <table class="table table-bordered ">
                         <thead class="table-primary">
                             <tr>
-                                <th scope="col">Mi Empresa</th>
+                                <th scope="col">Proyecto 1</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -36,7 +56,7 @@
                     <table class="table table-bordered">
                         <thead class="table-primary">
                             <tr>
-                                <th scope="col">El medio</th>
+                                <th scope="col">Proyecto 2</th>
                             </tr>
                         </thead>
                         <tbody>
