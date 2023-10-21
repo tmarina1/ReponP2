@@ -47,6 +47,11 @@
     margin-top: 0;
 }
 
+.table {
+    min-width: 250px;
+    width: 100%;
+}
+
 .containerBtnVolver{
     display: flex;
     justify-content: center;
