@@ -204,6 +204,7 @@ def verInventarioAdmin(request, insumoId):
         iva = request.POST.get('iva')
         fechaCaducidad = request.POST.get('fechaCaducidad')
         fechaCompra = request.POST.get('fechaCompra')
+        categoria = request.POST.get('categoria')
         observaciones = request.POST.get('observaciones')
 
         insumoBuscado = Insumo.objects.get(codigo=codigoInsumo)
@@ -223,6 +224,7 @@ def verInventarioAdmin(request, insumoId):
             fechaCompraFormateada = fechaCompra.replace('.', '')
             fechaCompraParseada = datetime.strptime(fechaCompraFormateada, '%b %d, %Y, %I:%M %p')
             insumoBuscado.fechaCompra = fechaCompraParseada
+        insumoBuscado.categoria = categoria
         insumoBuscado.observaciones = observaciones
 
         insumoBuscado.save()

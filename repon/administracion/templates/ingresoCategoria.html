@@ -21,6 +21,7 @@
                 <th>Referencia</th>
                 <th>Marca</th>
                 <th>Cantidad</th>
+                <th>Categoría</th>
                 <th>Ver Item</th>
             </tr>
         </thead>
@@ -31,6 +32,11 @@
                 <td>{{insumo.referencia}}</td>
                 <td>{{insumo.nombreMarca}}</td>
                 <td>{{insumo.cantidad|floatformat:2}}</td>
+                {% if insumo.categoria %}
+                    <td>{{insumo.categoria}}</td>
+                {% else %}
+                    <td>Sin asignar</td>
+                {% endif %}
                 <td class="verItem">
                     <a href="{% url 'verInventarioAdmin' insumo.id %}" class="containerCirculo">
                     <div class="circulo">
