@@ -21,11 +21,12 @@
                         <div class="col">
                             <div class="input">
                                 <label for="basic-url" class="form-label">Codigo Insumo</label>
-                                <p name="codigo" class="form-control">{{ item.codigo }}</p>
+                                <p class="form-control">{{ item.codigo }}</p>
+                                <input type="text" name="codigo" value="{{ item.codigo }}" hidden>
                             </div>
                             <div class="input">
                                 <label for="basic-url" class="form-label">Referencia</label>
-                                <input type="text" name="ref" class="form-control" value="{{ item.referencia }}">
+                                <p class="form-control">{{ item.referencia }}</p>
                             </div>
                             <div class="input">
                                 <label for="basic-url" class="form-label">Unidad Base</label>
@@ -42,13 +43,12 @@
                             </div>
                             <div class="input">
                                 <label for="basic-url" class="form-label">Tipo de insumo</label>
-                                <input type="text" name="marca" class="form-control"
+                                <input type="text" name="tipoInsumo" class="form-control"
                                     value="{{ item.tipoInsumo }}">
                             </div>
                             <div class="input">
                                 <label for="basic-url" class="form-label">Proyecto que genero el insumo</label>
-                                <input type="text" name="marca" class="form-control"
-                                    value="{{ item.proyectoAsociado.nombreProyecto }}">
+                                <p class="form-control">{{ item.proyectoAsociado.nombreProyecto }}</p>
                             </div>
                             <div class="input">
                                 <label for="basic-url" class="form-label">Lugar donde se almacena</label>
@@ -63,11 +63,11 @@
                             </div>
                             <div class="input">
                                 <label for="basic-url" class="form-label">Iva</label>
-                                <input type="text" name="valorU" class="form-control" value="{{item.impuesto}}">
+                                <input type="text" name="iva" class="form-control" value="{{item.impuesto}}">
                             </div>
                             <div class="input">
                                 <label for="basic-url" class="form-label">Valor Total</label>
-                                <input type="number" name="valorU" class="form-control" value="{{valorTotal}}">
+                                <p class="form-control">{{ valorTotal }}</p>
                             </div>
                             <div class="input">
                                 <label for="basic-url" class="form-label">Fecha Ingreso</label>
@@ -88,7 +88,7 @@
                             {% endif %}
                             <div class="input">
                                 <label for="basic-url" class="form-label">Fecha Compra</label>
-                                <input type="datetime" name="fechaCaducidad" class="form-control"
+                                <input type="datetime" name="fechaCompra" class="form-control"
                                     value="{{ item.fechaCompra }}">
                             </div>
                             <div class="input">
@@ -99,6 +99,7 @@
                             <div class="confirmacion">
                                 <div class="botones">
                                     <a class="volver" href="{% url 'ingresoCategoria' %}">Volver</a>
+                                    <button id="btnActualizar" class='btn btn-der btn-sm' type="submit">Actualizar</button>
                                 </div>
                             </div>
                         </div>

@@ -8,6 +8,7 @@ from django.core.mail import EmailMessage as mensajeEmail
 from django.template.loader import render_to_string
 from repon import settings as configuraciones
 from django.db.models import Q
+from datetime import datetime
 from repon.settings import UBICACION
 
 '''
@@ -191,5 +192,41 @@ def verInventarioAdmin(request, insumoId):
         valorTotal = valorSubTotal+(valorSubTotal*0.19)
     else:
         valorTotal = valorSubTotal
+    
+    if request.method == 'POST':
+        codigoInsumo = request.POST.get('codigo')
+        unidadBase = request.POST.get('unidadBase')
+        cantidad = request.POST.get('cantidad')
+        marca = request.POST.get('marca')
+        tipoInsumo = request.POST.get('tipoInsumo')
+        lugarAlmacenado = request.POST.get('lugarAlmacenado')
+        valorUnidad = request.POST.get('valorU')
+        iva = request.POST.get('iva')
+        fechaCaducidad = request.POST.get('fechaCaducidad')
+        fechaCompra = request.POST.get('fechaCompra')
+        observaciones = request.POST.get('observaciones')
+
+        insumoBuscado = Insumo.objects.get(codigo=codigoInsumo)
+
+        insumoBuscado.unidad = unidadBase
+        insumoBuscado.cantidad = cantidad
+        insumoBuscado.nombreMarca = marca
+        insumoBuscado.tipoInsumo = tipoInsumo
+        insumoBuscado.ubicacion = lugarAlmacenado
+        insumoBuscado.valorUnitario = valorUnidad
+        insumoBuscado.impuesto = iva
+        if fechaCaducidad and fechaCaducidad != 'NA':
+            fechaCaducidadFormateada = fechaCaducidad.replace('.', '')
+            fechaCaducidadParseada = datetime.strptime(fechaCaducidadFormateada, '%b %d, %Y, %I:%M %p')
+            insumoBuscado.fechaCaducidad = fechaCaducidadParseada
+        if fechaCompra:
+            fechaCompraFormateada = fechaCompra.replace('.', '')
+            fechaCompraParseada = datetime.strptime(fechaCompraFormateada, '%b %d, %Y, %I:%M %p')
+            insumoBuscado.fechaCompra = fechaCompraParseada
+        insumoBuscado.observaciones = observaciones
+
+        insumoBuscado.save()
+        redirect(verInventarioAdmin,insumoId)
+
 
     return render(request, "verInventarioAdmin.html", {'item': item, 'valorTotal': valorTotal})
