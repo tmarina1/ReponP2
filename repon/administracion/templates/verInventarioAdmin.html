@@ -77,19 +77,19 @@
                             <div class="input">
                                 <label for="basic-url" class="form-label">Fecha Caducidad</label>
                                 <input type="text" name="fechaCaducidad" class="form-control"
-                                    value="{{ item.fechaCaducidad }}">
+                                    value="{{ item.fechaCaducidad|date:'Y-m-d\TH:i' }}">
                             </div>
                             {% else %}
                             <div class="input">
-                                <label for="basic-url" class="form-label">Fecha Caducidad</label>
-                                <input type="text" name="fechaCaducidad" class="form-control"
-                                    value="NA">
+                                <label for="basic-url" class="form-label">Fecha Caducidad (sin asignar aún)</label>
+                                <input type="datetime-local" name="fechaCaducidad" class="form-control"
+                                    value="">
                             </div>
                             {% endif %}
                             <div class="input">
                                 <label for="basic-url" class="form-label">Fecha Compra</label>
-                                <input type="datetime" name="fechaCompra" class="form-control"
-                                    value="{{ item.fechaCompra }}">
+                                <input type="datetime-local" name="fechaCompra" class="form-control"
+                                    value="{{ item.fechaCompra|date:'Y-m-d\TH:i' }}">
                             </div>
                             <div class="input">
                                 <label for="basic-url" class="form-label">Categoría</label>

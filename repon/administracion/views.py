@@ -207,7 +207,7 @@ def verInventarioAdmin(request, insumoId):
         categoria = request.POST.get('categoria')
         observaciones = request.POST.get('observaciones')
 
-        insumoBuscado = Insumo.objects.get(codigo=codigoInsumo)
+        insumoBuscado = Insumo.objects.get(id=insumoId)
 
         insumoBuscado.unidad = unidadBase
         insumoBuscado.cantidad = cantidad
@@ -217,18 +217,16 @@ def verInventarioAdmin(request, insumoId):
         insumoBuscado.valorUnitario = valorUnidad
         insumoBuscado.impuesto = iva
         if fechaCaducidad and fechaCaducidad != 'NA':
-            fechaCaducidadFormateada = fechaCaducidad.replace('.', '')
-            fechaCaducidadParseada = datetime.strptime(fechaCaducidadFormateada, '%b %d, %Y, %I:%M %p')
+            fechaCaducidadParseada = datetime.strptime(fechaCaducidad, '%Y-%m-%dT%H:%M')
             insumoBuscado.fechaCaducidad = fechaCaducidadParseada
         if fechaCompra:
-            fechaCompraFormateada = fechaCompra.replace('.', '')
-            fechaCompraParseada = datetime.strptime(fechaCompraFormateada, '%b %d, %Y, %I:%M %p')
+            fechaCompraParseada = datetime.strptime(fechaCompra, '%Y-%m-%dT%H:%M')
             insumoBuscado.fechaCompra = fechaCompraParseada
         insumoBuscado.categoria = categoria
         insumoBuscado.observaciones = observaciones
 
         insumoBuscado.save()
-        redirect(verInventarioAdmin,insumoId)
+        return redirect(verInventarioAdmin, insumoId)
 
 
     return render(request, "verInventarioAdmin.html", {'item': item, 'valorTotal': valorTotal})
