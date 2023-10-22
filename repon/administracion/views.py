@@ -23,7 +23,8 @@ def landingAdmon(request):
     mensaje=''
     if not empresa:
         return redirect(crearEmpresas)
-    return render(request, "landingAdmon.html")
+    estadoTransferencia = 0
+    return render(request, "landingAdmon.html",{'estadoTransferencia':estadoTransferencia})
 
 
 '''
@@ -172,43 +173,73 @@ al aprobar una solicitud se verificara si la nueva cantidad del insumo está dis
 peticion automaticamente y se enviara un correo al coordinador con su respectiva respuesta
 '''
 @login_required
-def verSolicitudesTraspaso(request):
+def verSolicitudesTraspaso(request, estadoTransferencia):
     idUsuario = request.user.id
+    mensaje = ''
     solicitudes = TransferenciaInsumo.objects.filter(administrador_id = idUsuario)
+    if estadoTransferencia == 1:
+        mensaje = 'Lo sentimos, se ha rechazado por falta de insumos en el inventario'
+    elif estadoTransferencia == 2:
+        mensaje = 'Se ha aceptado exitosamente'
+    elif estadoTransferencia == 3:
+        mensaje = 'Se ha rechazado exitosamente'
 
-    return render(request,'verSolicitudesTraspaso.html',{'solicitudes':solicitudes})
+    return render(request,'verSolicitudesTraspaso.html',{'solicitudes':solicitudes,'mensaje':mensaje})
 
 '''
 Metodo encargado de realizar el proceso de transferencia de insumos de un proyecto a otro cuando este es aceptado por el
-administrador de la empresa. Enviando un correo al coordinador con su respectiva respuesta. 
+administrador de la empresa. Enviando un correo al coordinador con su respectiva respuesta.
+estadoTransferencia = 1: se ha rechazado por falta de insumos en el inventario
+estadoTransferencia = 2: se ha aceptado por parte del administrador
 '''
 @login_required
 def aceptarTraspaso(request, transferenciaId):
     if request.method == 'POST':
         solicitud = TransferenciaInsumo.objects.get(id = transferenciaId)
-        solicitud.estado = "Aceptado"
-        solicitud.save() 
-
         insumo =  Insumo.objects.get(id = solicitud.insumo_id)
         coordinador = User.objects.get(id = solicitud.coordinadorSolicitante_id)
         proyecto = models.Proyecto.objects.get(coordinadorVinculado_id = solicitud.coordinadorSolicitante_id)
-        plantilla = render_to_string('traspasos/correoAprobacion.html',{
+        
+
+        if solicitud.cantidad > insumo.cantidad or solicitud.proyectoDestino_id == insumo.proyectoAsociado_id:
+            plantilla = render_to_string('traspasos/correoFaltaInventario.html',{
             'nombre': coordinador.first_name,
             'insumo': insumo.referencia,
             'cantidad': solicitud.cantidad
-        })
-        asunto = f"Respuesta a la solicitud del insumo \"{insumo.referencia}\" para el proyecto \"{proyecto.nombreProyecto}\""
-        correoAEnviar = mensajeEmail(
-            asunto,
-            plantilla,
-            configuraciones.EMAIL_HOST_USER,
-            [coordinador.email]
-        )
-        correoAEnviar.fail_silently = False
-        correoAEnviar.send()
-        if solicitud.cantidad == insumo.cantidad:
+            })
+            asunto = f"Respuesta a la solicitud del insumo \"{insumo.referencia}\" para el proyecto \"{proyecto.nombreProyecto}\""
+            correoAEnviar = mensajeEmail(
+                asunto,
+                plantilla,
+                configuraciones.EMAIL_HOST_USER,
+                [coordinador.email]
+            )
+            correoAEnviar.fail_silently = False
+            correoAEnviar.send()
+            estadoTransferencia = 1
+            solicitud.estado = "Rechazado"
+            solicitud.save() 
+
+        elif solicitud.cantidad == insumo.cantidad:
             insumo.proyectoAsociado_id = solicitud.proyectoDestino_id
             insumo.save()
+            plantilla = render_to_string('traspasos/correoAprobacion.html',{
+            'nombre': coordinador.first_name,
+            'insumo': insumo.referencia,
+            'cantidad': solicitud.cantidad
+            })
+            asunto = f"Respuesta a la solicitud del insumo \"{insumo.referencia}\" para el proyecto \"{proyecto.nombreProyecto}\""
+            correoAEnviar = mensajeEmail(
+                asunto,
+                plantilla,
+                configuraciones.EMAIL_HOST_USER,
+                [coordinador.email]
+            )
+            correoAEnviar.fail_silently = False
+            correoAEnviar.send()
+            estadoTransferencia = 2
+            solicitud.estado = "Aceptado"
+            solicitud.save() 
         elif solicitud.cantidad < insumo.cantidad:
             insumo.cantidad -= solicitud.cantidad
             insumo.save()
@@ -223,12 +254,30 @@ def aceptarTraspaso(request, transferenciaId):
                                                     ubicacion = insumo.ubicacion,fechaCaducidad = insumo.fechaCaducidad,
                                                     fechaCompra = insumo.fechaCompra, observaciones = insumo.observaciones, proyectoAsociado_id = solicitud.proyectoDestino_id)
                 nuevoInsumo.save()
-        return redirect(verSolicitudesTraspaso)
+            plantilla = render_to_string('traspasos/correoAprobacion.html',{
+            'nombre': coordinador.first_name,
+            'insumo': insumo.referencia,
+            'cantidad': solicitud.cantidad
+            })
+            asunto = f"Respuesta a la solicitud del insumo \"{insumo.referencia}\" para el proyecto \"{proyecto.nombreProyecto}\""
+            correoAEnviar = mensajeEmail(
+                asunto,
+                plantilla,
+                configuraciones.EMAIL_HOST_USER,
+                [coordinador.email]
+            )
+            correoAEnviar.fail_silently = False
+            correoAEnviar.send()
+            estadoTransferencia = 2
+            solicitud.estado = "Aceptado"
+            solicitud.save() 
+        return redirect(verSolicitudesTraspaso, estadoTransferencia)
     return render(request, 'traspasos/aceptado.html')
 
 '''
 Metodo encargado de estabelcer el estado rechazado en el proceso de transferencia de insumos de un proyecto a otro cuando este 
 es denegado por el administrador de la empresa. Enviando un correo al coordinador con su respectiva respuesta.
+estadoTransferencia = 3: se ha Rechazado por parte del administrador
 '''
 @login_required
 def rechazarTraspaso(request, transferenciaId):
@@ -254,8 +303,8 @@ def rechazarTraspaso(request, transferenciaId):
         )
         correoAEnviar.fail_silently = False
         correoAEnviar.send()
-
-        return redirect(verSolicitudesTraspaso)
+        estadoTransferencia = 3
+        return redirect(verSolicitudesTraspaso, estadoTransferencia)
     return render(request, 'traspasos/rechazado.html')
 
 

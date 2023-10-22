@@ -11,7 +11,7 @@ urlpatterns = [
     path('verEmpresa/', views.verEmpresa, name='verEmpresa'),
     path('crearProyecto/', views.crearProyecto, name='crearProyecto'),
     path('crearCoordinador/', views.crearCoordinador, name='crearCoordinador'),
-    path('verSolicitudesTraspaso/', views.verSolicitudesTraspaso, name='verSolicitudesTraspaso'),
+    path('verSolicitudesTraspaso/<int:estadoTransferencia>', views.verSolicitudesTraspaso, name='verSolicitudesTraspaso'),
     path('aceptarTraspaso/<int:transferenciaId>', views.aceptarTraspaso, name='aceptarTraspaso'),
     path('rechazarTraspaso/<int:transferenciaId>', views.rechazarTraspaso, name='rechazarTraspaso'),
 ]

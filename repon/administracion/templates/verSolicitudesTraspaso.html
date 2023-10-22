@@ -9,10 +9,18 @@
 {% block content %}
 <div class="containerBtnVolver">
     <h1 class="tituloLandingInventario">Solicitudes de traspaso</h1>
+    
 </div>
 <div class="containerBtnVolver">
     <a href="{% url 'landingAdmon' %}" class="btnVolver">Volver</a>
 </div>
+{% if mensaje%}
+<br>
+<div class="containerBtnVolver">
+    <p class="alert alert-warning" role="alert"> {{ mensaje }}</p>
+</div>
+{% endif %}
+
 <section class="containerInventario">
     <table>
         <thead>
