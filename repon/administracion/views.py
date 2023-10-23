@@ -9,8 +9,14 @@ from django.template.loader import render_to_string
 from repon import settings as configuraciones
 from django.db.models import Q
 from datetime import datetime
+import pandas as pd
 from repon.settings import UBICACION
-
+#------------------------------------------------------------------
+from sklearn.model_selection import train_test_split
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.naive_bayes import MultinomialNB
+import joblib
+import os
 '''
 Este método permite mostrar la página principal de los usuarios administradores. Para acceder a esta página,
 es necesario estar autenticado como administrador. El sistema obtiene el ID de usuario y verifica si aún no
@@ -170,7 +176,8 @@ def verEmpresa(request):
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 def ingresoCategoria(request):
-    insumosExistentes = Insumo.objects.all().order_by('referencia')
+    idUsuario = request.user.id
+    insumosExistentes = Insumo.objects.filter(proyectoAsociado__empresaVinculada__usuarioVinculado__id = idUsuario).order_by('referencia')
 
     paginacion = Paginator(insumosExistentes, 10)  # Muestra 10 insumos por página
     pagina = request.GET.get('pagina')
@@ -230,3 +237,29 @@ def verInventarioAdmin(request, insumoId):
 
 
     return render(request, "verInventarioAdmin.html", {'item': item, 'valorTotal': valorTotal})
+
+def subirArchivoEntreno(request):
+    mensajes =''
+    try:
+        if request.method == 'POST' and request.FILES['archivo']:
+            archivo = request.FILES['archivo']
+            df = pd.read_excel(archivo)
+            X = df['Referencia']
+            y = df['categoria']
+            X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+            vectorTFIDF = TfidfVectorizer()
+            X_train_tfidf = vectorTFIDF.fit_transform(X_train)
+
+            modelo_path = os.path.join('administracion', 'static', 'archivosModelo', 'modeloDeClasificacion.pkl')
+            vectorizador_path = os.path.join('administracion', 'static', 'archivosModelo', 'vectorizadorTFIDF.pkl')
+
+            clf = MultinomialNB()
+            clf.fit(X_train_tfidf, y_train)
+
+            joblib.dump(clf, modelo_path)
+            joblib.dump(vectorTFIDF, vectorizador_path)
+            return redirect(landingAdmon)
+    except:
+        mensajes = ['Error con el archivo subido, por favor verifica que el formato esté correctamente diligenciado']
+    return render(request, 'subirArchivoEntreno.html', {'mensajes':mensajes})

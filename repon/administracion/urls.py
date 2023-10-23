@@ -13,6 +13,7 @@ urlpatterns = [
     path('crearCoordinador/', views.crearCoordinador, name='crearCoordinador'),
     path('ingresoCategoria/', views.ingresoCategoria, name='ingresoCategoria'),
     path('verInventarioAdmin/<int:insumoId>', views.verInventarioAdmin, name='verInventarioAdmin'),
+    path('subirArchivoEntreno/', views.subirArchivoEntreno, name='subirArchivoEntreno'),
 ]
 
 if settings.DEBUG:

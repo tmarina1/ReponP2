@@ -13,6 +13,7 @@ openpyxl="*"
 numpy = "*"
 scikit-learn = "*"
 nltk = "*"
+joblib = "*"
 
 [dev-packages]
 
