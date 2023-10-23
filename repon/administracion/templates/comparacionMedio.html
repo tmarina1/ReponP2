@@ -1,0 +1,81 @@
+{% extends 'autenticacion/plantillaCuadros.html' %}
+{% load static %}
+{% block title %}Comparacion con el medio{% endblock %}
+{%block head%}
+<link rel="stylesheet" href="{% static 'css/comparacionMedio.css' %}">
+<script src="https://kit.fontawesome.com/4efaf993e1.js" crossorigin="anonymous"></script>
+{%endblock%}
+
+{% block content %}
+<section class="contenido">
+    <div class="cuadroBlanco">
+        <div class="containerContenido">
+            <h1 id="titulo">Empresa vs medio</h1>
+            <div class="containerColumnas" >
+                <div class="columna" >
+                    <table class="table table-bordered ">
+                        <thead class="table-primary">
+                            <tr>
+                                <th scope="col">{{empresa.nombreEmpresa}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Cantidad de proyectos: {{ miEmpresa.proyectosMiEmpresa |floatformat:-2 }}</td>
+                            </tr>
+                            <tr>
+                                <td>Cantidad de insumos sobrantes: {{ miEmpresa.cantidadInsumos |floatformat:-2}}</td>
+                            </tr>
+                            <tr>
+                                {% load humanize %}
+                                <td>Valor inventario: $ {{ miEmpresa.costosInsumos|intcomma }}</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Insumos más desperdiciado:</p>
+                                    {% for i in miEmpresa.Desperdiciados %}
+                                        <p>{{i.referencia }}</p>
+                                    {% endfor %}
+                                </td>
+                                
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="columna" >
+                    <table class="table table-bordered">
+                        <thead class="table-primary">
+                            <tr>
+                                <th scope="col">El medio</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Cantidad de proyectos: {{ medio.promedioProyectosRestantes|floatformat:-2 }}</td>
+                            </tr>
+                            <tr>
+                                <td >Cantidad de insumos sobrantes: {{ medio.promedioInsumos |floatformat:-2}} </td>
+                            </tr>
+                            <tr>
+                                <td>Valor inventario: $ {{ medio.promedioPrecios |intcomma}} </td>
+                            </tr>
+                            <tr>
+                                <td >
+                                <p>Insumos más desperdiciado:</p>
+                                    {% for i in medio.insumosMayorCantidad  %}
+                                        <p>{{i.referencia }}</p>
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="botones">
+                <a class="volverCrearProyecto" href="{% url 'panelAdministrador' %}">Volver</a>
+            </div>
+        </div>
+    </div>
+
+</section>
+{% endblock %}

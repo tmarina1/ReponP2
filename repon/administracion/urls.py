@@ -19,6 +19,7 @@ urlpatterns = [
     path('ingresoCategoria/', views.ingresoCategoria, name='ingresoCategoria'),
     path('verInventarioAdmin/<int:insumoId>', views.verInventarioAdmin, name='verInventarioAdmin'),
     path('subirArchivoEntreno/', views.subirArchivoEntreno, name='subirArchivoEntreno'),
+    path('comparacionMedio/', views.comparacionMedio, name='comparacionMedio'),
 ]
 
 if settings.DEBUG:

@@ -62,3 +62,21 @@
 #flecha{
     color: #ffffff;
 }
+.botones{
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 20px;
+    margin: auto;
+    padding-bottom: 30px;
+}
+
+.botones>a, .botones>button{
+    text-decoration: none;
+    color: #fff;
+    font-size: 18px;
+    border-radius: 5px;
+    padding: 3px 10px;
+}
+.botones>a{
+    background-color: #3855C2;
+} 

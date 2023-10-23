@@ -23,7 +23,7 @@
             <form method="post" enctype="multipart/form-data">
                 <div class="containerForm">
                     {% csrf_token %}
-                    <p for="basic-url" class="instruccionLabel">1.Descargar plantilla de excel para carga de insumos y Diligenciar Excel en el formato indicado por la plantilla</p>
+                    <p for="basic-url" class="instruccionLabel">1.Descargar plantilla de excel para carga información para categorización automática</p>
                     <a class="descarga" href="{% static 'formatoModelo.xlsx' %}" download="formatoModelo.xlsx">
                         <div class="cuadroAzul">
                             <div class="row">
@@ -48,7 +48,7 @@
 
                 </div>
                 <div class="botones">
-                    <a class="volver" href="{% url 'landingAdmon'%}">Volver</a>
+                    <a class="volver" href="{% url 'panelAdministrador'%}">Volver</a>
                     <button type="submit" class="btn btn-der btn-sm">Guardar</button>
                 </div>
             </form>

@@ -201,21 +201,21 @@ def comparacionProyectos(request):
         cantidadInsumos = Insumo.objects.filter(proyectoAsociado_id = proyectoActual.id).aggregate(cantidad=Sum('cantidad'))
         insumoMasDesaprovechado = Insumo.objects.filter(proyectoAsociado_id = proyectoActual.id).order_by('cantidad')[:3]
         costosInsumos = Insumo.objects.filter(proyectoAsociado_id = proyectoActual.id).aggregate(total = Sum(F('valorUnitario')*F('cantidad')))
-        #Aprovados = TraspasoInsumo.objects.filter(proyectoDestino_id = proyectoActual.id,estado = "Aceptado")
+        Aprobados = TransferenciaInsumo.objects.filter(proyectoDestino_id = proyectoActual.id,estado = "Aceptado").count()
 
-        miActualProyecto = {'cantidadInsumos':cantidadInsumos,'insumoMasDesaprovechado':insumoMasDesaprovechado,
-                            'costosInsumos':costosInsumos}
+        miActualProyecto = {'proyectoActual':proyectoActual,'cantidadInsumos':cantidadInsumos,'insumoMasDesaprovechado':insumoMasDesaprovechado,
+                            'costosInsumos':costosInsumos,'Aprobados':Aprobados}
         ##lado der
-        #proyectoAComparar = models.Proyecto.objects.get(nombreProyecto = otroProyecto)
-        #cantidadInsumosOtro = Insumo.objects.filter(proyectoAsociado_id = proyectoAComparar.id).aggregate(cantidad=Sum('cantidad'))
-        #insumoMasDesaprovechadoOtro = Insumo.objects.filter(proyectoAsociado_id = proyectoAComparar).id.order_by('cantidad')[:3]
-        #costosInsumosOtro = Insumo.objects.filter(proyectoAsociado_id = proyectoAComparar.id).aggregate(total = Sum(F('valorUnitario')*F('cantidad')))
-        #Aprovados = TraspasoInsumo.objects.filter(proyectoAsociado_id = proyectoAComparar.id,estado = "Aceptado")
+        proyectoAComparar = models.Proyecto.objects.get(nombreProyecto = otroProyecto)
+        cantidadInsumosOtro = Insumo.objects.filter(proyectoAsociado_id = proyectoAComparar.id).aggregate(cantidad=Sum('cantidad'))
+        insumoMasDesaprovechadoOtro = Insumo.objects.filter(proyectoAsociado_id = proyectoAComparar.id).order_by('cantidad')[:3]
+        costosInsumosOtro = Insumo.objects.filter(proyectoAsociado_id = proyectoAComparar.id).aggregate(total = Sum(F('valorUnitario')*F('cantidad')))
+        AprobadosOtro = TransferenciaInsumo.objects.filter(proyectoDestino_id = proyectoAComparar.id,estado = "Aceptado").count()
 
-        #miOtroProyecto = {'cantidadInsumosOtro':cantidadInsumosOtro,'insumoMasDesaprovechadoOtro':insumoMasDesaprovechadoOtro,
-                            #'costosInsumosOtro':costosInsumosOtro}
+        miOtroProyecto = {'proyectoAComparar':proyectoAComparar,'cantidadInsumosOtro':cantidadInsumosOtro,'insumoMasDesaprovechadoOtro':insumoMasDesaprovechadoOtro,
+                            'costosInsumosOtro':costosInsumosOtro,'AprobadosOtro':AprobadosOtro}
         
-        return render(request, 'comparacionProyectos.html',{'proyectosMiEmpresa':proyectosMiEmpresa,'miActualProyecto':miActualProyecto})
+        return render(request, 'comparacionProyectos.html',{'proyectosMiEmpresa':proyectosMiEmpresa,'miActualProyecto':miActualProyecto,'miOtroProyecto':miOtroProyecto})
 
         
     return render(request, 'comparacionProyectos.html',{'proyectosMiEmpresa':proyectosMiEmpresa})
@@ -452,3 +452,46 @@ def subirArchivoEntreno(request):
         mensajes = ['Error con el archivo subido, por favor verifica que el formato esté correctamente diligenciado']
     return render(request, 'subirArchivoEntreno.html', {'mensajes':mensajes})
 
+@login_required
+def comparacionMedio(request):
+    idUsuario = request.user.id
+    empresa = models.Empresa.objects.get(usuarioVinculado_id = idUsuario)
+
+
+    proyectosMiEmpresa = models.Proyecto.objects.filter(empresaVinculada_id = empresa.id).count()
+    cantidadInsumos = Insumo.objects.filter(proyectoAsociado__empresaVinculada__id=empresa.id).aggregate(cantidad=Sum('cantidad'))
+    costosInsumos = Insumo.objects.filter(proyectoAsociado__empresaVinculada__id=empresa.id).aggregate(total = Sum(F('valorUnitario')*F('cantidad')))
+    insumosMayorCantidad = Insumo.objects.filter(proyectoAsociado__empresaVinculada__id=empresa.id).order_by('-cantidad')[:3]
+
+
+    miEmpresa = {'proyectosMiEmpresa':proyectosMiEmpresa,'cantidadInsumos':cantidadInsumos['cantidad'],
+                 'costosInsumos':costosInsumos['total'],'Desperdiciados':insumosMayorCantidad}
+
+
+    promedioProyectosRestantes = models.Proyecto.objects.values('empresaVinculada__id').annotate(
+        cantidadProyectos=Count('id')
+    ).exclude(empresaVinculada__id = empresa.id).aggregate(
+        promedioProyectos=Avg('cantidadProyectos')
+    )
+
+    sumaCantidadInsumos = Insumo.objects.exclude(proyectoAsociado__empresaVinculada__id=empresa.id).aggregate(
+        totalCantidad=Sum('cantidad'))['totalCantidad']
+    empresasConInsumos = models.Empresa.objects.exclude(id=empresa.id).annotate(cantidadInsumos=Count('proyecto__insumo')).filter(
+        cantidadInsumos__gt=0)
+    cantidadEmpresas = empresasConInsumos.count()
+
+    promedioInsumos = sumaCantidadInsumos / cantidadEmpresas
+
+    costoTotalInsumos = Insumo.objects.exclude(proyectoAsociado__empresaVinculada__id=empresa.id).aggregate(
+        costoTotal=Sum(F('valorUnitario')*F('cantidad')))['costoTotal']
+
+    promedioPrecios = costoTotalInsumos  / cantidadEmpresas
+
+    insumosMayorCantidad = Insumo.objects.exclude(proyectoAsociado__empresaVinculada__id=empresa.id).order_by('-cantidad')[:3]
+
+
+    medio = {'promedioProyectosRestantes':promedioProyectosRestantes['promedioProyectos'],'promedioInsumos':promedioInsumos,
+             'promedioPrecios':promedioPrecios,'insumosMayorCantidad':insumosMayorCantidad}
+
+    print(promedioPrecios )
+    return render(request, 'comparacionMedio.html',{'miEmpresa':miEmpresa,'empresa': empresa,'medio':medio})
