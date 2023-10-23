@@ -14,6 +14,9 @@ urlpatterns = [
     path('verSolicitudesTraspaso/<int:estadoTransferencia>', views.verSolicitudesTraspaso, name='verSolicitudesTraspaso'),
     path('aceptarTraspaso/<int:transferenciaId>', views.aceptarTraspaso, name='aceptarTraspaso'),
     path('rechazarTraspaso/<int:transferenciaId>', views.rechazarTraspaso, name='rechazarTraspaso'),
+    path('ingresoCategoria/', views.ingresoCategoria, name='ingresoCategoria'),
+    path('verInventarioAdmin/<int:insumoId>', views.verInventarioAdmin, name='verInventarioAdmin'),
+    path('subirArchivoEntreno/', views.subirArchivoEntreno, name='subirArchivoEntreno'),
 ]
 
 if settings.DEBUG:

@@ -1,0 +1,69 @@
+{% extends 'autenticacion/plantillaFondoCompleto.html' %}
+{% load static %}
+{% block title %}Ingreso Categoria{% endblock %}
+{%block head%}
+<link rel="stylesheet" href="{% static 'css/ingresoCategoria.css' %}">
+<script src="https://kit.fontawesome.com/4efaf993e1.js" crossorigin="anonymous"></script>
+{%endblock%}
+
+{% block content %}
+<section class="containerTituloLanding">
+    <h1 class="tituloLanding">Categorización</h1>
+</section>
+<div class="containerBtnVolver">
+    <a href="{% url 'landingAdmon' %}" class="btnVolver">Volver</a>
+</div>
+<section class="containerInventario">
+    <table>
+        <thead>
+            <tr>
+                <th>Código Insumo</th>
+                <th>Referencia</th>
+                <th>Marca</th>
+                <th>Cantidad</th>
+                <th>Categoría</th>
+                <th>Ver Item</th>
+            </tr>
+        </thead>
+        <tbody>  
+            {% for insumo in insumos %}
+            <tr>
+                <td>{{insumo.codigo}}</td>
+                <td>{{insumo.referencia}}</td>
+                <td>{{insumo.nombreMarca}}</td>
+                <td>{{insumo.cantidad|floatformat:2}}</td>
+                {% if insumo.categoria %}
+                    <td>{{insumo.categoria}}</td>
+                {% else %}
+                    <td>Sin asignar</td>
+                {% endif %}
+                <td class="verItem">
+                    <a href="{% url 'verInventarioAdmin' insumo.id %}" class="containerCirculo">
+                    <div class="circulo">
+                        <i class="fas fa-chevron-right" id="flecha"></i>
+                    </div>
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+<div class="paginacion">
+    <span class="links">
+        {% if insumos.has_previous %}
+            <a href="?pagina=1">&laquo; primera</a>
+            <a href="?pagina={{ insumos.previous_page_number }}">anterior</a>
+        {% endif %}
+
+        <span class="actual">
+            Página {{ insumos.number }} de {{ insumos.paginator.num_pages }}.
+        </span>
+
+        {% if insumos.has_next %}
+            <a href="?pagina={{ insumos.next_page_number }}">siguiente</a>
+            <a href="?pagina={{ insumos.paginator.num_pages }}">última &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+{% endblock %}

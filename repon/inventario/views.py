@@ -4,7 +4,9 @@ from .models import Proyecto, Insumo, TransferenciaInsumo
 import pandas as pd
 import difflib
 from django.contrib.auth.decorators import login_required
-
+from decimal import Decimal
+import joblib
+import os
 
 '''
 Este método tiene la función de listar los insumos en el inventario de un proyecto previamente seleccionado.
@@ -108,6 +110,19 @@ def opcionesCoordinador(request,proyectoId):
     idUsuario = request.user.id
     return render(request, "opcionesCoordinador.html", {'proyecto':proyectoId, 'usuarioSesion':idUsuario, 'usuarioCoordinador':idCoordinador, 'nombre':nombreProyecto})
 
+#----------------------------------------------------------------------
+def predecirCategoria(referencia):
+    rutaModelo = os.path.join('administracion', 'static', 'archivosModelo', 'modeloDeClasificacion.pkl')
+    rutaVectorizador = os.path.join('administracion', 'static', 'archivosModelo', 'vectorizadorTFIDF.pkl')
+
+    clf = joblib.load(rutaModelo)
+    vectorTFIDF = joblib.load(rutaVectorizador)
+
+    descripcion_tfidf = vectorTFIDF.transform([referencia])
+    categoria = clf.predict(descripcion_tfidf)
+    return categoria[0]
+#----------------------------------------------------------------------
+
 '''
 Este método tiene la función de mostrar la página destinada a ingresar un nuevo insumo al inventario de sobrantes existente.
 '''
@@ -137,7 +152,8 @@ def crearInventario(request, proyectoId):
         crearInsumo = Insumo.objects.create(codigo = codigo, referencia = ref, unidad = unidadBase, cantidad = cantidad,
                                             valorUnitario = valorU, impuesto = iva, nombreMarca = marca,
                                             tipoInsumo = tipoInsumo, ubicacion = lugarAlmacenado, fechaCaducidad = fechaCaducidad,
-                                            fechaCompra = fechaCompra, observaciones = observaciones, proyectoAsociado = proyectoAsociado)
+                                            fechaCompra = fechaCompra, observaciones = observaciones, categoria = predecirCategoria(ref) , proyectoAsociado = proyectoAsociado)
+    
         crearInsumo.save()
         return redirect(opcionesCoordinador, proyectoId)
 
@@ -162,7 +178,7 @@ def subirArchivo(request, proyectoId):
                                         cantidad = row['Cantidad'], valorUnitario = row['Valor_unitario'], impuesto = row['Iva'],
                                         nombreMarca = row['Marca'], tipoInsumo = row['Tipo_insumo'], ubicacion = row['Lugar_Almacenamiento'],
                                         fechaCaducidad = row['Fecha_caducidad'], fechaCompra = row['Fecha_compra'], 
-                                        observaciones = row['Observaciones'], proyectoAsociado = proyectoAsociado
+                                        observaciones = row['Observaciones'], categoria = predecirCategoria(row['Referencia']) , proyectoAsociado = proyectoAsociado
                 )
             return redirect(opcionesCoordinador, proyectoId)
     except:
