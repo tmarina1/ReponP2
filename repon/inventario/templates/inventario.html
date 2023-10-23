@@ -25,6 +25,7 @@
                 <th>Referencia</th>
                 <th>Marca</th>
                 <th>Cantidad</th>
+                <th>Categoría</th>
                 <th>Ver Item</th>
             </tr>
         </thead>
@@ -50,6 +51,7 @@
                 <td>{{insumo.referencia}}</td>
                 <td>{{insumo.nombreMarca}}</td>
                 <td>{{insumo.cantidad|floatformat:2}}</td>
+                <td>{{insumo.categoria}}</td>
                 <td class="verItem">
                     <a href="{% url 'verItemInventario' insumo.id %}" class="containerCirculo">
                     <div class="circulo">
@@ -66,6 +68,7 @@
                     <td>{{insumo.referencia}}</td>
                     <td>{{insumo.nombreMarca}}</td>
                     <td>{{insumo.cantidad|floatformat:2}}</td>
+                    <td>{{insumo.categoria}}</td>
                     <td class="verItem">
                         <a href="{% url 'verItemInventario' insumo.id %}" class="containerCirculo">
                         <div class="circulo">

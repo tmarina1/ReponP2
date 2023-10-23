@@ -11,7 +11,7 @@ urlpatterns = [
     path('verInventario/<int:proyectoId>', views.inventario, name='inventario'),
     path('verItemInventario/<int:insumoId>', views.verItemInventario, name='verItemInventario'),
     path('crearInventario/<int:proyectoId>', views.crearInventario, name='crearInventario'),
-    path('subirArchivo/<int:proyectoId>', views.subirArchivo, name='subirArchivo')
+    path('subirArchivo/<int:proyectoId>', views.subirArchivo, name='subirArchivo'),
 ]
 
 if settings.DEBUG:

@@ -14,22 +14,19 @@
 <section class="contenido">
     <div class="cuadroBlanco">
         <form method="post">
-            
             <div class="containerForm">
-                {% if mensaje %}
-                    <p class="alert alert-success" role="alert"> {{ mensaje }}</p>
-                {% endif %}
                 {% csrf_token %}
                 <div>
                     <div class="row">
                         <div class="col">
                             <div class="input">
                                 <label for="basic-url" class="form-label">Codigo Insumo</label>
-                                <p name="codigo" class="form-control">{{ item.codigo }}</p>
+                                <p class="form-control">{{ item.codigo }}</p>
+                                <input type="text" name="codigo" value="{{ item.codigo }}" hidden>
                             </div>
                             <div class="input">
                                 <label for="basic-url" class="form-label">Referencia</label>
-                                <input type="text" name="ref" class="form-control" value="{{ item.referencia }}">
+                                <p class="form-control">{{ item.referencia }}</p>
                             </div>
                             <div class="input">
                                 <label for="basic-url" class="form-label">Unidad Base</label>
@@ -46,13 +43,12 @@
                             </div>
                             <div class="input">
                                 <label for="basic-url" class="form-label">Tipo de insumo</label>
-                                <input type="text" name="marca" class="form-control"
+                                <input type="text" name="tipoInsumo" class="form-control"
                                     value="{{ item.tipoInsumo }}">
                             </div>
                             <div class="input">
                                 <label for="basic-url" class="form-label">Proyecto que genero el insumo</label>
-                                <input type="text" name="marca" class="form-control"
-                                    value="{{ item.proyectoAsociado.nombreProyecto }}">
+                                <p class="form-control">{{ item.proyectoAsociado.nombreProyecto }}</p>
                             </div>
                             <div class="input">
                                 <label for="basic-url" class="form-label">Lugar donde se almacena</label>
@@ -67,11 +63,11 @@
                             </div>
                             <div class="input">
                                 <label for="basic-url" class="form-label">Iva</label>
-                                <input type="text" name="valorU" class="form-control" value="{{item.impuesto}}">
+                                <input type="text" name="iva" class="form-control" value="{{item.impuesto}}">
                             </div>
                             <div class="input">
                                 <label for="basic-url" class="form-label">Valor Total</label>
-                                <input type="number" name="valorU" class="form-control" value="{{valorTotal}}">
+                                <p class="form-control">{{ valorTotal }}</p>
                             </div>
                             <div class="input">
                                 <label for="basic-url" class="form-label">Fecha Ingreso</label>
@@ -81,39 +77,33 @@
                             <div class="input">
                                 <label for="basic-url" class="form-label">Fecha Caducidad</label>
                                 <input type="text" name="fechaCaducidad" class="form-control"
-                                    value="{{ item.fechaCaducidad }}">
+                                    value="{{ item.fechaCaducidad|date:'Y-m-d\TH:i' }}">
                             </div>
                             {% else %}
                             <div class="input">
-                                <label for="basic-url" class="form-label">Fecha Caducidad</label>
-                                <input type="text" name="fechaCaducidad" class="form-control"
-                                    value="NA">
+                                <label for="basic-url" class="form-label">Fecha Caducidad (sin asignar aún)</label>
+                                <input type="datetime-local" name="fechaCaducidad" class="form-control"
+                                    value="">
                             </div>
                             {% endif %}
                             <div class="input">
                                 <label for="basic-url" class="form-label">Fecha Compra</label>
-                                <input type="datetime" name="fechaCaducidad" class="form-control"
-                                    value="{{ item.fechaCompra }}">
+                                <input type="datetime-local" name="fechaCompra" class="form-control"
+                                    value="{{ item.fechaCompra|date:'Y-m-d\TH:i' }}">
+                            </div>
+                            <div class="input">
+                                <label for="basic-url" class="form-label">Categoría</label>
+                                <input type="text" name="categoria" class="form-control" value="{{item.categoria}}">
                             </div>
                             <div class="input">
                                 <label for="basic-url" class="form-label">Observaciones</label>
                                 <input type="text" name="observaciones" class="form-control"
                                     value="{{ item.observaciones }}">
                             </div>
-                            {% if coordinadorSolicitante != coordinadorInsumo.coordinadorVinculado_id%}
-                                <div class="input">
-                                        <form method = "post">
-                                            <label class="form-label">Cantidad</label><br>
-                                            <div class="botones" style="display: flex; justify-content:left; ">
-                                                <input type="text" name="cantidadTraspaso" class="form-control" style="border-color:#000;" oninput="limitarValor(this)" onkeypress="return (event.charCode >= 48 && event.charCode <= 57)">
-                                                <button type="submit" class="btn btn-der btn-sm" style="display: flex; margin-left:40px;">Solicitar</button>
-                                            </div>
-                                        </form>
-                                </div>
-                            {% endif %}
                             <div class="confirmacion">
                                 <div class="botones">
-                                    <a class="volver" href="{% url 'inventario' item.proyectoAsociado_id %}">Volver</a>
+                                    <a class="volver" href="{% url 'ingresoCategoria' %}">Volver</a>
+                                    <button id="btnActualizar" class='btn btn-der btn-sm' type="submit">Actualizar</button>
                                 </div>
                             </div>
                         </div>
@@ -123,13 +113,5 @@
         </form>
     </div>
 </section>
-<script>
-    function limitarValor(input) {
-        if (parseInt(input.value) > {{item.cantidad}}  ) {
-            input.value = {{item.cantidad}};
-        }else if( parseInt(input.value) == 0){
-            input.value = 1;
-        }
-    }
-</script>
+
 {% endblock %}

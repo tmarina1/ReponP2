@@ -2,14 +2,25 @@ from django.shortcuts import render, redirect
 from autenticacion.models import Perfil
 from django.contrib.auth.models import User
 from . import models
+from inventario.models import Insumo
 from django.contrib.auth.decorators import login_required
 from django.core.mail import EmailMessage as mensajeEmail
 from django.template.loader import render_to_string
 from repon import settings as configuraciones
+from django.db.models import Q
+from datetime import datetime
+import pandas as pd
 from repon.settings import UBICACION
 from django.db.models import Count,Avg,Sum,F, Value,  FloatField
 from inventario.models import Insumo
 from django.db.models.functions import Coalesce
+from inventario.models import TransferenciaInsumo, Insumo
+#------------------------------------------------------------------
+from sklearn.model_selection import train_test_split
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.naive_bayes import MultinomialNB
+import joblib
+import os
 
 '''
 Este método permite mostrar la página principal de los usuarios administradores. Para acceder a esta página,
@@ -25,7 +36,8 @@ def landingAdmon(request):
     mensaje=''
     if not empresa:
         return redirect(crearEmpresas)
-    return render(request, "landingAdmon.html")
+    estadoTransferencia = 0
+    return render(request, "landingAdmon.html",{'estadoTransferencia':estadoTransferencia})
 
 
 '''
@@ -157,8 +169,9 @@ def crearEmpresas(request):
         return render(request, "crearEmpresas.html",{'mensaje': mensaje, 'ciudades':UBICACION[0], 'departamentos':UBICACION[1]})
 
 '''
-Este método tiene como finalidad mostrar la información con la que se inscribió la empresa y la información básica de los proyectos relacionados. Esto se logra 
-realizando dos queries a la base de datos en donde se encuentra la empresa relacionada al usuario logueado y los proyectos utilizando el id de esta misma empresa.
+Este método tiene como finalidad mostrar la información con la que se inscribió la empresa y la información básica de los proyectos
+relacionados. Esto se logra realizando dos queries a la base de datos en donde se encuentra la empresa relacionada al usuario logueado
+y los proyectos utilizando el id de esta misma empresa.
 '''
 @login_required
 def verEmpresa(request):
@@ -206,3 +219,236 @@ def comparacionProyectos(request):
 
         
     return render(request, 'comparacionProyectos.html',{'proyectosMiEmpresa':proyectosMiEmpresa})
+
+'''
+Metodo que lista las solicitudes de traspaso de insumos entre proyectos para el administrador de la empresa, y se verifica si
+al aprobar una solicitud se verificara si la nueva cantidad del insumo está disponible con las otras solicitudes, sino se rechazará la
+peticion automaticamente y se enviara un correo al coordinador con su respectiva respuesta
+'''
+@login_required
+def verSolicitudesTraspaso(request, estadoTransferencia):
+    idUsuario = request.user.id
+    mensaje = ''
+    solicitudes = TransferenciaInsumo.objects.filter(administrador_id = idUsuario)
+    if estadoTransferencia == 1:
+        mensaje = 'Lo sentimos, se ha rechazado por falta de insumos en el inventario'
+    elif estadoTransferencia == 2:
+        mensaje = 'Se ha aceptado exitosamente'
+    elif estadoTransferencia == 3:
+        mensaje = 'Se ha rechazado exitosamente'
+
+    return render(request,'verSolicitudesTraspaso.html',{'solicitudes':solicitudes,'mensaje':mensaje})
+
+'''
+Metodo encargado de realizar el proceso de transferencia de insumos de un proyecto a otro cuando este es aceptado por el
+administrador de la empresa. Enviando un correo al coordinador con su respectiva respuesta.
+estadoTransferencia = 1: se ha rechazado por falta de insumos en el inventario
+estadoTransferencia = 2: se ha aceptado por parte del administrador
+'''
+@login_required
+def aceptarTraspaso(request, transferenciaId):
+    if request.method == 'POST':
+        solicitud = TransferenciaInsumo.objects.get(id = transferenciaId)
+        insumo =  Insumo.objects.get(id = solicitud.insumo_id)
+        coordinador = User.objects.get(id = solicitud.coordinadorSolicitante_id)
+        proyecto = models.Proyecto.objects.get(coordinadorVinculado_id = solicitud.coordinadorSolicitante_id)
+        
+
+        if solicitud.cantidad > insumo.cantidad or solicitud.proyectoDestino_id == insumo.proyectoAsociado_id:
+            plantilla = render_to_string('traspasos/correoFaltaInventario.html',{
+            'nombre': coordinador.first_name,
+            'insumo': insumo.referencia,
+            'cantidad': solicitud.cantidad
+            })
+            asunto = f"Respuesta a la solicitud del insumo \"{insumo.referencia}\" para el proyecto \"{proyecto.nombreProyecto}\""
+            correoAEnviar = mensajeEmail(
+                asunto,
+                plantilla,
+                configuraciones.EMAIL_HOST_USER,
+                [coordinador.email]
+            )
+            correoAEnviar.fail_silently = False
+            correoAEnviar.send()
+            estadoTransferencia = 1
+            solicitud.estado = "Rechazado"
+            solicitud.save() 
+
+        elif solicitud.cantidad == insumo.cantidad:
+            insumo.proyectoAsociado_id = solicitud.proyectoDestino_id
+            insumo.save()
+            plantilla = render_to_string('traspasos/correoAprobacion.html',{
+            'nombre': coordinador.first_name,
+            'insumo': insumo.referencia,
+            'cantidad': solicitud.cantidad
+            })
+            asunto = f"Respuesta a la solicitud del insumo \"{insumo.referencia}\" para el proyecto \"{proyecto.nombreProyecto}\""
+            correoAEnviar = mensajeEmail(
+                asunto,
+                plantilla,
+                configuraciones.EMAIL_HOST_USER,
+                [coordinador.email]
+            )
+            correoAEnviar.fail_silently = False
+            correoAEnviar.send()
+            estadoTransferencia = 2
+            solicitud.estado = "Aceptado"
+            solicitud.save() 
+        elif solicitud.cantidad < insumo.cantidad:
+            insumo.cantidad -= solicitud.cantidad
+            insumo.save()
+            comprobarExistencia = Insumo.objects.filter(codigo = insumo.codigo, proyectoAsociado_id = solicitud.proyectoDestino_id)
+            if comprobarExistencia:
+                comprobarExistencia[0].cantidad += solicitud.cantidad
+                comprobarExistencia[0].save() 
+            else:
+                nuevoInsumo = Insumo.objects.create(codigo = insumo.codigo, referencia = insumo.referencia, unidad = insumo.unidad,
+                                                    cantidad = solicitud.cantidad, valorUnitario = insumo.valorUnitario, impuesto = insumo.impuesto,
+                                                    nombreMarca = insumo.nombreMarca,tipoInsumo = insumo.tipoInsumo,
+                                                    ubicacion = insumo.ubicacion,fechaCaducidad = insumo.fechaCaducidad,
+                                                    fechaCompra = insumo.fechaCompra, observaciones = insumo.observaciones, proyectoAsociado_id = solicitud.proyectoDestino_id)
+                nuevoInsumo.save()
+            plantilla = render_to_string('traspasos/correoAprobacion.html',{
+            'nombre': coordinador.first_name,
+            'insumo': insumo.referencia,
+            'cantidad': solicitud.cantidad
+            })
+            asunto = f"Respuesta a la solicitud del insumo \"{insumo.referencia}\" para el proyecto \"{proyecto.nombreProyecto}\""
+            correoAEnviar = mensajeEmail(
+                asunto,
+                plantilla,
+                configuraciones.EMAIL_HOST_USER,
+                [coordinador.email]
+            )
+            correoAEnviar.fail_silently = False
+            correoAEnviar.send()
+            estadoTransferencia = 2
+            solicitud.estado = "Aceptado"
+            solicitud.save() 
+        return redirect(verSolicitudesTraspaso, estadoTransferencia)
+    return render(request, 'traspasos/aceptado.html')
+
+'''
+Metodo encargado de estabelcer el estado rechazado en el proceso de transferencia de insumos de un proyecto a otro cuando este 
+es denegado por el administrador de la empresa. Enviando un correo al coordinador con su respectiva respuesta.
+estadoTransferencia = 3: se ha Rechazado por parte del administrador
+'''
+@login_required
+def rechazarTraspaso(request, transferenciaId):
+    if request.method == 'POST':
+        solicitud = TransferenciaInsumo.objects.get(id = transferenciaId)
+        solicitud.estado = "Rechazado"
+        solicitud.save()
+        insumo =  Insumo.objects.get(id = solicitud.insumo_id)
+        coordinador = User.objects.get(id = solicitud.coordinadorSolicitante_id)
+        proyecto = models.Proyecto.objects.get(coordinadorVinculado_id = solicitud.coordinadorSolicitante_id)
+
+        plantilla = render_to_string('traspasos/correoRechazo.html',{
+            'nombre': coordinador.first_name,
+            'insumo': insumo.referencia,
+            'cantidad': solicitud.cantidad
+        })
+        asunto = f"Respuesta a la solicitud del insumo \"{insumo.referencia}\" para el proyecto \"{proyecto.nombreProyecto}\""
+        correoAEnviar = mensajeEmail(
+            asunto,
+            plantilla,
+            configuraciones.EMAIL_HOST_USER,
+            [coordinador.email]
+        )
+        correoAEnviar.fail_silently = False
+        correoAEnviar.send()
+        estadoTransferencia = 3
+        return redirect(verSolicitudesTraspaso, estadoTransferencia)
+    return render(request, 'traspasos/rechazado.html')
+
+
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
+def ingresoCategoria(request):
+    idUsuario = request.user.id
+    insumosExistentes = Insumo.objects.filter(proyectoAsociado__empresaVinculada__usuarioVinculado__id = idUsuario).order_by('referencia')
+
+    paginacion = Paginator(insumosExistentes, 10)  # Muestra 10 insumos por página
+    pagina = request.GET.get('pagina')
+
+    try:
+        insumos = paginacion.page(pagina)
+    except PageNotAnInteger:
+        # Si el parámetro de la página no es un número, muestra la primera página
+        insumos = paginacion.page(1)
+    except EmptyPage:
+        # Si la página está fuera de rango, muestra la última página de resultados
+        insumos = paginacion.page(paginacion.num_pages)
+    return render(request, 'ingresoCategoria.html',{'insumos': insumos})
+
+def verInventarioAdmin(request, insumoId):
+    item = Insumo.objects.get(id=insumoId)
+    valorSubTotal = item.cantidad*item.valorUnitario
+    if item.impuesto == 'si':
+        valorTotal = valorSubTotal+(valorSubTotal*0.19)
+    else:
+        valorTotal = valorSubTotal
+    
+    if request.method == 'POST':
+        codigoInsumo = request.POST.get('codigo')
+        unidadBase = request.POST.get('unidadBase')
+        cantidad = request.POST.get('cantidad')
+        marca = request.POST.get('marca')
+        tipoInsumo = request.POST.get('tipoInsumo')
+        lugarAlmacenado = request.POST.get('lugarAlmacenado')
+        valorUnidad = request.POST.get('valorU')
+        iva = request.POST.get('iva')
+        fechaCaducidad = request.POST.get('fechaCaducidad')
+        fechaCompra = request.POST.get('fechaCompra')
+        categoria = request.POST.get('categoria')
+        observaciones = request.POST.get('observaciones')
+
+        insumoBuscado = Insumo.objects.get(id=insumoId)
+
+        insumoBuscado.unidad = unidadBase
+        insumoBuscado.cantidad = cantidad
+        insumoBuscado.nombreMarca = marca
+        insumoBuscado.tipoInsumo = tipoInsumo
+        insumoBuscado.ubicacion = lugarAlmacenado
+        insumoBuscado.valorUnitario = valorUnidad
+        insumoBuscado.impuesto = iva
+        if fechaCaducidad and fechaCaducidad != 'NA':
+            fechaCaducidadParseada = datetime.strptime(fechaCaducidad, '%Y-%m-%dT%H:%M')
+            insumoBuscado.fechaCaducidad = fechaCaducidadParseada
+        if fechaCompra:
+            fechaCompraParseada = datetime.strptime(fechaCompra, '%Y-%m-%dT%H:%M')
+            insumoBuscado.fechaCompra = fechaCompraParseada
+        insumoBuscado.categoria = categoria
+        insumoBuscado.observaciones = observaciones
+
+        insumoBuscado.save()
+        return redirect(verInventarioAdmin, insumoId)
+
+
+    return render(request, "verInventarioAdmin.html", {'item': item, 'valorTotal': valorTotal})
+
+def subirArchivoEntreno(request):
+    mensajes =''
+    try:
+        if request.method == 'POST' and request.FILES['archivo']:
+            archivo = request.FILES['archivo']
+            df = pd.read_excel(archivo)
+            X = df['Referencia']
+            y = df['categoria']
+            X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+            vectorTFIDF = TfidfVectorizer()
+            X_train_tfidf = vectorTFIDF.fit_transform(X_train)
+
+            modelo_path = os.path.join('administracion', 'static', 'archivosModelo', 'modeloDeClasificacion.pkl')
+            vectorizador_path = os.path.join('administracion', 'static', 'archivosModelo', 'vectorizadorTFIDF.pkl')
+
+            clf = MultinomialNB()
+            clf.fit(X_train_tfidf, y_train)
+
+            joblib.dump(clf, modelo_path)
+            joblib.dump(vectorTFIDF, vectorizador_path)
+            return redirect(landingAdmon)
+    except:
+        mensajes = ['Error con el archivo subido, por favor verifica que el formato esté correctamente diligenciado']
+    return render(request, 'subirArchivoEntreno.html', {'mensajes':mensajes})
+

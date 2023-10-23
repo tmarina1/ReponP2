@@ -1,11 +1,12 @@
 from django.shortcuts import render, redirect
 from datetime import datetime
-from .models import Proyecto, Insumo
-from django.db.models import Sum
+from .models import Proyecto, Insumo, TransferenciaInsumo
 import pandas as pd
 import difflib
 from django.contrib.auth.decorators import login_required
 from decimal import Decimal
+import joblib
+import os
 
 '''
 Este método tiene la función de listar los insumos en el inventario de un proyecto previamente seleccionado.
@@ -42,17 +43,44 @@ def inventario(request, proyectoId):
             
     print (mensajes)
     return render(request, "inventario.html",{'proyecto':proyectoId,'inventario':inventarioInsumos,'terminoBusqueda':terminoBusqueda, 'mensajes':mensajes})
-
+'''
+Metodo que se encarga de listar los isumos del inventario
+'''
 @login_required
 def verItemInventario(request, insumoId):
+    mensaje = ''
     item = Insumo.objects.get(id=insumoId)
     valorSubTotal = item.cantidad*item.valorUnitario
+
+    coordinadorSolicitante = request.user.id
+    coordinadorDueño = item.proyectoAsociado_id
+    
+    coordinadorInsumo = Proyecto.objects.get(id = coordinadorDueño)
+
+
     if item.impuesto == 'si':
         valorTotal = valorSubTotal+(valorSubTotal*0.19)
     else:
         valorTotal = valorSubTotal
+    
 
-    return render(request, "verInventario.html", {'item': item, 'valorTotal': valorTotal})
+    if request.method == 'POST':
+        cantidad = request.POST['cantidadTraspaso']
+        
+        administrador = item.proyectoAsociado.empresaVinculada.usuarioVinculado.id
+        proyectoOrigen = item.proyectoAsociado.id    
+        destino = Proyecto.objects.get(coordinadorVinculado_id = coordinadorSolicitante)
+        proyectoDestino = destino.id
+        insumo = item.id
+        peticion = TransferenciaInsumo.objects.create(coordinadorSolicitante_id = coordinadorSolicitante, administrador_id = administrador,
+                                                      proyectoOrigen_id = proyectoOrigen, proyectoDestino_id = proyectoDestino, insumo_id=insumo,
+                                                      cantidad = cantidad)
+        
+        peticion.save()
+        mensaje = 'se ha enviado la solicitud correctamente'
+
+    return render(request, "verInventario.html", {'item': item, 'valorTotal': valorTotal, 'mensaje':mensaje,'coordinadorInsumo':coordinadorInsumo,'coordinadorSolicitante':coordinadorSolicitante})
+
 '''
 Este método tiene como propósito mostrar la página principal destinada al usuario con el rol de coordinador. 
 La página principal para el coordinador proporciona acceso a las funciones relacionadas con la gestión de proyectos 
@@ -81,6 +109,19 @@ def opcionesCoordinador(request,proyectoId):
     nombreProyecto = proyecto.nombreProyecto
     idUsuario = request.user.id
     return render(request, "opcionesCoordinador.html", {'proyecto':proyectoId, 'usuarioSesion':idUsuario, 'usuarioCoordinador':idCoordinador, 'nombre':nombreProyecto})
+
+#----------------------------------------------------------------------
+def predecirCategoria(referencia):
+    rutaModelo = os.path.join('administracion', 'static', 'archivosModelo', 'modeloDeClasificacion.pkl')
+    rutaVectorizador = os.path.join('administracion', 'static', 'archivosModelo', 'vectorizadorTFIDF.pkl')
+
+    clf = joblib.load(rutaModelo)
+    vectorTFIDF = joblib.load(rutaVectorizador)
+
+    descripcion_tfidf = vectorTFIDF.transform([referencia])
+    categoria = clf.predict(descripcion_tfidf)
+    return categoria[0]
+#----------------------------------------------------------------------
 
 '''
 Este método tiene la función de mostrar la página destinada a ingresar un nuevo insumo al inventario de sobrantes existente.
@@ -111,7 +152,8 @@ def crearInventario(request, proyectoId):
         crearInsumo = Insumo.objects.create(codigo = codigo, referencia = ref, unidad = unidadBase, cantidad = cantidad,
                                             valorUnitario = valorU, impuesto = iva, nombreMarca = marca,
                                             tipoInsumo = tipoInsumo, ubicacion = lugarAlmacenado, fechaCaducidad = fechaCaducidad,
-                                            fechaCompra = fechaCompra, observaciones = observaciones, proyectoAsociado = proyectoAsociado)
+                                            fechaCompra = fechaCompra, observaciones = observaciones, categoria = predecirCategoria(ref) , proyectoAsociado = proyectoAsociado)
+    
         crearInsumo.save()
         return redirect(opcionesCoordinador, proyectoId)
 
@@ -136,12 +178,13 @@ def subirArchivo(request, proyectoId):
                                         cantidad = row['Cantidad'], valorUnitario = row['Valor_unitario'], impuesto = row['Iva'],
                                         nombreMarca = row['Marca'], tipoInsumo = row['Tipo_insumo'], ubicacion = row['Lugar_Almacenamiento'],
                                         fechaCaducidad = row['Fecha_caducidad'], fechaCompra = row['Fecha_compra'], 
-                                        observaciones = row['Observaciones'], proyectoAsociado = proyectoAsociado
+                                        observaciones = row['Observaciones'], categoria = predecirCategoria(row['Referencia']) , proyectoAsociado = proyectoAsociado
                 )
             return redirect(opcionesCoordinador, proyectoId)
     except:
         mensajes = ['Error con el archivo subido, por favor verifica que el formato esté correctamente diligenciado']
     return render(request, 'subirArchivo.html', {'proyecto':proyectoId, 'mensajes':mensajes})
+
     
 
     

@@ -85,9 +85,14 @@ form{
     text-align: center;
 }
 
+#btnActualizar{
+    margin-left: 30%;
+}
+
 .botones {
     display: flex;
     justify-content: space-between;
+    
 }
 
 .botones>a, .botones>button{

@@ -11,6 +11,9 @@ pylint-django = "*"
 pandas = "*"
 openpyxl="*"
 numpy = "*"
+scikit-learn = "*"
+nltk = "*"
+joblib = "*"
 
 [dev-packages]
 

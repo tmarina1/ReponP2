@@ -11,8 +11,9 @@
     <h1 class="tituloLanding">Repon - menú principal</h1>
 </section>
 {% if mensaje %}
-<p class="alert alert-success" role="alert"> {{ mensaje }}</p>
+    <p class="alert alert-success" role="alert"> {{ mensaje }}</p>
 {% endif %}
+
 <section class="containerBotonesArriba">
     <a class="botonesLanding" href="{% url 'crearProyecto' %}">
         <div class="containerContenido">
@@ -36,6 +37,17 @@
             </div>
         </div>
     </a>
+    <a class="botonesLanding" href="{% url 'verSolicitudesTraspaso' estadoTransferencia %}">
+        <div class="containerContenido">
+            <img src="{% static 'img/Inbox.png'  %}" class="iconos" alt="Imagen Solicitudes">
+            <p class="textoContenido">Solicitudes de Traspaso</p>
+        </div>
+        <div class="containerCirculo">
+            <div class="circulo">
+                <i class="fas fa-chevron-up" id="flecha"></i>
+            </div>
+        </div>
+    </a>
 </section>
 <section class="containerBotonesAbajo">
     <a class="botonesLanding" href="{% url 'verEmpresa' %}">
@@ -49,7 +61,18 @@
             </div>
         </div>
     </a>
-    <a class="botonesLanding" href="{% url 'panelAdministrador' %}">
+    <a class="botonesLanding" href="{% url 'ingresoCategoria' %}">
+        <div class="containerContenido">
+            <img src="{% static 'img/herramientas.png' %}" class="iconos" id="imgDiferente" alt="Imagen empresa">
+            <p class="textoContenido">Editar insumos</p>
+        </div>
+        <div class="containerCirculo">
+            <div class="circulo">
+                <i class="fas fa-chevron-up" id="flecha"></i>
+            </div>
+        </div>
+    </a>
+    <a class="botonesLanding" id="panelAdmin" href="#">
         <div class="containerContenido">
             <img src="{% static 'img/Graph.png' %}" class="iconos" alt="Imagen admin">
             <p class="textoContenido">Panel administrador</p>
