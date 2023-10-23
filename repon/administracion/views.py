@@ -370,6 +370,15 @@ def ingresoCategoria(request):
     paginacion = Paginator(insumosExistentes, 10)  # Muestra 10 insumos por página
     pagina = request.GET.get('pagina')
 
+    if request.method == 'POST':
+        filtros = {
+            f'{llave}__icontains': valor
+            for llave, valor in request.POST.items()
+            if llave in ['referencia', 'categoria','proyectoAsociado__nombreProyecto']
+            }
+        insumosExistentes =  insumosExistentes.filter(**filtros)
+        paginacion = Paginator(insumosExistentes, 10)
+
     try:
         insumos = paginacion.page(pagina)
     except PageNotAnInteger:

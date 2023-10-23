@@ -10,6 +10,15 @@
 <section class="containerTituloLanding">
     <h1 class="tituloLanding">Actualización de insumos</h1>
 </section>
+<div id="divBusqueda">
+    <form method="post">
+        {%csrf_token%}
+        <input type="text" class="inputBusqueda" name="referencia" placeholder="Referencia">
+        <input type="text" class="inputBusqueda" name="categoria" placeholder="Categoria">
+        <input type="text" class="inputBusqueda" name="proyectoAsociado" placeholder="Proyecto">
+        <button type="submit" id="botonBusqueda">Buscar</button>
+    </form>
+</div>
 <div class="containerBtnVolver">
     <a href="{% url 'landingAdmon' %}" class="btnVolver">Volver</a>
 </div>
@@ -21,27 +30,29 @@
                 <th>Referencia</th>
                 <th>Marca</th>
                 <th>Cantidad</th>
+                <th>Proyecto</th>
                 <th>Categoría</th>
                 <th>Ver Item</th>
             </tr>
         </thead>
-        <tbody>  
+        <tbody>
             {% for insumo in insumos %}
             <tr>
                 <td>{{insumo.codigo}}</td>
                 <td>{{insumo.referencia}}</td>
                 <td>{{insumo.nombreMarca}}</td>
                 <td>{{insumo.cantidad|floatformat:2}}</td>
+                <td>{{insumo.proyectoAsociado.nombreProyecto}}</td>
                 {% if insumo.categoria %}
-                    <td>{{insumo.categoria}}</td>
+                <td>{{insumo.categoria}}</td>
                 {% else %}
-                    <td>Sin asignar</td>
+                <td>Sin asignar</td>
                 {% endif %}
                 <td class="verItem">
                     <a href="{% url 'verInventarioAdmin' insumo.id %}" class="containerCirculo">
-                    <div class="circulo">
-                        <i class="fas fa-chevron-right" id="flecha"></i>
-                    </div>
+                        <div class="circulo">
+                            <i class="fas fa-chevron-right" id="flecha"></i>
+                        </div>
                     </a>
                 </td>
             </tr>
@@ -52,8 +63,8 @@
 <div class="paginacion">
     <span class="links">
         {% if insumos.has_previous %}
-            <a href="?pagina=1">&laquo; primera</a>
-            <a href="?pagina={{ insumos.previous_page_number }}">anterior</a>
+        <a href="?pagina=1">&laquo; primera</a>
+        <a href="?pagina={{ insumos.previous_page_number }}">anterior</a>
         {% endif %}
 
         <span class="actual">
@@ -61,8 +72,8 @@
         </span>
 
         {% if insumos.has_next %}
-            <a href="?pagina={{ insumos.next_page_number }}">siguiente</a>
-            <a href="?pagina={{ insumos.paginator.num_pages }}">última &raquo;</a>
+        <a href="?pagina={{ insumos.next_page_number }}">siguiente</a>
+        <a href="?pagina={{ insumos.paginator.num_pages }}">última &raquo;</a>
         {% endif %}
     </span>
 </div>
