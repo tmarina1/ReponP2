@@ -7,6 +7,9 @@ from django.core.mail import EmailMessage as mensajeEmail
 from django.template.loader import render_to_string
 from repon import settings as configuraciones
 from repon.settings import UBICACION
+from django.db.models import Count,Avg,Sum,F, Value,  FloatField
+from inventario.models import Insumo
+from django.db.models.functions import Coalesce
 
 '''
 Este método permite mostrar la página principal de los usuarios administradores. Para acceder a esta página,
@@ -170,4 +173,44 @@ def panelAdministrador(request):
 
 @login_required
 def comparacionMedio(request):
-    return render(request, 'comparacionMedio.html')
+    idUsuario = request.user.id
+    empresa = models.Empresa.objects.get(usuarioVinculado_id = idUsuario)
+
+    
+    proyectosMiEmpresa = models.Proyecto.objects.filter(empresaVinculada_id = empresa.id).count()
+    cantidadInsumos = Insumo.objects.filter(proyectoAsociado__empresaVinculada__id=empresa.id).aggregate(cantidad=Sum('cantidad'))
+    costosInsumos = Insumo.objects.filter(proyectoAsociado__empresaVinculada__id=empresa.id).aggregate(total = Sum(F('valorUnitario')*F('cantidad')))
+    insumosMayorCantidad = Insumo.objects.filter(proyectoAsociado__empresaVinculada__id=empresa.id).order_by('-cantidad')[:3]
+
+
+    miEmpresa = {'proyectosMiEmpresa':proyectosMiEmpresa,'cantidadInsumos':cantidadInsumos['cantidad'],
+                 'costosInsumos':costosInsumos['total'],'Desperdiciados':insumosMayorCantidad}
+
+    
+    promedioProyectosRestantes = models.Proyecto.objects.values('empresaVinculada__id').annotate(
+        cantidadProyectos=Count('id')
+    ).exclude(empresaVinculada__id = empresa.id).aggregate(
+        promedioProyectos=Avg('cantidadProyectos')
+    )
+
+    sumaCantidadInsumos = Insumo.objects.exclude(proyectoAsociado__empresaVinculada__id=empresa.id).aggregate(
+        totalCantidad=Sum('cantidad'))['totalCantidad']
+    empresasConInsumos = models.Empresa.objects.exclude(id=empresa.id).annotate(cantidadInsumos=Count('proyecto__insumo')).filter(
+        cantidadInsumos__gt=0)
+    cantidadEmpresas = empresasConInsumos.count()
+
+    promedioInsumos = sumaCantidadInsumos / cantidadEmpresas
+
+    costoTotalInsumos = Insumo.objects.exclude(proyectoAsociado__empresaVinculada__id=empresa.id).aggregate(
+        costoTotal=Sum(F('valorUnitario')*F('cantidad')))['costoTotal']
+
+    promedioPrecios = costoTotalInsumos  / cantidadEmpresas
+
+    insumosMayorCantidad = Insumo.objects.exclude(proyectoAsociado__empresaVinculada__id=empresa.id).order_by('-cantidad')[:3]
+
+
+    medio = {'promedioProyectosRestantes':promedioProyectosRestantes['promedioProyectos'],'promedioInsumos':promedioInsumos,
+             'promedioPrecios':promedioPrecios,'insumosMayorCantidad':insumosMayorCantidad}
+    
+    print(promedioPrecios )
+    return render(request, 'comparacionMedio.html',{'miEmpresa':miEmpresa,'empresa': empresa,'medio':medio})

@@ -16,18 +16,28 @@
                     <table class="table table-bordered ">
                         <thead class="table-primary">
                             <tr>
-                                <th scope="col">Mi Empresa</th>
+                                <th scope="col">{{empresa.nombreEmpresa}}</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td>@mdo</td>
+                                <td>Cantidad de proyectos: {{ miEmpresa.proyectosMiEmpresa |floatformat:-2 }}</td>
                             </tr>
                             <tr>
-                                <td>@mdo</td>
+                                <td>Cantidad de insumos sobrantes: {{ miEmpresa.cantidadInsumos |floatformat:-2}}</td>
                             </tr>
                             <tr>
-                                <td>@mdo</td>
+                                {% load humanize %}
+                                <td>Costos: $ {{ miEmpresa.costosInsumos|intcomma }}</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Insumos más desperdiciado:</p>
+                                    {% for i in miEmpresa.Desperdiciados %}
+                                        <p>{{i.referencia }}</p>
+                                    {% endfor %}
+                                </td>
+                                
                             </tr>
                         </tbody>
                     </table>
@@ -41,13 +51,21 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td >@mdo</td>
+                                <td>Cantidad de proyectos: {{ medio.promedioProyectosRestantes|floatformat:-2 }}</td>
                             </tr>
                             <tr>
-                                <td >@mdo</td>
+                                <td >Cantidad de insumos sobrantes: {{ medio.promedioInsumos |floatformat:-2}} </td>
                             </tr>
                             <tr>
-                                <td >@mdo</td>
+                                <td >Costos: {{ medio.promedioPrecios |intcomma}} </td>
+                            </tr>
+                            <tr>
+                                <td >
+                                <p>Insumos más desperdiciado:</p>
+                                    {% for i in medio.insumosMayorCantidad  %}
+                                        <p>{{i.referencia }}</p>
+                                    {% endfor %}
+                                </td>
                             </tr>
                         </tbody>
                     </table>
