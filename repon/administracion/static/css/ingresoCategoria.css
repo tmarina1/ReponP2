@@ -124,10 +124,13 @@ tr:not(:last-child) th {
 
 .inputBusqueda {
   border-radius: 5px;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.533);
 }
 
 #botonBusqueda {
   background-color: #3855c2;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.533);
+  height: 35px;
   color: #ffffff;
   border-radius: 5px;
 }

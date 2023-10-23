@@ -1,151 +1,149 @@
-.contenido{
-    display: flex;
-    width: 100%;
-    height: 100%;
-    justify-content: center;
+.contenido {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
 }
 
-.cuadroBlanco{
-    margin-top: 50px;
-    width: 70%;
-    height: 88%;
-    background-color: #ffffff;
-    border-radius: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.333); 
+.cuadroBlanco {
+  margin-top: 50px;
+  width: 70%;
+  height: 70%;
+  background-color: #ffffff;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.333);
 }
 
-.containerContenido{
-    width: 95%;
-    height: 95%;
-    border: 5px solid #152850;
-    border-radius: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    align-items: center;
+.containerContenido {
+  width: 95%;
+  height: 95%;
+  border: 5px solid #152850;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
 }
 
-#tituloCrearInventario{
-    color: #6E6E6E;
-    font-size: 25px;
-    text-align: center;
-    margin-top: 30px;
-    margin-bottom: 0px;
+#tituloCrearInventario {
+  color: #6e6e6e;
+  font-size: 25px;
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 30px;
 }
 
-form{
-    height: 100%;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    align-items: center;
+form {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
 }
 
-.containerForm{
-    height: 80%;
-    width: 80%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
+.containerForm {
+  height: 80%;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
 }
-
 
 .input {
-    padding: 8px 4px;
+  padding: 8px 4px;
 }
 
 .form-label {
-    font-size: 14px;
-    color: #000000;
-    font-weight: bold;
+  font-size: 14px;
+  color: #000000;
+  font-weight: bold;
 }
 
 .form-control {
-    font-size: 14px;
+  font-size: 14px;
 }
 
 .confirmacion {
-    width: 100%;
-    margin: auto;
-    margin-top: 20%;
+  width: 100%;
+  margin: auto;
+  margin-top: 20%;
 }
 
 .confirmacionForm2 {
-    width: 100%;
-    margin: auto;
-    margin-top: 2%;
-    margin-bottom: 5%;
+  width: 100%;
+  margin: auto;
+  margin-top: 2%;
+  margin-bottom: 5%;
 }
 
-.advertencia{
-    text-align: center;
+.advertencia {
+  text-align: center;
 }
 
-#btnActualizar{
-    margin-left: 30%;
+#btnActualizar {
+  margin-left: 30%;
 }
 
 .botones {
-    display: flex;
-    justify-content: space-between;
-    
+  display: flex;
+  justify-content: space-between;
 }
 
-.botones>a, .botones>button{
-    text-decoration: none;
-    color: #ffffff;
-    font-size: 18px;
-    border-radius: 5px;
-    padding: 3px 10px;
+.botones > a,
+.botones > button {
+  text-decoration: none;
+  color: #ffffff;
+  font-size: 18px;
+  border-radius: 5px;
+  padding: 3px 10px;
 }
 
-.botones>a{
-    background-color: #152850;
+.botones > a {
+  background-color: #152850;
 }
 
-.botones>button{
-    background-color: #3855C2;
+.botones > button {
+  background-color: #3855c2;
 }
-#btn-continuar:hover{
-    background-color: #3855C2;
-    color: #ffffff;
-}
-
-#btn-volver{
-    background-color: #152850;
-    color: #ffffff;
+#btn-continuar:hover {
+  background-color: #3855c2;
+  color: #ffffff;
 }
 
-.input>input{
-    border-color: #000000;
+#btn-volver {
+  background-color: #152850;
+  color: #ffffff;
 }
 
+.input > input {
+  border-color: #000000;
+}
 
 @media (max-width: 1000px) {
-    .cuadroBlanco{
-        width: 60%;
-        height: 50%;
-    }
-    .botones{
-        width: 65%;
-    }
-    .containerForm{
-        width: 70%;
-    }
+  .cuadroBlanco {
+    width: 60%;
+    height: 50%;
+  }
+  .botones {
+    width: 65%;
+  }
+  .containerForm {
+    width: 70%;
+  }
 }
 @media (max-width: 600px) {
-    .cuadroBlanco{
-        width: 90%;
-        height: 60%;
-    }
-    .botones{
-        width: 88%;
-    }
-    .containerForm{
-        width: 90%;
-    }
+  .cuadroBlanco {
+    width: 90%;
+    height: 60%;
+  }
+  .botones {
+    width: 88%;
+  }
+  .containerForm {
+    width: 90%;
+  }
 }

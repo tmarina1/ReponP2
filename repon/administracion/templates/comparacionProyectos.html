@@ -8,128 +8,131 @@
 
 {% block content %}
 
-<form method = "post">
+<form method="post">
     {% csrf_token %}
-<section class="contenido">
-    <div class="cuadroBlanco">
-        <div class="containerContenido">
-            <h1 id="titulo">Comparación entre proyectos</h1>
-            <div class="containerColumnas seleccionarProyecto" >
-                <div class="columna" >
-                    <div class="input">
-                        <select name="miProyecto"class="form-control" required>
-                            {% for i in proyectosMiEmpresa %}
+    <section class="contenido">
+        <div class="cuadroBlanco">
+            <div class="containerContenido">
+                <h1 id="titulo">Comparación entre proyectos</h1>
+                <div class="containerColumnas seleccionarProyecto">
+                    <div class="columna">
+                        <div class="input">
+                            <select name="miProyecto" class="form-control" required>
+                                {% for i in proyectosMiEmpresa %}
                                 <option value="{{i.nombreProyecto}}"> {{i.nombreProyecto}} </option>
-                            {% endfor %}
-                        </select>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="columna">
+                        <div class="input">
+                            <select name="otroProyecto" class="form-control" required>
+                                {% for i in proyectosMiEmpresa %}
+                                <option value="{{i.nombreProyecto}}"> {{i.nombreProyecto}} </option>
+                                {% endfor %}
+                            </select>
+                        </div>
                     </div>
                 </div>
-                <div class="columna" >
-                    <div class="input">
-                        <select name="otroProyecto" class="form-control" required>
-                            {% for i in proyectosMiEmpresa %}
-                                <option value="{{i.nombreProyecto}}"> {{i.nombreProyecto}} </option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                </div>
-            </div>
-            {% load humanize %}
-            <div class="containerColumnas" >
-                <div class="columna" >
-                    <table class="table table-bordered ">
-                        <thead class="table-primary">
-                            <tr>
-                                <th scope="col">{{ miActualProyecto.proyectoActual.nombreProyecto}} </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                {% if miActualProyecto.cantidadInsumos.cantidad == None %}
+                {% load humanize %}
+                <div class="containerColumnas">
+                    <div class="columna">
+                        <table class="table table-bordered ">
+                            <thead class="table-primary">
+                                <tr>
+                                    <th id="tituloTabla" scope="col">{{ miActualProyecto.proyectoActual.nombreProyecto}}
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    {% if miActualProyecto.cantidadInsumos.cantidad == None %}
                                     <td>Cantidad de insumos: Ninguno</td>
-                                {% else %}
+                                    {% else %}
                                     <td>Cantidad de insumos: {{miActualProyecto.cantidadInsumos.cantidad}}</td>
-                                {% endif %}
-                            </tr>
-                            <tr>
-                                <td><p>Insumo más desaprovechado:</p>
-                                    {% if miActualProyecto.insumoMasDesaprovechado %}
-                                        {% for i in miActualProyecto.insumoMasDesaprovechado  %}
-                                            <p>{{i.referencia}}</p>
+                                    {% endif %}
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <p>Insumo más desaprovechado:</p>
+                                        {% if miActualProyecto.insumoMasDesaprovechado %}
+                                        {% for i in miActualProyecto.insumoMasDesaprovechado %}
+                                        <p>{{i.referencia}}</p>
                                         {% endfor %}
-                                    {% else %}
-                                            <p>{{i.referencia}}ninguno</p>
-                                    {% endif %} 
-                                </td>
-                            </tr>
-                            <tr>
-                                {% if miActualProyecto.costosInsumos.total == None %}
+                                        {% else %}
+                                        <p>{{i.referencia}}ninguno</p>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    {% if miActualProyecto.costosInsumos.total == None %}
                                     <td>Valor inventario: $0</td>
-                                {% else %}
-                                    <td>Valor inventario: $ {{miActualProyecto.costosInsumos.total |intcomma}}</td>
-                                {% endif %}
-                            </tr>
-                            <tr>
-                                {% if miActualProyecto.Aprobados %}
-                                    <td>Cantidad de traspasos aprobados: {{miActualProyecto.Aprobados}} </td>
-                                {% else %}
-                                    <td>Cantidad de traspasos aprobados: 0</td>
-                                {% endif %}
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="columna" >
-                    <table class="table table-bordered">
-                        <thead class="table-primary">
-                            <tr>
-                                <th scope="col">{{ miOtroProyecto.proyectoAComparar.nombreProyecto }}</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                {% if miActualProyecto.cantidadInsumos.cantidad == None %}
-                                    <td>Cantidad de insumos: Ninguno</td>
-                                {% else %}
-                                    <td>Cantidad de insumos: {{ miOtroProyecto.cantidadInsumosOtro.cantidad}} </td>
-                                {% endif %}
-                            </tr>
-                            <tr>
-                                <td>
-                                    <p>Insumo más desaprovechado:</p>
-                                    {% if  miOtroProyecto.insumoMasDesaprovechadoOtro %}
-                                        {% for i in miOtroProyecto.insumoMasDesaprovechadoOtro  %}
-                                            <p>{{i.referencia}}</p>
-                                        {% endfor %}
                                     {% else %}
-                                            <p>{{i.referencia}}ninguno</p>
-                                    {% endif %} 
-                                </td>
-                            </tr>
-                            <tr>
-                                {% if miOtroProyecto.costosInsumosOtro.total %}
-                                    <td>Valor inventario: $ {{ miOtroProyecto.costosInsumosOtro.total|intcomma }} </td>
-                                {% else %}
-                                    <td>Valor inventario: $ 0 </td>
-                                {% endif %}
-                            </tr>
-                            <tr>
-                                {% if miOtroProyecto.AprobadosOtro %}
-                                    <td>Cantidad de traspasos aprobados: {{ miOtroProyecto.AprobadosOtro}} </td>
-                                {% else %}
+                                    <td>Valor inventario: $ {{miActualProyecto.costosInsumos.total |intcomma}}</td>
+                                    {% endif %}
+                                </tr>
+                                <tr>
+                                    {% if miActualProyecto.Aprobados %}
+                                    <td>Cantidad de traspasos aprobados: {{miActualProyecto.Aprobados}} </td>
+                                    {% else %}
                                     <td>Cantidad de traspasos aprobados: 0</td>
-                                {% endif %}
-                            </tr>
-                        </tbody>
-                    </table>
+                                    {% endif %}
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="columna">
+                        <table class="table table-bordered">
+                            <thead class="table-primary">
+                                <tr>
+                                    <th scope="col" id="tituloTabla">
+                                        {{ miOtroProyecto.proyectoAComparar.nombreProyecto}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    {% if miActualProyecto.cantidadInsumos.cantidad == None %}
+                                    <td>Cantidad de insumos: Ninguno</td>
+                                    {% else %}
+                                    <td>Cantidad de insumos: {{ miOtroProyecto.cantidadInsumosOtro.cantidad}} </td>
+                                    {% endif %}
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <p>Insumo más desaprovechado:</p>
+                                        {% if miOtroProyecto.insumoMasDesaprovechadoOtro %}
+                                        {% for i in miOtroProyecto.insumoMasDesaprovechadoOtro %}
+                                        <p>{{i.referencia}}</p>
+                                        {% endfor %}
+                                        {% else %}
+                                        <p>{{i.referencia}}ninguno</p>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    {% if miOtroProyecto.costosInsumosOtro.total %}
+                                    <td>Valor inventario: $ {{ miOtroProyecto.costosInsumosOtro.total|intcomma }} </td>
+                                    {% else %}
+                                    <td>Valor inventario: $ 0 </td>
+                                    {% endif %}
+                                </tr>
+                                <tr>
+                                    {% if miOtroProyecto.AprobadosOtro %}
+                                    <td>Cantidad de traspasos aprobados: {{ miOtroProyecto.AprobadosOtro}} </td>
+                                    {% else %}
+                                    <td>Cantidad de traspasos aprobados: 0</td>
+                                    {% endif %}
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-            </div>
-            <div class="botones">
-                <a class="volver" href="{% url 'panelAdministrador' %}">Volver</a>
-                <button type="submit" class="btn btn-der btn-sm">Consultar</button>
+                <div class="botones">
+                    <button type="submit" class="btn btn-der btn-sm">Consultar</button>
+                    <a class="volver" href="{% url 'panelAdministrador' %}">Volver</a>
+                </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 </form>
 {% endblock %}

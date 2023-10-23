@@ -193,11 +193,9 @@ def comparacionProyectos(request):
     if request.method == 'POST':
         miProyecto = request.POST['miProyecto']
         otroProyecto = request.POST['otroProyecto']
-
         
-
         ## lado izq
-        proyectoActual = models.Proyecto.objects.get(nombreProyecto = miProyecto)
+        proyectoActual = models.Proyecto.objects.get(nombreProyecto = miProyecto, empresaVinculada__id = empresa.id)
         cantidadInsumos = Insumo.objects.filter(proyectoAsociado_id = proyectoActual.id).aggregate(cantidad=Sum('cantidad'))
         insumoMasDesaprovechado = Insumo.objects.filter(proyectoAsociado_id = proyectoActual.id).order_by('cantidad')[:3]
         costosInsumos = Insumo.objects.filter(proyectoAsociado_id = proyectoActual.id).aggregate(total = Sum(F('valorUnitario')*F('cantidad')))
@@ -206,7 +204,7 @@ def comparacionProyectos(request):
         miActualProyecto = {'proyectoActual':proyectoActual,'cantidadInsumos':cantidadInsumos,'insumoMasDesaprovechado':insumoMasDesaprovechado,
                             'costosInsumos':costosInsumos,'Aprobados':Aprobados}
         ##lado der
-        proyectoAComparar = models.Proyecto.objects.get(nombreProyecto = otroProyecto)
+        proyectoAComparar = models.Proyecto.objects.get(nombreProyecto = otroProyecto, empresaVinculada__id = empresa.id)
         cantidadInsumosOtro = Insumo.objects.filter(proyectoAsociado_id = proyectoAComparar.id).aggregate(cantidad=Sum('cantidad'))
         insumoMasDesaprovechadoOtro = Insumo.objects.filter(proyectoAsociado_id = proyectoAComparar.id).order_by('cantidad')[:3]
         costosInsumosOtro = Insumo.objects.filter(proyectoAsociado_id = proyectoAComparar.id).aggregate(total = Sum(F('valorUnitario')*F('cantidad')))
