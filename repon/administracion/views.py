@@ -214,3 +214,5 @@ def comparacionMedio(request):
     
     print(promedioPrecios )
     return render(request, 'comparacionMedio.html',{'miEmpresa':miEmpresa,'empresa': empresa,'medio':medio})
+def comparacionProyectos(request):
+    return render(request, 'comparacionProyectos.html')

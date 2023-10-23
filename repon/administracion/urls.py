@@ -12,7 +12,7 @@ urlpatterns = [
     path('crearProyecto/', views.crearProyecto, name='crearProyecto'),
     path('crearCoordinador/', views.crearCoordinador, name='crearCoordinador'),
     path('panelAdministrador/', views.panelAdministrador, name='panelAdministrador'),
-    path('comparacionMedio/', views.comparacionMedio, name='comparacionMedio'),
+    path('comparacionProyectos/', views.comparacionProyectos, name='comparacionProyectos'),
 ]
 
 if settings.DEBUG:
