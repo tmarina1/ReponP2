@@ -126,13 +126,11 @@
 </section>
 <script>
     function limitarValor(input) {
-        if (parseInt(input.value) > {{ item.cantidad }
-    }  ) {
-        input.value = {{ item.cantidad }
-    };
-        }else if (parseInt(input.value) == 0) {
-        input.value = 1;
-    }
+        if (parseInt(input.value) > {{item.cantidad}}) {
+            input.value = {{item.cantidad}};
+        }else if( parseInt(input.value) == 0){
+            input.value = 1;
+        }
     }
 </script>
 {% endblock %}
