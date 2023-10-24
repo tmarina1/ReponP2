@@ -11,6 +11,9 @@
     <div class="cuadroBlanco">
         <div class="containerContenido">
             <h1 id="titulo">Mi empresa vs Otras empresas</h1>
+            {% if mensaje %}
+            <p class="alert alert-danger mt-3 mb-3" role="alert"> {{ mensaje }}</p>
+            {% endif %}
             <div class="containerColumnas">
                 <div class="columna">
                     <table class="table table-bordered ">

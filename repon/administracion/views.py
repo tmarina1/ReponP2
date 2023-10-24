@@ -37,7 +37,7 @@ def landingAdmon(request):
     if not empresa:
         return redirect(crearEmpresas)
     estadoTransferencia = 0
-    return render(request, "landingAdmon.html",{'estadoTransferencia':estadoTransferencia})
+    return render(request, "landingAdmon.html",{'idTransferencia':estadoTransferencia})
 
 
 '''
@@ -430,7 +430,6 @@ def verInventarioAdmin(request, insumoId):
         insumoBuscado.save()
         return redirect(verInventarioAdmin, insumoId)
 
-
     return render(request, "verInventarioAdmin.html", {'item': item, 'valorTotal': valorTotal})
 
 def subirArchivoEntreno(request):
@@ -464,41 +463,40 @@ def comparacionMedio(request):
     idUsuario = request.user.id
     empresa = models.Empresa.objects.get(usuarioVinculado_id = idUsuario)
 
-
     proyectosMiEmpresa = models.Proyecto.objects.filter(empresaVinculada_id = empresa.id).count()
     cantidadInsumos = Insumo.objects.filter(proyectoAsociado__empresaVinculada__id=empresa.id).aggregate(cantidad=Sum('cantidad'))
     costosInsumos = Insumo.objects.filter(proyectoAsociado__empresaVinculada__id=empresa.id).aggregate(total = Sum(F('valorUnitario')*F('cantidad')))
     insumosMayorCantidad = Insumo.objects.filter(proyectoAsociado__empresaVinculada__id=empresa.id).order_by('-cantidad')[:3]
 
-
     miEmpresa = {'proyectosMiEmpresa':proyectosMiEmpresa,'cantidadInsumos':cantidadInsumos['cantidad'],
                  'costosInsumos':costosInsumos['total'],'Desperdiciados':insumosMayorCantidad}
 
+    try:
+        promedioProyectosRestantes = models.Proyecto.objects.values('empresaVinculada__id').annotate(
+            cantidadProyectos=Count('id')
+        ).exclude(empresaVinculada__id = empresa.id).aggregate(
+            promedioProyectos=Avg('cantidadProyectos')
+        )
 
-    promedioProyectosRestantes = models.Proyecto.objects.values('empresaVinculada__id').annotate(
-        cantidadProyectos=Count('id')
-    ).exclude(empresaVinculada__id = empresa.id).aggregate(
-        promedioProyectos=Avg('cantidadProyectos')
-    )
+        sumaCantidadInsumos = Insumo.objects.exclude(proyectoAsociado__empresaVinculada__id=empresa.id).aggregate(
+            totalCantidad=Sum('cantidad'))['totalCantidad']
+        empresasConInsumos = models.Empresa.objects.exclude(id=empresa.id).annotate(cantidadInsumos=Count('proyecto__insumo')).filter(
+            cantidadInsumos__gt=0)
+        cantidadEmpresas = empresasConInsumos.count()
 
-    sumaCantidadInsumos = Insumo.objects.exclude(proyectoAsociado__empresaVinculada__id=empresa.id).aggregate(
-        totalCantidad=Sum('cantidad'))['totalCantidad']
-    empresasConInsumos = models.Empresa.objects.exclude(id=empresa.id).annotate(cantidadInsumos=Count('proyecto__insumo')).filter(
-        cantidadInsumos__gt=0)
-    cantidadEmpresas = empresasConInsumos.count()
+        promedioInsumos = sumaCantidadInsumos / cantidadEmpresas
 
-    promedioInsumos = sumaCantidadInsumos / cantidadEmpresas
+        costoTotalInsumos = Insumo.objects.exclude(proyectoAsociado__empresaVinculada__id=empresa.id).aggregate(
+            costoTotal=Sum(F('valorUnitario')*F('cantidad')))['costoTotal']
 
-    costoTotalInsumos = Insumo.objects.exclude(proyectoAsociado__empresaVinculada__id=empresa.id).aggregate(
-        costoTotal=Sum(F('valorUnitario')*F('cantidad')))['costoTotal']
+        promedioPrecios = costoTotalInsumos  / cantidadEmpresas
 
-    promedioPrecios = costoTotalInsumos  / cantidadEmpresas
+        insumosMayorCantidad = Insumo.objects.exclude(proyectoAsociado__empresaVinculada__id=empresa.id).order_by('-cantidad')[:3]
 
-    insumosMayorCantidad = Insumo.objects.exclude(proyectoAsociado__empresaVinculada__id=empresa.id).order_by('-cantidad')[:3]
-
-
-    medio = {'promedioProyectosRestantes':promedioProyectosRestantes['promedioProyectos'],'promedioInsumos':promedioInsumos,
+        medio = {'promedioProyectosRestantes':promedioProyectosRestantes['promedioProyectos'],'promedioInsumos':promedioInsumos,
              'promedioPrecios':promedioPrecios,'insumosMayorCantidad':insumosMayorCantidad}
-
-    print(promedioPrecios )
+    
+    except:
+        mensaje = 'No hay mas empresas creadas en el software'
+        return render(request, 'comparacionMedio.html',{'miEmpresa':miEmpresa,'empresa': empresa, 'mensaje':mensaje})
     return render(request, 'comparacionMedio.html',{'miEmpresa':miEmpresa,'empresa': empresa,'medio':medio})

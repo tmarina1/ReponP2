@@ -10,62 +10,68 @@
 {% block content %}
 <section class="contenido">
     <div class="cuadroBlanco">
-            <div class="containerContenido">
-                <form method="post">
-                    <div class="containerForm">
-                       
-                            {% csrf_token %}
-                            <div  id="formulario1" style="display: block;">
-                                <h1 id="tituloCrearEmpresa">Ingrese información de la empresa</h1>
-                                    {% if mensaje %}
-                                    <p class="alert alert-danger" role="alert"> {{ mensaje }}</p>
-                                    {% endif %}
-                                <div class="row" >
-                                    <div class="col">
-                                        <div class="input">
-                                            <label for="basic-url" class="form-label">NIT (Obligatorio)</label>
-                                            <input type="number" min="0" step="1" name="nit" class="form-control" placeholder="Ejemplo: 901567814" required> 
-                                        </div>
-                                        <div class="input">
-                                            <label for="basic-url" class="form-label">Nombre de la empresa (Obligatorio)</label>
-                                            <input type="text" name="nombre" class="form-control" placeholder="Ejemplo: Homecenter" required>
-                                        </div>
-                                        <div class="input">
-                                            <label for="basic-url" class="form-label">Dirección (Opcional)</label>
-                                            <input type="text" name="direccion" class="form-control" placeholder="Ejemplo: Calle 45b sur #25 - 15">
-                                        </div>
-                                        <div class="input">
-                                            <label for="basic-url" class="form-label">Departamento (Obligatorio)</label>
-                                            <input type="text" name="departamento" class="form-control" list="listaDepartamentos" placeholder="Ejemplo: Antioquia" required>
-                                            <datalist id="listaDepartamentos">
-                                                {% for departamento in departamentos %}
-                                                <option value="{{departamento}}"></option>
-                                                {% endfor %}
-                                            </datalist>
-                                        </div>
-                                        <div class="input">
-                                            <label for="basic-url" class="form-label">Ciudad (Obligatorio)</label>
-                                            <input type="text" name="ciudad" class="form-control" list="listaCiudades" placeholder="Ejemplo: Medellín" required>
-                                            <datalist id="listaCiudades">
-                                                {% for ciudad in ciudades %}
-                                                <option value="{{ciudad}}"></option>
-                                                {% endfor %}
-                                            </datalist>
-                                        </div>
-                                        <div class="confirmacion">
-                                            <label class="advertencia-label">* Recuerde verificar la información
-                                                antes de crear la empresa</label>
-                                            <div class="botones">
-                                                <button type="submit" class="btn btn-der btn-sm" id="btn-crearEmpresa">Crear Empresa</button>
-                                            </div>
-                                        </div>
+        <div class="containerContenido">
+            <form method="post">
+                <div class="containerForm">
+
+                    {% csrf_token %}
+                    <div id="formulario1" style="display: block;">
+                        <h1 id="tituloCrearEmpresa">Ingrese información de la empresa</h1>
+                        {% if mensaje %}
+                        <p class="alert alert-danger" role="alert"> {{ mensaje }}</p>
+                        {% endif %}
+                        <div class="row">
+                            <div class="col">
+                                <div class="input">
+                                    <label for="basic-url" class="form-label">NIT (Obligatorio)</label>
+                                    <input type="number" min="0" step="1" name="nit" class="form-control"
+                                        placeholder="Ejemplo: 901567814" required>
+                                </div>
+                                <div class="input">
+                                    <label for="basic-url" class="form-label">Nombre de la empresa (Obligatorio)</label>
+                                    <input type="text" name="nombre" class="form-control"
+                                        placeholder="Ejemplo: Homecenter" required>
+                                </div>
+                                <div class="input">
+                                    <label for="basic-url" class="form-label">Dirección (Opcional)</label>
+                                    <input type="text" name="direccion" class="form-control"
+                                        placeholder="Ejemplo: Calle 45b sur #25 - 15">
+                                </div>
+                                <div class="input">
+                                    <label for="basic-url" class="form-label">Departamento (Obligatorio)</label>
+                                    <input type="text" name="departamento" class="form-control"
+                                        list="listaDepartamentos" placeholder="Ejemplo: Antioquia" required>
+                                    <datalist id="listaDppepartamentos">
+                                        {% for departamento in departamentos %}
+                                        <option value="{{departamento}}"></option>
+                                        {% endfor %}
+                                    </datalist>
+                                </div>
+                                <div class="input">
+                                    <label for="basic-url" class="form-label">Ciudad (Obligatorio)</label>
+                                    <input type="text" name="ciudad" class="form-control" list="listaCiudades"
+                                        placeholder="Ejemplo: Medellín" required>
+                                    <datalist id="listaCiudades">
+                                        {% for ciudad in ciudades %}
+                                        <option value="{{ciudad}}"></option>
+                                        {% endfor %}
+                                    </datalist>
+                                </div>
+                                <div class="confirmacion">
+                                    <label class="advertencia-label">* Recuerde verificar la información
+                                        antes de crear la empresa</label>
+                                    <div class="botones">
+                                        <button type="submit" class="btn btn-der btn-sm" id="btn-crearEmpresa">Crear
+                                            Empresa</button>
                                     </div>
                                 </div>
                             </div>
-                    </div>    
+                        </div>
+                    </div>
+                </div>
 
-                </form>
-            </div>
+            </form>
+        </div>
     </div>
 </section>
 

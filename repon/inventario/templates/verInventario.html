@@ -14,10 +14,10 @@
 <section class="contenido">
     <div class="cuadroBlanco">
         <form method="post">
-            
+
             <div class="containerForm">
                 {% if mensaje %}
-                    <p class="alert alert-success" role="alert"> {{ mensaje }}</p>
+                <p class="alert alert-success" role="alert"> {{ mensaje }}</p>
                 {% endif %}
                 {% csrf_token %}
                 <div>
@@ -33,8 +33,7 @@
                             </div>
                             <div class="input">
                                 <label for="basic-url" class="form-label">Unidad Base</label>
-                                <input type="text" name="unidadBase" class="form-control"
-                                    value="{{ item.unidad }}">
+                                <input type="text" name="unidadBase" class="form-control" value="{{ item.unidad }}">
                             </div>
                             <div class="input">
                                 <label for="basic-url" class="form-label">Cantidad</label>
@@ -46,8 +45,7 @@
                             </div>
                             <div class="input">
                                 <label for="basic-url" class="form-label">Tipo de insumo</label>
-                                <input type="text" name="marca" class="form-control"
-                                    value="{{ item.tipoInsumo }}">
+                                <input type="text" name="marca" class="form-control" value="{{ item.tipoInsumo }}">
                             </div>
                             <div class="input">
                                 <label for="basic-url" class="form-label">Proyecto que genero el insumo</label>
@@ -63,7 +61,8 @@
                         <div class="col">
                             <div class="input">
                                 <label for="basic-url" class="form-label">Valor Unitario</label>
-                                <input type="number" name="valorU" class="form-control" value="{{ item.valorUnitario }}">
+                                <input type="number" name="valorU" class="form-control"
+                                    value="{{ item.valorUnitario }}">
                             </div>
                             <div class="input">
                                 <label for="basic-url" class="form-label">Iva</label>
@@ -86,8 +85,7 @@
                             {% else %}
                             <div class="input">
                                 <label for="basic-url" class="form-label">Fecha Caducidad</label>
-                                <input type="text" name="fechaCaducidad" class="form-control"
-                                    value="NA">
+                                <input type="text" name="fechaCaducidad" class="form-control" value="NA">
                             </div>
                             {% endif %}
                             <div class="input">
@@ -101,15 +99,18 @@
                                     value="{{ item.observaciones }}">
                             </div>
                             {% if coordinadorSolicitante != coordinadorInsumo.coordinadorVinculado_id%}
-                                <div class="input">
-                                        <form method = "post">
-                                            <label class="form-label">Cantidad</label><br>
-                                            <div class="botones" style="display: flex; justify-content:left; ">
-                                                <input type="text" name="cantidadTraspaso" class="form-control" style="border-color:#000;" oninput="limitarValor(this)" onkeypress="return (event.charCode >= 48 && event.charCode <= 57)">
-                                                <button type="submit" class="btn btn-der btn-sm" style="display: flex; margin-left:40px;">Solicitar</button>
-                                            </div>
-                                        </form>
-                                </div>
+                            <div class="input">
+                                <form method="post">
+                                    <label class="form-label">Cantidad</label><br>
+                                    <div class="botones" style="display: flex; justify-content:left; ">
+                                        <input type="text" name="cantidadTraspaso" class="form-control"
+                                            style="border-color:#000;" oninput="limitarValor(this)"
+                                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57)" required>
+                                        <button type="submit" class="btn btn-der btn-sm"
+                                            style="display: flex; margin-left:40px;">Solicitar</button>
+                                    </div>
+                                </form>
+                            </div>
                             {% endif %}
                             <div class="confirmacion">
                                 <div class="botones">
@@ -125,11 +126,13 @@
 </section>
 <script>
     function limitarValor(input) {
-        if (parseInt(input.value) > {{item.cantidad}}  ) {
-            input.value = {{item.cantidad}};
-        }else if( parseInt(input.value) == 0){
-            input.value = 1;
-        }
+        if (parseInt(input.value) > {{ item.cantidad }
+    }  ) {
+        input.value = {{ item.cantidad }
+    };
+        }else if (parseInt(input.value) == 0) {
+        input.value = 1;
+    }
     }
 </script>
 {% endblock %}
