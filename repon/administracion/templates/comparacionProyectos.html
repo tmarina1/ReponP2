@@ -17,7 +17,8 @@
                 <div class="containerColumnas seleccionarProyecto">
                     <div class="columna">
                         <div class="input">
-                            <select name="miProyecto" class="form-control" required>
+                            <select id="selectProyecto" name="miProyecto" class="form-control" required>
+                                <option disabled selected hidden>Seleccione un proyecto</option>
                                 {% for i in proyectosMiEmpresa %}
                                 <option value="{{i.nombreProyecto}}"> {{i.nombreProyecto}} </option>
                                 {% endfor %}
@@ -26,7 +27,8 @@
                     </div>
                     <div class="columna">
                         <div class="input">
-                            <select name="otroProyecto" class="form-control" required>
+                            <select id="selectProyecto" name="otroProyecto" class="form-control" required>
+                                <option disabled selected hidden>Seleccione un proyecto</option>
                                 {% for i in proyectosMiEmpresa %}
                                 <option value="{{i.nombreProyecto}}"> {{i.nombreProyecto}} </option>
                                 {% endfor %}
