@@ -101,6 +101,9 @@
                             {% if coordinadorSolicitante != coordinadorInsumo.coordinadorVinculado_id%}
                             <div class="input">
                                 <form method="post">
+                                    <h6 class="mt-2">
+                                        Ingrese la cantidad de insumo a solicitar:
+                                    </h6>
                                     <label class="form-label">Cantidad</label><br>
                                     <div class="botones" style="display: flex; justify-content:left; ">
                                         <input type="text" name="cantidadTraspaso" class="form-control"
@@ -126,11 +129,13 @@
 </section>
 <script>
     function limitarValor(input) {
-        if (parseInt(input.value) > {{item.cantidad}}) {
-            input.value = {{item.cantidad}};
-        }else if( parseInt(input.value) == 0){
-            input.value = 1;
-        }
+        if (parseInt(input.value) > {{ item.cantidad }
+    }) {
+        input.value = {{ item.cantidad }
+    };
+        }else if (parseInt(input.value) == 0) {
+        input.value = 1;
+    }
     }
 </script>
 {% endblock %}
