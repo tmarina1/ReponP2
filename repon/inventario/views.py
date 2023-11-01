@@ -111,6 +111,11 @@ def opcionesCoordinador(request,proyectoId):
     return render(request, "opcionesCoordinador.html", {'proyecto':proyectoId, 'usuarioSesion':idUsuario, 'usuarioCoordinador':idCoordinador, 'nombre':nombreProyecto})
 
 #----------------------------------------------------------------------
+
+'''
+Este método tiene la función de predecir la categoría de un insumo.
+'''
+
 def predecirCategoria(referencia):
     rutaModelo = os.path.join('administracion', 'static', 'archivosModelo', 'modeloDeClasificacion.pkl')
     rutaVectorizador = os.path.join('administracion', 'static', 'archivosModelo', 'vectorizadorTFIDF.pkl')
@@ -124,7 +129,7 @@ def predecirCategoria(referencia):
 #----------------------------------------------------------------------
 
 '''
-Este método tiene la función de mostrar la página destinada a ingresar un nuevo insumo al inventario de sobrantes existente.
+Este método tiene la función de mostrar la página destinada a ingresar un nuevo insumo al inventario de sobrantes existente y por defecto asignarle una categoría a dicho insumo.
 '''
 @login_required
 def crearInventario(request, proyectoId):

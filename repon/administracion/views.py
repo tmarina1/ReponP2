@@ -361,7 +361,11 @@ def rechazarTraspaso(request, transferenciaId):
 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
-def ingresoCategoria(request):
+'''
+Metodo encargado de listar la totalidad de insumos de la empresa que esta en la sesión para posteriormente realizarle modificaciones a las caracteristicas de los insumos
+'''
+
+def listaInsumosAdmin(request):
     idUsuario = request.user.id
     insumosExistentes = Insumo.objects.filter(proyectoAsociado__empresaVinculada__usuarioVinculado__id = idUsuario).order_by('referencia')
 
@@ -385,7 +389,11 @@ def ingresoCategoria(request):
     except EmptyPage:
         # Si la página está fuera de rango, muestra la última página de resultados
         insumos = paginacion.page(paginacion.num_pages)
-    return render(request, 'ingresoCategoria.html',{'insumos': insumos})
+    return render(request, 'listaInsumosAdmin.html',{'insumos': insumos})
+
+'''
+Metodo encargado de actualizar las propiedades de los insumos.
+'''
 
 def verInventarioAdmin(request, insumoId):
     item = Insumo.objects.get(id=insumoId)
@@ -431,6 +439,10 @@ def verInventarioAdmin(request, insumoId):
         return redirect(verInventarioAdmin, insumoId)
 
     return render(request, "verInventarioAdmin.html", {'item': item, 'valorTotal': valorTotal})
+
+'''
+Metodo encargado de ingresar un archivo de excel con ejemplos de referencia y categoría de insumos para posteriormente entrenar un modelo para la categorización de futuros insumos
+'''
 
 def subirArchivoEntreno(request):
     mensajes =''
