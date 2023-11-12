@@ -14,7 +14,7 @@ from repon.settings import UBICACION
 from django.db.models import Count,Avg,Sum,F, Value,  FloatField
 from inventario.models import Insumo
 from django.db.models.functions import Coalesce
-from inventario.models import TransferenciaInsumo, Insumo
+from inventario.models import TransferenciaInsumo, Insumo, CostosProyecto
 #------------------------------------------------------------------
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -512,3 +512,10 @@ def comparacionMedio(request):
         mensaje = 'No hay mas empresas creadas en el software'
         return render(request, 'comparacionMedio.html',{'miEmpresa':miEmpresa,'empresa': empresa, 'mensaje':mensaje})
     return render(request, 'comparacionMedio.html',{'miEmpresa':miEmpresa,'empresa': empresa,'medio':medio})
+
+def verCostosAdmin(request):
+    idUsuario = request.user.id
+    empresa = models.Empresa.objects.get(usuarioVinculado_id = idUsuario)
+    costosProyectos = CostosProyecto.objects.filter(proyectoAsociado__empresaVinculada = empresa.id)
+    print(costosProyectos)
+    return render(request, 'verCostosAdmin.html', {'proyectosConCostos': costosProyectos})
