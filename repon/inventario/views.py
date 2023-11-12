@@ -190,6 +190,7 @@ def subirArchivo(request, proyectoId):
         mensajes = ['Error con el archivo subido, por favor verifica que el formato esté correctamente diligenciado']
     return render(request, 'subirArchivo.html', {'proyecto':proyectoId, 'mensajes':mensajes})
 
+@login_required
 def ingresarCostos(request, proyectoId):
     if request.method == 'POST':
         valor = request.POST['valor']
@@ -201,7 +202,7 @@ def ingresarCostos(request, proyectoId):
         costoNuevo = CostosProyecto.objects.create(valor=valor,tipo=tipo,observaciones=observaciones,
                                                    proyectoAsociado=proyectoAsociado) 
         costoNuevo.save()
-    return render(request, 'ingresarCostos.html')
+    return render(request, 'ingresarCostos.html', {'proyecto':proyectoId})
 
     
 

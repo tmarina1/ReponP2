@@ -1,0 +1,56 @@
+{% extends 'autenticacion/plantillaCuadros.html' %}
+{% load static %}
+
+{% block title %} Ingresar Costos {% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/crearInventario.css' %}">
+<link rel="stylesheet" href="{% static 'css/ingresarCostos.css' %}">
+{% endblock %}
+
+{% block content %}
+
+
+<section class="contenido">
+    <div class="cuadroBlanco">
+        <div class="containerContenido">
+            <form method="post">
+                <div class="containerForm">
+                    {% csrf_token %}
+                    <div>
+                        <h1 id="tituloCrearInventario">Ingrese información básica del insumo</h1>
+                        <div class="row">
+                            <div class="col">
+                                    <div class="input">
+                                        <label for="basic-url" class="form-label">Valor costo</label>
+                                        <input type="number" name="valor" class="form-control" placeholder="Ejemplo: 15000" required min="1">
+                                    </div>
+                                <div class="input">
+                                    <label for="basic-url" class="form-label">Tipo de costo</label>
+                                    <select class="form-select" name="tipo" class="form-control" required>
+                                        <option value="variable">Variable</option>
+                                        <option value="fijo">Fijo</option>
+                                    </select>
+                                </div>
+                                <div class="input">
+                                    <label for="basic-url" class="form-label">Porque se dio</label>
+                                    <textarea class="form-control"  name="observaciones"></textarea>
+                                </div>
+                                <div class="confirmacion">
+                                    <div class="botones" style="display: flex; justify-content:center">
+                                        <a class="volver" href="{% url 'opcionesCoordinador' proyecto %}">Volver</a>
+                                        <button type="submit" class="btn btn-der btn-sm" id="btn-enviar">Guardar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</section>
+
+
+{% endblock %}
