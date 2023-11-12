@@ -512,3 +512,14 @@ def comparacionMedio(request):
         mensaje = 'No hay mas empresas creadas en el software'
         return render(request, 'comparacionMedio.html',{'miEmpresa':miEmpresa,'empresa': empresa, 'mensaje':mensaje})
     return render(request, 'comparacionMedio.html',{'miEmpresa':miEmpresa,'empresa': empresa,'medio':medio})
+
+def costoMovimiento(request):
+    transferenciaId = 1 #borrar 
+
+    if request.method == 'POST':
+        costoTraspaso = request.POST['costo']
+        insumo = TransferenciaInsumo.objects.get(id=transferenciaId) #modificar atraves de id transferencia por url
+        insumo.costoTransferencia = costoTraspaso
+        insumo.save()
+
+    return render(request)
