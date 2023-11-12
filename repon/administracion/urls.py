@@ -20,7 +20,8 @@ urlpatterns = [
     path('verInventarioAdmin/<int:insumoId>', views.verInventarioAdmin, name='verInventarioAdmin'),
     path('subirArchivoEntreno/', views.subirArchivoEntreno, name='subirArchivoEntreno'),
     path('comparacionMedio/', views.comparacionMedio, name='comparacionMedio'),
-    path('traspasosAprovados/', views.traspasosAprovados, name='traspasosAprovados'),
+    path('traspasosAprobados/<int:proyectoId>', views.traspasosAprobados, name='traspasosAprobados'),
+    path('listadoProyectos/', views.listadoProyectos, name='listadoProyectos'),
 ]
 
 if settings.DEBUG:

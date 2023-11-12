@@ -3,6 +3,7 @@
 {% block title %}Landing Admin{% endblock %}
 {%block head%}
 <link rel="stylesheet" href="{% static 'css/landingAdmon.css' %}">
+
 <script src="https://kit.fontawesome.com/4efaf993e1.js" crossorigin="anonymous"></script>
 {%endblock%}
 
@@ -76,6 +77,20 @@
         <div class="containerContenido">
             <img src="{% static 'img/Graph.png' %}" class="iconos" alt="Imagen admin">
             <p class="textoContenido">Panel administrador</p>
+        </div>
+        <div class="containerCirculo">
+            <div class="circulo">
+                <i class="fas fa-chevron-up" id="flecha"></i>
+            </div>
+        </div>
+    </a>
+    
+</section>
+<section class="containerBotonesAbajo">
+    <a class="botonesLanding" href="{% url 'listadoProyectos' %}">
+        <div class="containerContenido">
+            <img src="{% static 'img/check.png' %}" class="iconos" alt="Imagen admin">
+            <p class="textoContenido">Traspasos aprobados</p>
         </div>
         <div class="containerCirculo">
             <div class="circulo">
