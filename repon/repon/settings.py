@@ -149,4 +149,5 @@ UBICACION = extraerCiudadyDepartamento(RUTA_UBICACION)
 
 CRONJOBS = [
     ('*/5 * * * *', 'administracion.cron.verificacionFechas'),
+    ('*/5 * * * *', 'administracion.cron.verificacionFechas1')
 ]
