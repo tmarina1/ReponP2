@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from datetime import datetime
-from .models import Proyecto, Insumo, TransferenciaInsumo
+from .models import Proyecto, Insumo, TransferenciaInsumo, CostosProyecto
 import pandas as pd
 import difflib
 from django.contrib.auth.decorators import login_required
@@ -189,6 +189,19 @@ def subirArchivo(request, proyectoId):
     except:
         mensajes = ['Error con el archivo subido, por favor verifica que el formato esté correctamente diligenciado']
     return render(request, 'subirArchivo.html', {'proyecto':proyectoId, 'mensajes':mensajes})
+
+def ingresarCostos(request, proyectoId):
+    if request.method == 'POST':
+        valor = request.POST['valor']
+        tipo = request.POST['tipo']
+        observaciones = request.POST['observaciones']   
+
+        proyectoAsociado = Proyecto.objects.get(id = proyectoId)
+
+        costoNuevo = CostosProyecto.objects.create(valor=valor,tipo=tipo,observaciones=observaciones,
+                                                   proyectoAsociado=proyectoAsociado) 
+        costoNuevo.save()
+    return render(request, 'ingresarCostos.html')
 
     
 
