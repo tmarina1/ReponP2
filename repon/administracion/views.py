@@ -516,6 +516,5 @@ def comparacionMedio(request):
 def verCostosAdmin(request):
     idUsuario = request.user.id
     empresa = models.Empresa.objects.get(usuarioVinculado_id = idUsuario)
-    costosProyectos = CostosProyecto.objects.filter(proyectoAsociado__empresaVinculada = empresa.id)
-    print(costosProyectos)
+    costosProyectos = CostosProyecto.objects.filter(proyectoAsociado__empresaVinculada = empresa.id).values('proyectoAsociado','tipo','valor')
     return render(request, 'verCostosAdmin.html', {'proyectosConCostos': costosProyectos})
