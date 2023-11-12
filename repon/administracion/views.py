@@ -523,3 +523,6 @@ def costoMovimiento(request):
         insumo.save()
 
     return render(request)
+
+def traspasosAprovados(request):
+    return render(request, 'traspasos/traspasosAprovados.html')

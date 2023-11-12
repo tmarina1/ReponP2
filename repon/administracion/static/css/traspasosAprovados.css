@@ -1,0 +1,24 @@
+#divBusqueda{
+    margin-bottom: 50px;
+    margin-top: 30px;
+}
+
+.busquedaForm {
+    display: flex;
+    justify-content: center;
+}
+
+.busquedaContainer {
+    display: flex;
+    align-items: center;
+}
+
+.tituloBusqueda, .inputBusqueda, #botonBusqueda {
+    margin: 5px;
+}
+
+.tituloBusqueda {
+    color: #ffffff;
+    font-size: 15px;
+    text-align: center;
+}
