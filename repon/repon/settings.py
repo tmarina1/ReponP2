@@ -148,6 +148,6 @@ RUTA_UBICACION = os.path.join(BASE_DIR,'static','archivos','colombia.json')
 UBICACION = extraerCiudadyDepartamento(RUTA_UBICACION) 
 
 CRONJOBS = [
-    ('*/5 * * * *', 'administracion.cron.verificacionFechas'),
-    ('*/5 * * * *', 'administracion.cron.verificacionFechas1')
+    ('0 0 * * *', 'administracion.cron.verificacionFechas'),
+    ('0 0 * * *', 'administracion.cron.verificacionFechas1')
 ]
