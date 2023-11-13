@@ -512,3 +512,7 @@ def comparacionMedio(request):
         mensaje = 'No hay mas empresas creadas en el software'
         return render(request, 'comparacionMedio.html',{'miEmpresa':miEmpresa,'empresa': empresa, 'mensaje':mensaje})
     return render(request, 'comparacionMedio.html',{'miEmpresa':miEmpresa,'empresa': empresa,'medio':medio})
+
+
+def consultaInsumos(request):
+    return render(request, 'consultaInsumos.html')
