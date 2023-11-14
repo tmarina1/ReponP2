@@ -416,6 +416,7 @@ def verInventarioAdmin(request, insumoId):
         fechaCompra = request.POST.get('fechaCompra')
         categoria = request.POST.get('categoria')
         observaciones = request.POST.get('observaciones')
+        paraVender = request.POST.get('paraVender')
 
         insumoBuscado = Insumo.objects.get(id=insumoId)
 
@@ -434,7 +435,10 @@ def verInventarioAdmin(request, insumoId):
             insumoBuscado.fechaCompra = fechaCompraParseada
         insumoBuscado.categoria = categoria
         insumoBuscado.observaciones = observaciones
-
+        if paraVender == 'Si':
+            insumoBuscado.paraVender = True
+        else:
+            insumoBuscado.paraVender = False
         insumoBuscado.save()
         return redirect(verInventarioAdmin, insumoId)
 

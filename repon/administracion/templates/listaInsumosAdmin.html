@@ -32,6 +32,7 @@
                 <th>Cantidad</th>
                 <th>Proyecto</th>
                 <th>Categoría</th>
+                <th>Para la venta</th>
                 <th>Ver Item</th>
             </tr>
         </thead>
@@ -47,6 +48,11 @@
                 <td>{{insumo.categoria}}</td>
                 {% else %}
                 <td>Sin asignar</td>
+                {% endif %}
+                {% if insumo.paraVender %}
+                <td>Si</td>
+                {% else %}
+                <td>No</td>
                 {% endif %}
                 <td class="verItem">
                     <a href="{% url 'verInventarioAdmin' insumo.id %}" class="containerCirculo">

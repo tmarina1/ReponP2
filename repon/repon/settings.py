@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'autenticacion',
     'administracion',
     'inventario',
+    'django_crontab',
     
 ]
 
@@ -145,3 +146,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 from administracion.logica import extraerCiudadyDepartamento
 RUTA_UBICACION = os.path.join(BASE_DIR,'static','archivos','colombia.json')
 UBICACION = extraerCiudadyDepartamento(RUTA_UBICACION) 
+
+CRONJOBS = [
+    ('*/5 * * * *', 'administracion.cron.verificacionFechas'),
+]
