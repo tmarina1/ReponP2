@@ -20,6 +20,8 @@ class Insumo(models.Model):
     observaciones = models.CharField(max_length=300, default='') 
     categoria = models.CharField(max_length=300, default='')
     paraVender = models.BooleanField(default = False)
+    correoVencimiento = models.BooleanField(default=False)
+    correoFechaIngreso = models.BooleanField(default=False)
     proyectoAsociado = models.ForeignKey(Proyecto, on_delete=models.CASCADE)
 
 class TransferenciaInsumo(models.Model):
