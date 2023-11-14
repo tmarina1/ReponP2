@@ -14,7 +14,7 @@ from repon.settings import UBICACION
 from django.db.models import Count,Avg,Sum,F, Value,  FloatField
 from inventario.models import Insumo
 from django.db.models.functions import Coalesce
-from inventario.models import TransferenciaInsumo, Insumo
+from inventario.models import TransferenciaInsumo, Insumo, CostosProyecto
 #------------------------------------------------------------------
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import TfidfVectorizer
