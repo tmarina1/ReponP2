@@ -577,11 +577,10 @@ def listadoProyectos(request):
     proyectos = models.Proyecto.objects.filter(empresaVinculada_id = empresa[0].id)
     
     return render(request, 'traspasos/listadoProyectos.html',{'proyectos':proyectos,'empresa':empresa[0]})
->>>>>>> 9475c3777798f8ed5bd86154dcfe9b521431f481
-=======
+
 def verCostosAdmin(request):
     idUsuario = request.user.id
     empresa = models.Empresa.objects.get(usuarioVinculado_id = idUsuario)
     costosProyectos = CostosProyecto.objects.filter(proyectoAsociado__empresaVinculada = empresa.id).values('proyectoAsociado__nombreProyecto','tipo','valor')
     return render(request, 'verCostosAdmin.html', {'proyectosConCostos': costosProyectos})
->>>>>>> 6bc1452177cd3815bfc3a888bfbc86f1a0415a25
+
