@@ -519,7 +519,6 @@ def comparacionMedio(request):
         return render(request, 'comparacionMedio.html',{'miEmpresa':miEmpresa,'empresa': empresa, 'mensaje':mensaje})
     return render(request, 'comparacionMedio.html',{'miEmpresa':miEmpresa,'empresa': empresa,'medio':medio})
 
-
 def consultaInsumos(request):
     idUsuario = request.user.id
     empresa = models.Empresa.objects.get(usuarioVinculado_id = idUsuario)

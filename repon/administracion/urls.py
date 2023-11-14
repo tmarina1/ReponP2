@@ -23,6 +23,7 @@ urlpatterns = [
     path('consultaInsumos/', views.consultaInsumos, name='consultaInsumos'),
     path('traspasosAprobados/<int:proyectoId>', views.traspasosAprobados, name='traspasosAprobados'),
     path('listadoProyectos/', views.listadoProyectos, name='listadoProyectos'),
+    path('verCostosAdmin/', views.verCostosAdmin, name='verCostosAdmin'),
 ]
 
 if settings.DEBUG:
