@@ -14,7 +14,7 @@ from repon.settings import UBICACION
 from django.db.models import Count,Avg,Sum,F, Value,  FloatField
 from inventario.models import Insumo
 from django.db.models.functions import Coalesce
-from inventario.models import TransferenciaInsumo, Insumo, CostosProyecto
+from inventario.models import TransferenciaInsumo, Insumo
 #------------------------------------------------------------------
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -519,8 +519,6 @@ def comparacionMedio(request):
         return render(request, 'comparacionMedio.html',{'miEmpresa':miEmpresa,'empresa': empresa, 'mensaje':mensaje})
     return render(request, 'comparacionMedio.html',{'miEmpresa':miEmpresa,'empresa': empresa,'medio':medio})
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 def consultaInsumos(request):
     idUsuario = request.user.id
@@ -541,7 +539,6 @@ def consultaInsumos(request):
         #mensajes = ['Error con el archivo subido, por favor verifica que el formato esté correctamente diligenciado']
 
     return render(request, 'consultaInsumos.html', {'mensajes':mensajes, 'listaInsumos': listaInsumosValidados})
-=======
 '''
 Metodo encargado de segun el proyecto y sus insumos aceptados por el administrador para el traspaso, se le pueda asignar un costo de traspaso
 '''
@@ -577,11 +574,3 @@ def listadoProyectos(request):
     proyectos = models.Proyecto.objects.filter(empresaVinculada_id = empresa[0].id)
     
     return render(request, 'traspasos/listadoProyectos.html',{'proyectos':proyectos,'empresa':empresa[0]})
->>>>>>> 9475c3777798f8ed5bd86154dcfe9b521431f481
-=======
-def verCostosAdmin(request):
-    idUsuario = request.user.id
-    empresa = models.Empresa.objects.get(usuarioVinculado_id = idUsuario)
-    costosProyectos = CostosProyecto.objects.filter(proyectoAsociado__empresaVinculada = empresa.id).values('proyectoAsociado__nombreProyecto','tipo','valor')
-    return render(request, 'verCostosAdmin.html', {'proyectosConCostos': costosProyectos})
->>>>>>> 6bc1452177cd3815bfc3a888bfbc86f1a0415a25

@@ -20,16 +20,9 @@ urlpatterns = [
     path('verInventarioAdmin/<int:insumoId>', views.verInventarioAdmin, name='verInventarioAdmin'),
     path('subirArchivoEntreno/', views.subirArchivoEntreno, name='subirArchivoEntreno'),
     path('comparacionMedio/', views.comparacionMedio, name='comparacionMedio'),
-<<<<<<< HEAD
-<<<<<<< HEAD
     path('consultaInsumos/', views.consultaInsumos, name='consultaInsumos'),
-=======
     path('traspasosAprobados/<int:proyectoId>', views.traspasosAprobados, name='traspasosAprobados'),
     path('listadoProyectos/', views.listadoProyectos, name='listadoProyectos'),
->>>>>>> 9475c3777798f8ed5bd86154dcfe9b521431f481
-=======
-    path('verCostosAdmin/', views.verCostosAdmin, name='verCostosAdmin'),
->>>>>>> 6bc1452177cd3815bfc3a888bfbc86f1a0415a25
 ]
 
 if settings.DEBUG:
