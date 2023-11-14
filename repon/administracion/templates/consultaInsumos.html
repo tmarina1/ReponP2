@@ -5,6 +5,7 @@
 {% block head %}
 <link rel="stylesheet" href="{% static 'css/subirArchivo.css' %}">
 <link rel="stylesheet" href="{% static 'css/styleGlobal.css' %}">
+<link rel="stylesheet" href="{% static 'css/consultaInsumos.css' %}">
 <script src="https://kit.fontawesome.com/4efaf993e1.js" crossorigin="anonymous"></script>
 {% endblock %}
 
@@ -53,5 +54,13 @@
                 </div>
             </form>
         </div>
+</section>
+<section class="insumosDisponibles">
+    <h1 class="tituloInsumosDisponibles">Insumos disponibles</h1>
+    {% if listaInsumos %}
+        {% for insumo in listaInsumos %}
+        <p class="parrafoInsumosDisponibles">{{forloop.counter}}. Código: {{insumo.codigo}} , referencia: {{insumo.referencia}} , cantidad: {{insumo.cantidad}} , unidad: {{insumo.unidad}} , proyecto asociado: {{insumo.proyectoAsociado.nombreProyecto}}</p>
+        {% endfor %}
+    {% endif %}
 </section>
 {% endblock %}

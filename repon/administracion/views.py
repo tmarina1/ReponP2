@@ -515,4 +515,21 @@ def comparacionMedio(request):
 
 
 def consultaInsumos(request):
-    return render(request, 'consultaInsumos.html')
+    idUsuario = request.user.id
+    empresa = models.Empresa.objects.get(usuarioVinculado_id = idUsuario)
+    listaInsumosValidados = []
+    mensajes =''
+    #try:
+    if request.method == 'POST' and request.FILES['archivo']:
+        archivo = request.FILES['archivo']
+        df = pd.read_excel(archivo)
+        for index, row in df.iterrows():
+            insumosEmpresaActual = Insumo.objects.filter(proyectoAsociado__empresaVinculada=empresa.id, codigo=row['Codigo_insumo'])
+            listaInsumosValidados.extend(list(insumosEmpresaActual))
+            print(listaInsumosValidados)
+        for insumo in listaInsumosValidados:
+            print(insumo.referencia)
+    #except:
+        #mensajes = ['Error con el archivo subido, por favor verifica que el formato esté correctamente diligenciado']
+
+    return render(request, 'consultaInsumos.html', {'mensajes':mensajes, 'listaInsumos': listaInsumosValidados})
