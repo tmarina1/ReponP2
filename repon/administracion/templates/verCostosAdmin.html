@@ -1,0 +1,36 @@
+{% extends 'autenticacion/plantillaFondoCompleto.html' %}
+{% load static %}
+{% block title %}Ver empresa{% endblock %}
+{%block head%}
+<link rel="stylesheet" href="{% static 'css/verCostosAdmin.css' %}">
+<script src="https://kit.fontawesome.com/4efaf993e1.js" crossorigin="anonymous"></script>
+{%endblock%}
+{% block content %}
+<section class="contenido">
+  <div class="cuadroBlanco">
+    <div class="containerContenido">
+      <div>
+        <h1 class="text-center mt-3">Costos en proyectos</h1>
+        <div class="containerBtnVolver">
+          <a href="{% url 'landingAdmon' %}" class="btnVolver text-center">Volver</a>
+        </div>
+        <div class="row">
+          {% for costo in proyectosConCostos%}
+          <div class="col-sm-6">
+            <div class="card mt-5 mb-3" id="cardCostos">
+              <div class="card-header border text-center" id="tituloCard">
+                <strong>{{costo.proyectoAsociado__nombreProyecto}}</strong>
+              </div>
+              <div class="card-body text">
+                <p class="card-text"><strong>Tipo de costo:</strong> {{costo.tipo}}</p>
+              </div>
+              <div class="card-footer bg-transparent border"><strong>Valor costo: </strong>$ {{ costo.valor }}</div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

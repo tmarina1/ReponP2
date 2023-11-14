@@ -10,8 +10,8 @@
     <div class="cuadroBlanco">
         <div class="containerContenido">
             <h1 id="tituloVerEmpresa">Información de la empresa</h1>
-            <div class="containerColumnas" >
-                <div class="columna" >
+            <div class="containerColumnas">
+                <div class="columna">
                     <p><strong>NIT: </strong>{{empresa.nit}}</p>
                     <p><strong>Nombre de la empresa: </strong>{{empresa.nombreEmpresa}}</p>
                     {% if empresa.direccion %}
@@ -29,13 +29,18 @@
         <div class="cuadroBlancoVerCoordinadores">
             <div class="containerContenidoCoordinadores">
                 <h1 id="tituloVerEmpresaCoordinadores">Información proyectos</h1>
-                <div class="containerColumnas" >
-                    <div class="columna" >
+                <div class="containerColumnas">
+                    <div class="columna">
                         {% for proyecto in proyectos %}
                         {% if proyecto.coordinadorVinculado %}
-                        <p><strong>* Nombre coordinador: </strong>{{proyecto.coordinadorVinculado.usuario.first_name}}<strong> - Nombre proyecto asignado: </strong>{{proyecto.nombreProyecto}}<strong> - Ubicación proyecto: </strong>{{proyecto.departamento}}, {{proyecto.ciudad}}</p>
+                        <p><strong>* Nombre coordinador:
+                            </strong>{{proyecto.coordinadorVinculado.usuario.first_name}}<strong> - Nombre proyecto
+                                asignado: </strong>{{proyecto.nombreProyecto}}<strong> - Ubicación proyecto:
+                            </strong>{{proyecto.departamento}}, {{proyecto.ciudad}}</p>
                         {% else %}
-                        <p><strong>* Nombre coordinador: </strong>Sin asignar<strong> - Nombre proyecto asignado: </strong>{{proyecto.nombreProyecto}}<strong> - Ubicación proyecto: </strong>{{proyecto.departamento}}, {{proyecto.ciudad}}</p>
+                        <p><strong>* Nombre coordinador: </strong>Sin asignar<strong> - Nombre proyecto asignado:
+                            </strong>{{proyecto.nombreProyecto}}<strong> - Ubicación proyecto:
+                            </strong>{{proyecto.departamento}}, {{proyecto.ciudad}}</p>
                         {% endif %}
                         {% endfor %}
                     </div>
@@ -43,7 +48,7 @@
             </div>
         </div>
     </section>
-    <div class="containerBtnVolver">
+    <div class="containerBtnVolver mb-3">
         <a href="{% url 'landingAdmon' %}" class="btnVolver">Volver</a>
     </div>
 </section>

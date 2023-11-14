@@ -14,7 +14,7 @@ from repon.settings import UBICACION
 from django.db.models import Count,Avg,Sum,F, Value,  FloatField
 from inventario.models import Insumo
 from django.db.models.functions import Coalesce
-from inventario.models import TransferenciaInsumo, Insumo
+from inventario.models import TransferenciaInsumo, Insumo, CostosProyecto
 #------------------------------------------------------------------
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -520,6 +520,7 @@ def comparacionMedio(request):
     return render(request, 'comparacionMedio.html',{'miEmpresa':miEmpresa,'empresa': empresa,'medio':medio})
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 def consultaInsumos(request):
     idUsuario = request.user.id
@@ -577,3 +578,10 @@ def listadoProyectos(request):
     
     return render(request, 'traspasos/listadoProyectos.html',{'proyectos':proyectos,'empresa':empresa[0]})
 >>>>>>> 9475c3777798f8ed5bd86154dcfe9b521431f481
+=======
+def verCostosAdmin(request):
+    idUsuario = request.user.id
+    empresa = models.Empresa.objects.get(usuarioVinculado_id = idUsuario)
+    costosProyectos = CostosProyecto.objects.filter(proyectoAsociado__empresaVinculada = empresa.id).values('proyectoAsociado__nombreProyecto','tipo','valor')
+    return render(request, 'verCostosAdmin.html', {'proyectosConCostos': costosProyectos})
+>>>>>>> 6bc1452177cd3815bfc3a888bfbc86f1a0415a25
