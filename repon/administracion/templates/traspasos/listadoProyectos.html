@@ -1,0 +1,36 @@
+{% extends 'autenticacion/plantillaCuadros.html' %}
+{% load static %}
+{% block title %}Proyectos{% endblock %}
+{%block head%}
+<link rel="stylesheet" href="{% static 'css/landingCoordinador.css' %}">
+<link rel="stylesheet" href="{% static 'css/ingresoCategoria.css' %}">
+<script src="https://kit.fontawesome.com/4efaf993e1.js" crossorigin="anonymous"></script>
+{%endblock%}
+
+{% block content %}
+<section class="containerTituloLanding">
+    <h1 class="tituloLanding">Proyectos de la empresa {{ empresa.nombreEmpresa}}</h1>
+</section>
+<div class="containerBtnVolver">
+    <a href="{% url 'landingAdmon' %}" class="btnVolver">Volver</a>
+</div>
+<section class="containerBotones">
+    {% for proyecto in proyectos %}
+    <a class="botonesLanding" href="{% url 'traspasosAprobados' proyecto.id %}">
+        <div class="containerContenido">
+            <h3 class="subtitulos">Proyecto</h3>
+            <p class="textoContenido">{{proyecto.nombreProyecto}}</p>
+        </div>
+        <div class="containerContenido">
+            <h3 class="subtitulos">coordinador</h3>
+            <p class="textoContenido">{{proyecto.coordinadorVinculado.usuario.first_name}}</p>
+        </div>
+        <div class="containerCirculo">
+            <div class="circulo">
+                <i class="fas fa-chevron-right" id="flecha"></i>
+            </div>
+        </div>
+    </a>
+    {% endfor %}
+</section>
+{% endblock %}

@@ -473,7 +473,9 @@ def subirArchivoEntreno(request):
     except:
         mensajes = ['Error con el archivo subido, por favor verifica que el formato esté correctamente diligenciado']
     return render(request, 'subirArchivoEntreno.html', {'mensajes':mensajes})
-
+'''
+Metodo encargado de la comparacion de la empresa actual, con el promedio de las demás empresas registradas en el sistema
+'''
 @login_required
 def comparacionMedio(request):
     idUsuario = request.user.id
@@ -517,6 +519,7 @@ def comparacionMedio(request):
         return render(request, 'comparacionMedio.html',{'miEmpresa':miEmpresa,'empresa': empresa, 'mensaje':mensaje})
     return render(request, 'comparacionMedio.html',{'miEmpresa':miEmpresa,'empresa': empresa,'medio':medio})
 
+<<<<<<< HEAD
 
 def consultaInsumos(request):
     idUsuario = request.user.id
@@ -537,3 +540,40 @@ def consultaInsumos(request):
         #mensajes = ['Error con el archivo subido, por favor verifica que el formato esté correctamente diligenciado']
 
     return render(request, 'consultaInsumos.html', {'mensajes':mensajes, 'listaInsumos': listaInsumosValidados})
+=======
+'''
+Metodo encargado de segun el proyecto y sus insumos aceptados por el administrador para el traspaso, se le pueda asignar un costo de traspaso
+'''
+
+def traspasosAprobados(request, proyectoId):
+    insumos = TransferenciaInsumo.objects.filter(proyectoDestino_id=proyectoId,estado = 'Aceptado', costoTransferencia = 0)
+    mensaje = ""
+    if request.method == 'POST':
+        costoTraspaso = request.POST['costoTraspaso']
+        traspasos = request.POST.getlist('traspasos')
+        cantidad = 0
+        costoTraspaso = float(costoTraspaso)
+        for traspaso in traspasos:
+            transferencia = TransferenciaInsumo.objects.get(id = traspaso)
+            cantidad += transferencia.cantidad
+        costoTraspaso /= cantidad
+
+        for traspaso in traspasos:
+            transferencia = TransferenciaInsumo.objects.get(id = traspaso)
+            costoFinal = costoTraspaso*transferencia.cantidad
+            transferencia.costoTransferencia = costoFinal
+            transferencia.save()
+        mensaje = "Se ha vinculado correctamente el precio de transferencia"
+
+    return render(request, 'traspasos/traspasosAprobados.html',{'insumos':insumos,'mensaje':mensaje})
+
+'''
+Metodo que lista los proyectos vinculado en la empresa para el administrador
+'''
+def listadoProyectos(request):
+    idUsuario = request.user.id
+    empresa = models.Empresa.objects.filter(usuarioVinculado_id = idUsuario)
+    proyectos = models.Proyecto.objects.filter(empresaVinculada_id = empresa[0].id)
+    
+    return render(request, 'traspasos/listadoProyectos.html',{'proyectos':proyectos,'empresa':empresa[0]})
+>>>>>>> 9475c3777798f8ed5bd86154dcfe9b521431f481

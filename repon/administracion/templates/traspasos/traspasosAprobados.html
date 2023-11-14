@@ -1,0 +1,91 @@
+{% extends 'autenticacion/plantillaFondoCompleto.html' %}
+{% load static %}
+{% block title %}Traspasos Aprovados{% endblock %}
+{%block head%}
+<link rel="stylesheet" href="{% static 'css/ingresoCategoria.css' %}">
+<link rel="stylesheet" href="{% static 'css/traspasosAprobados.css' %}">
+<script src="https://kit.fontawesome.com/4efaf993e1.js" crossorigin="anonymous"></script>
+{%endblock%}
+
+{% block content %}
+<section class="containerTituloLanding">
+    <h1 class="tituloLanding">Traspasos Aprobados</h1>
+</section>
+
+{% if mensaje %}
+    <p class="alert alert-success text-center" role="alert"> {{ mensaje }}</p>
+{% endif %}
+
+<div id="divBusqueda">
+    <form method="post" class="busquedaForm">
+        {%csrf_token%}
+        <div class="busquedaContainer">
+            <h3 class="tituloBusqueda">Ingrese costo de traspasos</h3>
+            <input type="text" class="inputBusqueda" name="costoTraspaso"  placeholder="80000"
+                                            style="border-color:#000;" oninput="limitarValor(this)"
+                                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57)" required/>
+            <button type="submit" id="botonBusqueda">Guardar</button>
+        </div>
+    
+</div>
+
+<div class="containerBtnVolver">
+    <a href="{% url 'listadoProyectos' %}" class="btnVolver">Volver</a>
+</div>
+
+<section class="containerInventario">
+    <table>
+        <thead>
+            <tr>
+                <th>Insumo</th>
+                <th>Cantidad</th>
+                <th>Proyecto origen</th>
+                <th>Proyecto destino</th>
+                <th>Coordinador</th>
+                <th>seleccionar</th>
+            </tr>
+        </thead>
+        {% for insumo in insumos %}
+        <tbody>
+            <tr>
+                <th>{{insumo.insumo.referencia}}</th>
+                <th>{{insumo.cantidad}}</th>
+                <th>{{insumo.proyectoOrigen.nombreProyecto }}</th>
+                <th>{{insumo.proyectoDestino.nombreProyecto }}</th>
+                <th>{{insumo.coordinadorSolicitante.usuario.first_name}}</th>
+                <th>
+                    <div class="form-check">
+                        <input class="form-check-input" style ="border-color:black;" name="traspasos" type="checkbox" value="{{insumo.id}}">
+                    </div>
+                </th>
+            </tr>
+        </tbody>
+        {% endfor %}
+    </table>
+</section>
+</form>
+<script>
+    function limitarValor(input) {
+        if (parseInt(input.value) == 0) {
+        input.value = 1;
+    }
+    }
+</script>
+<div class="paginacion">
+    <span class="links">
+        {% if insumos.has_previous %}
+        <a href="?pagina=1">&laquo; primera</a>
+        <a href="?pagina={{ insumos.previous_page_number }}">anterior</a>
+        {% endif %}
+
+        <span class="actual">
+            Página {{ insumos.number }} de {{ insumos.paginator.num_pages }}.
+        </span>
+
+        {% if insumos.has_next %}
+        <a href="?pagina={{ insumos.next_page_number }}">siguiente</a>
+        <a href="?pagina={{ insumos.paginator.num_pages }}">última &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+{% endblock %}

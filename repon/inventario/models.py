@@ -32,6 +32,7 @@ class TransferenciaInsumo(models.Model):
     insumo = models.ForeignKey(Insumo, on_delete=models.CASCADE)
     cantidad = models.FloatField()
     estado = models.CharField(default='Pendiente', max_length=15)
+    costoTransferencia = models.FloatField(default=0, max_length=15)
 
 class CostosProyecto(models.Model):
     valor = models.FloatField()
