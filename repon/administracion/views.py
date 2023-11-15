@@ -191,30 +191,32 @@ def comparacionProyectos(request):
     proyectosMiEmpresa = models.Proyecto.objects.filter(empresaVinculada_id = empresa.id)
 
     if request.method == 'POST':
-        miProyecto = request.POST['miProyecto']
-        otroProyecto = request.POST['otroProyecto']
-        
-        ## lado izq
-        proyectoActual = models.Proyecto.objects.get(nombreProyecto = miProyecto, empresaVinculada__id = empresa.id)
-        cantidadInsumos = Insumo.objects.filter(proyectoAsociado_id = proyectoActual.id).aggregate(cantidad=Sum('cantidad'))
-        insumoMasDesaprovechado = Insumo.objects.filter(proyectoAsociado_id = proyectoActual.id).order_by('cantidad')[:3]
-        costosInsumos = Insumo.objects.filter(proyectoAsociado_id = proyectoActual.id).aggregate(total = Sum(F('valorUnitario')*F('cantidad')))
-        Aprobados = TransferenciaInsumo.objects.filter(proyectoDestino_id = proyectoActual.id,estado = "Aceptado").count()
+        try:
+            miProyecto = request.POST['miProyecto']
+            otroProyecto = request.POST['otroProyecto']
+            
+            ## lado izq
+            proyectoActual = models.Proyecto.objects.get(nombreProyecto = miProyecto, empresaVinculada__id = empresa.id)
+            cantidadInsumos = Insumo.objects.filter(proyectoAsociado_id = proyectoActual.id).aggregate(cantidad=Sum('cantidad'))
+            insumoMasDesaprovechado = Insumo.objects.filter(proyectoAsociado_id = proyectoActual.id).order_by('cantidad')[:3]
+            costosInsumos = Insumo.objects.filter(proyectoAsociado_id = proyectoActual.id).aggregate(total = Sum(F('valorUnitario')*F('cantidad')))
+            Aprobados = TransferenciaInsumo.objects.filter(proyectoDestino_id = proyectoActual.id,estado = "Aceptado").count()
 
-        miActualProyecto = {'proyectoActual':proyectoActual,'cantidadInsumos':cantidadInsumos,'insumoMasDesaprovechado':insumoMasDesaprovechado,
-                            'costosInsumos':costosInsumos,'Aprobados':Aprobados}
-        ##lado der
-        proyectoAComparar = models.Proyecto.objects.get(nombreProyecto = otroProyecto, empresaVinculada__id = empresa.id)
-        cantidadInsumosOtro = Insumo.objects.filter(proyectoAsociado_id = proyectoAComparar.id).aggregate(cantidad=Sum('cantidad'))
-        insumoMasDesaprovechadoOtro = Insumo.objects.filter(proyectoAsociado_id = proyectoAComparar.id).order_by('cantidad')[:3]
-        costosInsumosOtro = Insumo.objects.filter(proyectoAsociado_id = proyectoAComparar.id).aggregate(total = Sum(F('valorUnitario')*F('cantidad')))
-        AprobadosOtro = TransferenciaInsumo.objects.filter(proyectoDestino_id = proyectoAComparar.id,estado = "Aceptado").count()
+            miActualProyecto = {'proyectoActual':proyectoActual,'cantidadInsumos':cantidadInsumos,'insumoMasDesaprovechado':insumoMasDesaprovechado,
+                                'costosInsumos':costosInsumos,'Aprobados':Aprobados}
+            ##lado der
+            proyectoAComparar = models.Proyecto.objects.get(nombreProyecto = otroProyecto, empresaVinculada__id = empresa.id)
+            cantidadInsumosOtro = Insumo.objects.filter(proyectoAsociado_id = proyectoAComparar.id).aggregate(cantidad=Sum('cantidad'))
+            insumoMasDesaprovechadoOtro = Insumo.objects.filter(proyectoAsociado_id = proyectoAComparar.id).order_by('cantidad')[:3]
+            costosInsumosOtro = Insumo.objects.filter(proyectoAsociado_id = proyectoAComparar.id).aggregate(total = Sum(F('valorUnitario')*F('cantidad')))
+            AprobadosOtro = TransferenciaInsumo.objects.filter(proyectoDestino_id = proyectoAComparar.id,estado = "Aceptado").count()
 
-        miOtroProyecto = {'proyectoAComparar':proyectoAComparar,'cantidadInsumosOtro':cantidadInsumosOtro,'insumoMasDesaprovechadoOtro':insumoMasDesaprovechadoOtro,
-                            'costosInsumosOtro':costosInsumosOtro,'AprobadosOtro':AprobadosOtro}
-        
-        return render(request, 'comparacionProyectos.html',{'proyectosMiEmpresa':proyectosMiEmpresa,'miActualProyecto':miActualProyecto,'miOtroProyecto':miOtroProyecto})
-
+            miOtroProyecto = {'proyectoAComparar':proyectoAComparar,'cantidadInsumosOtro':cantidadInsumosOtro,'insumoMasDesaprovechadoOtro':insumoMasDesaprovechadoOtro,
+                                'costosInsumosOtro':costosInsumosOtro,'AprobadosOtro':AprobadosOtro}
+            
+            return render(request, 'comparacionProyectos.html',{'proyectosMiEmpresa':proyectosMiEmpresa,'miActualProyecto':miActualProyecto,'miOtroProyecto':miOtroProyecto})
+        except:
+            return render(request, 'comparacionProyectos.html',{'proyectosMiEmpresa':proyectosMiEmpresa})
         
     return render(request, 'comparacionProyectos.html',{'proyectosMiEmpresa':proyectosMiEmpresa})
 

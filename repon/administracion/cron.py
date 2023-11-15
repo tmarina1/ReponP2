@@ -22,7 +22,7 @@ def verificacionFechas():
 def verificacionFechas1():
     fechaActual = timezone.now()
     objetosAVencerse = Insumo.objects.filter(
-        Q(fechaIngreso__lte=fechaActual + timedelta(days=40)) &
+        Q(fechaIngreso__lt=fechaActual - timedelta(days=40)) &
         Q(correoFechaIngreso=False)
     )
     for objeto in objetosAVencerse:
