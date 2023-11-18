@@ -550,19 +550,23 @@ def traspasosAprobados(request, proyectoId):
     if request.method == 'POST':
         costoTraspaso = request.POST['costoTraspaso']
         traspasos = request.POST.getlist('traspasos')
-        cantidad = 0
-        costoTraspaso = float(costoTraspaso)
-        for traspaso in traspasos:
-            transferencia = TransferenciaInsumo.objects.get(id = traspaso)
-            cantidad += transferencia.cantidad
-        costoTraspaso /= cantidad
+        if len(traspasos) == 0:
+            mensaje = 'Recuerde seleccionar una orden de traspso'
+            return render(request, 'traspasos/traspasosAprobados.html',{'insumos':insumos,'mensaje':mensaje})
+        else:
+            cantidad = 0
+            costoTraspaso = float(costoTraspaso)
+            for traspaso in traspasos:
+                transferencia = TransferenciaInsumo.objects.get(id = traspaso)
+                cantidad += transferencia.cantidad
+            costoTraspaso /= cantidad
 
-        for traspaso in traspasos:
-            transferencia = TransferenciaInsumo.objects.get(id = traspaso)
-            costoFinal = costoTraspaso*transferencia.cantidad
-            transferencia.costoTransferencia = costoFinal
-            transferencia.save()
-        mensaje = "Se ha vinculado correctamente el precio de transferencia"
+            for traspaso in traspasos:
+                transferencia = TransferenciaInsumo.objects.get(id = traspaso)
+                costoFinal = costoTraspaso*transferencia.cantidad
+                transferencia.costoTransferencia = costoFinal
+                transferencia.save()
+            mensaje = "Se ha vinculado correctamente el precio de transferencia"
 
     return render(request, 'traspasos/traspasosAprobados.html',{'insumos':insumos,'mensaje':mensaje})
 
