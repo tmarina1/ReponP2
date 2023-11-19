@@ -17,7 +17,7 @@ informar al usuario que no se han encontrado resultados.
 '''
 @login_required
 def inventario(request, proyectoId):
-    inventarioInsumos = Insumo.objects.filter(proyectoAsociado = proyectoId)
+    inventarioInsumos = Insumo.objects.filter(proyectoAsociado = proyectoId, paraVender = False)
     mensajes = ''
     terminoBusqueda = request.GET.get('busqueda')
     if terminoBusqueda:
