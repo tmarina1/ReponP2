@@ -521,6 +521,9 @@ def comparacionMedio(request):
         return render(request, 'comparacionMedio.html',{'miEmpresa':miEmpresa,'empresa': empresa, 'mensaje':mensaje})
     return render(request, 'comparacionMedio.html',{'miEmpresa':miEmpresa,'empresa': empresa,'medio':medio})
 
+'''
+Metodo encargado de validar la disponibilidad de los insumos en los diferentes proyectos que tenga una empresa en la plataforma
+'''
 def consultaInsumos(request):
     idUsuario = request.user.id
     empresa = models.Empresa.objects.get(usuarioVinculado_id = idUsuario)
@@ -540,10 +543,10 @@ def consultaInsumos(request):
         #mensajes = ['Error con el archivo subido, por favor verifica que el formato esté correctamente diligenciado']
 
     return render(request, 'consultaInsumos.html', {'mensajes':mensajes, 'listaInsumos': listaInsumosValidados})
+
 '''
 Metodo encargado de segun el proyecto y sus insumos aceptados por el administrador para el traspaso, se le pueda asignar un costo de traspaso
 '''
-
 def traspasosAprobados(request, proyectoId):
     insumos = TransferenciaInsumo.objects.filter(proyectoDestino_id=proyectoId,estado = 'Aceptado', costoTransferencia = 0)
     mensaje = ""
@@ -580,6 +583,9 @@ def listadoProyectos(request):
     
     return render(request, 'traspasos/listadoProyectos.html',{'proyectos':proyectos,'empresa':empresa[0]})
 
+'''
+Metodo encargado de mostrar los costos de los proyectos ne administración
+'''
 def verCostosAdmin(request):
     idUsuario = request.user.id
     empresa = models.Empresa.objects.get(usuarioVinculado_id = idUsuario)

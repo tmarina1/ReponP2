@@ -5,6 +5,9 @@ from django.core.mail import EmailMessage
 from repon.settings import EMAIL_HOST_USER, EMAIL_HOST_PASSWORD
 from django.db.models import Q
 
+'''
+Metodo encargado de tener la logica necesaria para hacer el cron job de la fecha de caducidad
+'''
 def verificacionFechas():        
     fechaActual = timezone.now()
     objetosAVencerse = Insumo.objects.filter(
@@ -19,6 +22,9 @@ def verificacionFechas():
         objeto.correoVencimiento = True
         objeto.save()
 
+'''
+Metodo encargado de tener la logica necesaria para hacer el cron job de la fecha de ingreso
+'''
 def verificacionFechas1():
     fechaActual = timezone.now()
     objetosAVencerse = Insumo.objects.filter(
